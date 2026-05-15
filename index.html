@@ -250,6 +250,168 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* ── Modals ──────────────────────────────────────────── */
+    .glo-modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 99998;
+      display: none;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      padding: 1rem;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+    .glo-modal.open   { display: -webkit-flex; display: flex; }
+
+    .glo-modal-backdrop {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.88);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      -webkit-transition: opacity 0.3s ease;
+      transition: opacity 0.3s ease;
+      cursor: pointer;
+    }
+    .glo-modal.visible .glo-modal-backdrop { opacity: 1; }
+
+    .glo-modal-card {
+      position: relative;
+      z-index: 1;
+      background: rgba(6,6,10,0.98);
+      border: 1px solid rgba(0,195,255,0.22);
+      border-radius: 18px;
+      padding: 2.5rem 2.25rem 2rem;
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      box-shadow:
+        0 0 0 1px rgba(0,195,255,0.06),
+        0 40px 100px rgba(0,0,0,0.9),
+        0 0 60px rgba(0,195,255,0.05);
+      -webkit-transform: scale(0.94) translateY(18px);
+      transform: scale(0.94) translateY(18px);
+      -webkit-transition: -webkit-transform 0.38s cubic-bezier(0.34,1.56,0.64,1);
+      transition: transform 0.38s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .glo-modal.visible .glo-modal-card {
+      -webkit-transform: scale(1) translateY(0);
+      transform: scale(1) translateY(0);
+    }
+    /* Electric accent line across card top */
+    .glo-modal-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,195,255,0.7), transparent);
+    }
+
+    .glo-modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #777;
+      font-size: 1rem;
+      line-height: 1;
+      cursor: pointer;
+      display: -webkit-flex; display: flex;
+      -webkit-align-items: center; align-items: center;
+      -webkit-justify-content: center; justify-content: center;
+      -webkit-transition: background 0.2s, color 0.2s;
+      transition: background 0.2s, color 0.2s;
+    }
+    .glo-modal-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+    .glo-modal-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.45rem;
+    }
+    .glo-modal-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.8rem, 6vw, 2.5rem);
+      letter-spacing: 0.04em;
+      line-height: 1.05;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+    .glo-modal-sub {
+      font-size: 0.88rem;
+      color: #888;
+      line-height: 1.6;
+      margin-bottom: 1.6rem;
+    }
+
+    .glo-form {
+      display: -webkit-flex; display: flex;
+      -webkit-flex-direction: column; flex-direction: column;
+      gap: 0.9rem;
+    }
+    .glo-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+    }
+    .glo-form-submit {
+      width: 100%;
+      padding: 0.95rem;
+      background: var(--red);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: var(--glow-red);
+      -webkit-transition: background 0.18s, box-shadow 0.18s, -webkit-transform 0.18s;
+      transition: background 0.18s, box-shadow 0.18s, transform 0.18s;
+      margin-top: 0.25rem;
+    }
+    .glo-form-submit:hover {
+      background: var(--red-bright);
+      box-shadow: 0 0 36px rgba(255,58,58,0.65);
+      -webkit-transform: translateY(-1px); transform: translateY(-1px);
+    }
+    .glo-form-submit:disabled {
+      opacity: 0.6; cursor: not-allowed;
+      -webkit-transform: none; transform: none;
+    }
+
+    .glo-modal-success { display: none; text-align: center; padding: 1rem 0 0.5rem; }
+    .glo-modal-success.visible { display: block; }
+    .glo-modal-success .check { font-size: 2.5rem; margin-bottom: 0.6rem; }
+    .glo-modal-success h3 { font-size: 1.1rem; font-weight: 700; color: var(--blue); margin-bottom: 0.4rem; }
+    .glo-modal-success p  { font-size: 0.87rem; color: #aaa; line-height: 1.7; }
+
+    @media (max-width: 600px) {
+      .glo-modal      { padding: 0.6rem; }
+      .glo-modal-card {
+        padding: 2rem 1.35rem 1.75rem;
+        border-radius: 16px;
+        max-height: 92vh;
+        max-width: 100%;
+      }
+      .glo-form-row   { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 
@@ -299,7 +461,7 @@
     <a href="#about"    class="mobile-link">About</a>
     <a href="#inquiry"  class="mobile-link">Inquiry</a>
     <a href="#contact"  class="mobile-link">Contact</a>
-    <a href="#inquiry"  class="btn btn-primary mobile-link" style="margin-top:0.5rem;">Join the Waitlist</a>
+    <button id="btn-glolist-nav" class="btn btn-primary mobile-link" type="button" style="margin-top:0.5rem;align-self:flex-start;">Join the Glo List</button>
   </nav>
 
 
@@ -323,8 +485,8 @@
       </p>
 
       <div class="hero-cta-group">
-        <a href="#inquiry" class="btn btn-primary">Join the Waitlist</a>
-        <a href="#inquiry" class="btn btn-outline">Request Event Info</a>
+        <button id="btn-glolist" class="btn btn-primary" type="button">Join the Glo List</button>
+        <button id="btn-plan"    class="btn btn-outline" type="button">Plan Your Experience</button>
       </div>
 
       <p class="hero-status">
@@ -596,41 +758,271 @@
 
   <script src="./main.js"></script>
 
+  <!-- ── JOIN THE GLO LIST MODAL ───────────────────────── -->
+  <div id="glolist-modal" class="glo-modal" role="dialog" aria-modal="true" aria-label="Join the Glo List">
+    <div class="glo-modal-backdrop"></div>
+    <div class="glo-modal-card">
+      <button class="glo-modal-close" type="button" aria-label="Close">&#x2715;</button>
+      <p class="glo-modal-eyebrow">Early Access</p>
+      <h2 class="glo-modal-heading">Join the Glo List</h2>
+      <p class="glo-modal-sub">Be first to know when Glo Karts launches in Chicago.</p>
+
+      <div id="glolist-success" class="glo-modal-success" role="alert">
+        <div class="check">✅</div>
+        <h3>You're on the Glo List!</h3>
+        <p>We'll reach out as soon as Glo Karts is live. Chicago's about to experience something new.</p>
+      </div>
+
+      <form id="glolist-form" class="glo-form" method="POST" action="https://formspree.io/f/mjglqega" novalidate>
+        <input type="hidden" name="form-name" value="Glo List Signup" />
+
+        <div class="form-group">
+          <label for="gl-name">Full Name <span style="color:var(--red)">*</span></label>
+          <input id="gl-name" name="full_name" type="text" placeholder="Your full name" required autocomplete="name" />
+        </div>
+
+        <div class="form-group">
+          <label for="gl-email">Email Address <span style="color:var(--red)">*</span></label>
+          <input id="gl-email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+
+        <div class="form-group">
+          <label for="gl-phone">Phone Number <span style="color:var(--muted);font-weight:400;font-size:0.78rem;">(optional)</span></label>
+          <input id="gl-phone" name="phone" type="tel" placeholder="(000) 000-0000" autocomplete="tel" />
+        </div>
+
+        <button type="submit" id="glolist-submit" class="glo-form-submit">Get Early Access</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── PLAN YOUR EXPERIENCE MODAL ────────────────────── -->
+  <div id="plan-modal" class="glo-modal" role="dialog" aria-modal="true" aria-label="Plan Your Experience">
+    <div class="glo-modal-backdrop"></div>
+    <div class="glo-modal-card">
+      <button class="glo-modal-close" type="button" aria-label="Close">&#x2715;</button>
+      <p class="glo-modal-eyebrow">Inquire</p>
+      <h2 class="glo-modal-heading">Plan Your Experience</h2>
+      <p class="glo-modal-sub">Tell us what you have in mind — we'll craft something unforgettable.</p>
+
+      <div id="plan-success" class="glo-modal-success" role="alert">
+        <div class="check">✅</div>
+        <h3>Request Received!</h3>
+        <p>We'll be in touch soon to start planning your Glo Karts experience in Chicago.</p>
+      </div>
+
+      <form id="plan-form" class="glo-form" method="POST" action="https://formspree.io/f/mjglqega" novalidate>
+        <input type="hidden" name="form-name" value="Experience Inquiry" />
+
+        <div class="glo-form-row">
+          <div class="form-group">
+            <label for="pl-name">Full Name <span style="color:var(--red)">*</span></label>
+            <input id="pl-name" name="full_name" type="text" placeholder="Your name" required autocomplete="name" />
+          </div>
+          <div class="form-group">
+            <label for="pl-email">Email <span style="color:var(--red)">*</span></label>
+            <input id="pl-email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
+          </div>
+        </div>
+
+        <div class="glo-form-row">
+          <div class="form-group">
+            <label for="pl-phone">Phone Number</label>
+            <input id="pl-phone" name="phone" type="tel" placeholder="(000) 000-0000" autocomplete="tel" />
+          </div>
+          <div class="form-group">
+            <label for="pl-group">Group Size</label>
+            <select id="pl-group" name="group_size">
+              <option value="" disabled selected>Select size</option>
+              <option>1–2 people</option>
+              <option>3–5 people</option>
+              <option>6–10 people</option>
+              <option>11–20 people</option>
+              <option>20+ people</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="pl-experience">Type of Experience</label>
+          <select id="pl-experience" name="experience_type">
+            <option value="" disabled selected>Select an experience</option>
+            <option>Scenic City Ride</option>
+            <option>Sunset Experience</option>
+            <option>Night Ride</option>
+            <option>Birthday</option>
+            <option>Wedding / Event</option>
+            <option>Date Night</option>
+            <option>Corporate Event</option>
+            <option>Private Group Ride</option>
+            <option>Tourism Experience</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="pl-date">Preferred Date</label>
+          <input id="pl-date" name="preferred_date" type="date" />
+        </div>
+
+        <div class="form-group field-full">
+          <label for="pl-notes">Tell us more</label>
+          <textarea id="pl-notes" name="message" placeholder="Describe your vision — occasion, vibe, anything special…" style="min-height:88px;"></textarea>
+        </div>
+
+        <button type="submit" id="plan-submit" class="glo-form-submit">Submit My Request</button>
+      </form>
+    </div>
+  </div>
+
   </div><!-- /#site-content -->
 
   <script>
+    /* ── Intro reveal ───────────────────────────────────── */
     (function () {
       function runIntro() {
         var overlay     = document.getElementById('intro-overlay');
         var siteContent = document.getElementById('site-content');
         if (!overlay || !siteContent) return;
-
-        /* Lock scroll on both html and body — required for iOS Safari */
         document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow            = 'hidden';
-
         setTimeout(function () {
           overlay.classList.add('hide');
           siteContent.classList.add('revealed');
-
-          /* Restore scroll */
           document.documentElement.style.overflow = '';
           document.body.style.overflow            = '';
-
-          /* Remove overlay from DOM after fade completes */
           setTimeout(function () {
-            if (overlay.parentNode) {
-              overlay.parentNode.removeChild(overlay);
-            }
+            if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
           }, 1000);
         }, 3000);
       }
-
-      /* Trigger immediately if DOM is already parsed, otherwise wait */
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', runIntro);
       } else {
         runIntro();
+      }
+    })();
+
+    /* ── Modals ─────────────────────────────────────────── */
+    (function () {
+      function init() {
+        var modals = {
+          glolist: document.getElementById('glolist-modal'),
+          plan:    document.getElementById('plan-modal')
+        };
+
+        function lockScroll() {
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.overflow            = 'hidden';
+        }
+        function unlockScroll() {
+          document.documentElement.style.overflow = '';
+          document.body.style.overflow            = '';
+        }
+
+        function openModal(id) {
+          /* Close any open modal first */
+          Object.keys(modals).forEach(function (k) {
+            if (modals[k].classList.contains('open')) _close(k);
+          });
+          var m = modals[id];
+          if (!m) return;
+          m.classList.add('open');
+          lockScroll();
+          /* Double rAF so display:flex is painted before opacity transition */
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              m.classList.add('visible');
+            });
+          });
+          setTimeout(function () {
+            var first = m.querySelector('input, select, textarea');
+            if (first) first.focus();
+          }, 400);
+        }
+
+        function _close(id) {
+          var m = modals[id];
+          if (!m) return;
+          m.classList.remove('visible');
+          setTimeout(function () {
+            m.classList.remove('open');
+            unlockScroll();
+          }, 330);
+        }
+
+        function closeAll() {
+          Object.keys(modals).forEach(_close);
+        }
+
+        /* ── Open triggers ── */
+        var btnGlolist    = document.getElementById('btn-glolist');
+        var btnPlan       = document.getElementById('btn-plan');
+        var btnGlolistNav = document.getElementById('btn-glolist-nav');
+        var hamburger     = document.getElementById('hamburger-btn');
+        var mobileNav     = document.getElementById('mobile-nav');
+
+        function openAndCloseNav(id) {
+          if (hamburger) { hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); }
+          if (mobileNav)   mobileNav.classList.remove('open');
+          openModal(id);
+        }
+
+        if (btnGlolist)    btnGlolist.addEventListener('click',    function () { openAndCloseNav('glolist'); });
+        if (btnPlan)       btnPlan.addEventListener('click',       function () { openAndCloseNav('plan'); });
+        if (btnGlolistNav) btnGlolistNav.addEventListener('click', function () { openAndCloseNav('glolist'); });
+
+        /* ── Close triggers ── */
+        document.querySelectorAll('.glo-modal-backdrop').forEach(function (el) {
+          el.addEventListener('click', closeAll);
+        });
+        document.querySelectorAll('.glo-modal-close').forEach(function (el) {
+          el.addEventListener('click', closeAll);
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') closeAll();
+        });
+
+        /* ── Glo List form submission ── */
+        var glForm = document.getElementById('glolist-form');
+        var glSucc = document.getElementById('glolist-success');
+        var glBtn  = document.getElementById('glolist-submit');
+
+        glForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (!document.getElementById('gl-name').value.trim())  { document.getElementById('gl-name').focus();  return; }
+          if (!document.getElementById('gl-email').value.trim()) { document.getElementById('gl-email').focus(); return; }
+          glBtn.disabled = true; glBtn.textContent = 'Sending…';
+          fetch(glForm.action, { method: 'POST', body: new FormData(glForm), headers: { Accept: 'application/json' } })
+            .then(function (res) {
+              if (res.ok) { glForm.style.display = 'none'; glSucc.classList.add('visible'); }
+              else { glBtn.disabled = false; glBtn.textContent = 'Get Early Access'; alert('Something went wrong. Please email info@glokarts.com.'); }
+            })
+            .catch(function () { glBtn.disabled = false; glBtn.textContent = 'Get Early Access'; alert('Network error. Please check your connection.'); });
+        });
+
+        /* ── Plan Experience form submission ── */
+        var plForm = document.getElementById('plan-form');
+        var plSucc = document.getElementById('plan-success');
+        var plBtn  = document.getElementById('plan-submit');
+
+        plForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (!document.getElementById('pl-name').value.trim())  { document.getElementById('pl-name').focus();  return; }
+          if (!document.getElementById('pl-email').value.trim()) { document.getElementById('pl-email').focus(); return; }
+          plBtn.disabled = true; plBtn.textContent = 'Sending…';
+          fetch(plForm.action, { method: 'POST', body: new FormData(plForm), headers: { Accept: 'application/json' } })
+            .then(function (res) {
+              if (res.ok) { plForm.style.display = 'none'; plSucc.classList.add('visible'); }
+              else { plBtn.disabled = false; plBtn.textContent = 'Submit My Request'; alert('Something went wrong. Please email info@glokarts.com.'); }
+            })
+            .catch(function () { plBtn.disabled = false; plBtn.textContent = 'Submit My Request'; alert('Network error. Please check your connection.'); });
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
       }
     })();
   </script>
