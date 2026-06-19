@@ -100,27 +100,28 @@ a   { color: inherit; text-decoration: none; }
   line-height: 1;
   flex-shrink: 0;
   cursor: pointer;
-}
-.site-logo .logo-img {
-  height: 38px;
-  width: auto;
-  object-fit: contain;
-  display: block;
+  text-decoration: none;
 }
 .logo-name {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.35rem;
-  letter-spacing: 0.1em;
+  font-size: 1.55rem;
+  letter-spacing: 0.08em;
   color: #fff;
   line-height: 1;
 }
+/* Electric blue glow on the "O" only */
+.logo-o {
+  text-shadow:
+    0 0 10px rgba(0,195,255,0.9),
+    0 0 26px rgba(0,195,255,0.45);
+}
 .logo-sub {
-  font-size: 0.58rem;
-  font-weight: 600;
-  letter-spacing: 0.24em;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: #444;
-  margin-top: 1px;
+  color: rgba(255,255,255,0.28);
+  margin-top: 3px;
 }
 
 .header-nav {
@@ -140,25 +141,27 @@ a   { color: inherit; text-decoration: none; }
 
 .btn-book-header {
   display: inline-block;
-  padding: 0.6rem 1.3rem;
-  border-radius: var(--radius);
+  padding: 0.62rem 1.4rem;
+  border-radius: 4px;
   font-family: 'Inter', sans-serif;
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   background: transparent;
-  border: 1px solid rgba(0,195,255,0.45);
+  border: 1px solid rgba(0,195,255,0.55);
   color: var(--blue);
   cursor: pointer;
   transition: all 0.2s;
   white-space: nowrap;
   -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 0 12px rgba(0,195,255,0.08);
 }
 .btn-book-header:hover {
   background: var(--blue);
   color: #000;
-  box-shadow: 0 0 22px rgba(0,195,255,0.3);
+  border-color: var(--blue);
+  box-shadow: 0 0 22px rgba(0,195,255,0.35);
 }
 
 /* Hamburger */
