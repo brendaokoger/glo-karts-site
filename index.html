@@ -3,28 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Glo Karts Chicago — Private golf cart rides, city tours, nightlife routes, and event transportation. Coming soon to Chicago, Illinois." />
-  <title>Glo Karts Chicago — Coming Soon</title>
+  <meta name="description" content="Glo Karts Chicago — Luxury electric golf cart tours through Chicago at night. City tours, nightlife rides, private events." />
+  <title>Glo Karts Chicago — Luxury Night Tours</title>
 
-  <!-- Favicons & app icons -->
   <link rel="icon" href="./favicon.ico" />
   <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png" />
   <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
   <link rel="manifest" href="./site.webmanifest" />
-  <meta name="theme-color" content="#050505" />
+  <meta name="theme-color" content="#000000" />
 
-  <!-- Open Graph / social sharing -->
   <meta property="og:title"       content="Glo Karts Chicago" />
-  <meta property="og:description" content="Chicago's electric nightlife golf cart experience." />
+  <meta property="og:description" content="Chicago's luxury electric nightlife cart experience." />
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://glokarts.com" />
   <meta property="og:image"       content="https://glokarts.com/glo-karts-logo.png" />
-
-  <!-- Twitter / iMessage link preview -->
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:title"       content="Glo Karts Chicago" />
-  <meta name="twitter:description" content="Chicago's electric nightlife golf cart experience." />
+  <meta name="twitter:description" content="Chicago's luxury electric nightlife cart experience." />
   <meta name="twitter:image"       content="https://glokarts.com/glo-karts-logo.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -33,565 +29,365 @@
   <link rel="stylesheet" href="./styles.css" />
 
   <style>
-    /* ── Intro Smoke Reveal ─────────────────────────────── */
+    /* ── Cinematic Intro ─────────────────────────────────── */
     #intro-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      position: fixed; inset: 0;
       z-index: 999999;
-      background: #000;
-      display: -webkit-flex;
-      display: flex;
-      -webkit-align-items: center;
-      align-items: center;
-      -webkit-justify-content: center;
-      justify-content: center;
-      overflow: hidden;
-      -webkit-transition: opacity 0.9s ease;
-      transition: opacity 0.9s ease;
-      /* Force GPU layer so iOS Safari composites it above everything */
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-      will-change: opacity;
-    }
-    #intro-overlay.hide {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .intro-smoke-layer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      height: 100%;
-      display: -webkit-flex;
-      display: flex;
-      -webkit-align-items: center;
-      align-items: center;
-      -webkit-justify-content: center;
-      justify-content: center;
-      pointer-events: none;
-    }
-
-    .intro-smoke {
-      position: absolute;
-      border-radius: 50%;
-      will-change: transform, opacity;
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-    }
-
-    .is1 {
-      width: 420px; height: 260px;
-      background: radial-gradient(ellipse at center,
-        rgba(35,35,75,0.78) 0%, rgba(15,15,50,0.32) 45%, transparent 70%);
-      animation: smokeExpand 2.9s 0s both ease-out;
-    }
-    .is2 {
-      width: 640px; height: 370px;
-      background: radial-gradient(ellipse at center,
-        rgba(0,55,95,0.4) 0%, transparent 65%);
-      animation: smokeExpand 3.1s 0.18s both ease-out;
-    }
-    .is3 {
-      width: 370px; height: 470px;
-      background: radial-gradient(ellipse at center,
-        rgba(18,18,58,0.54) 0%, transparent 62%);
-      animation: smokeExpandRot3 2.7s 0.32s both ease-out;
-    }
-    .is4 {
-      width: 520px; height: 320px;
-      background: radial-gradient(ellipse at center,
-        rgba(0,28,58,0.44) 0%, transparent 62%);
-      animation: smokeExpandRot4 3.0s 0.12s both ease-out;
-    }
-    .is5 {
-      width: 680px; height: 440px;
-      background: radial-gradient(ellipse at center,
-        rgba(12,12,38,0.5) 0%, transparent 68%);
-      animation: smokeExpandRot5 3.2s 0.28s both ease-out;
-    }
-
-    @-webkit-keyframes smokeExpand {
-      0%   { opacity: 0; -webkit-transform: scale(0.22); -webkit-filter: blur(20px); }
-      22%  { opacity: 0.88; -webkit-filter: blur(13px); }
-      100% { opacity: 0.32; -webkit-transform: scale(2.5); -webkit-filter: blur(30px); }
-    }
-    @keyframes smokeExpand {
-      0%   { opacity: 0; transform: scale(0.22); filter: blur(20px); }
-      22%  { opacity: 0.88; filter: blur(13px); }
-      100% { opacity: 0.32; transform: scale(2.5); filter: blur(30px); }
-    }
-    @-webkit-keyframes smokeExpandRot3 {
-      0%   { opacity: 0; -webkit-transform: rotate(45deg) scale(0.22); -webkit-filter: blur(20px); }
-      22%  { opacity: 0.88; -webkit-filter: blur(13px); }
-      100% { opacity: 0.32; -webkit-transform: rotate(45deg) scale(2.5); -webkit-filter: blur(30px); }
-    }
-    @keyframes smokeExpandRot3 {
-      0%   { opacity: 0; transform: rotate(45deg) scale(0.22); filter: blur(20px); }
-      22%  { opacity: 0.88; filter: blur(13px); }
-      100% { opacity: 0.32; transform: rotate(45deg) scale(2.5); filter: blur(30px); }
-    }
-    @-webkit-keyframes smokeExpandRot4 {
-      0%   { opacity: 0; -webkit-transform: rotate(-32deg) scale(0.22); -webkit-filter: blur(20px); }
-      22%  { opacity: 0.88; -webkit-filter: blur(13px); }
-      100% { opacity: 0.32; -webkit-transform: rotate(-32deg) scale(2.5); -webkit-filter: blur(30px); }
-    }
-    @keyframes smokeExpandRot4 {
-      0%   { opacity: 0; transform: rotate(-32deg) scale(0.22); filter: blur(20px); }
-      22%  { opacity: 0.88; filter: blur(13px); }
-      100% { opacity: 0.32; transform: rotate(-32deg) scale(2.5); filter: blur(30px); }
-    }
-    @-webkit-keyframes smokeExpandRot5 {
-      0%   { opacity: 0; -webkit-transform: rotate(18deg) scale(0.22); -webkit-filter: blur(20px); }
-      22%  { opacity: 0.88; -webkit-filter: blur(13px); }
-      100% { opacity: 0.32; -webkit-transform: rotate(18deg) scale(2.5); -webkit-filter: blur(30px); }
-    }
-    @keyframes smokeExpandRot5 {
-      0%   { opacity: 0; transform: rotate(18deg) scale(0.22); filter: blur(20px); }
-      22%  { opacity: 0.88; filter: blur(13px); }
-      100% { opacity: 0.32; transform: rotate(18deg) scale(2.5); filter: blur(30px); }
-    }
-
-    /* Logo wrapper */
-    .intro-logo-wrap {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Electric-blue glow */
-    .intro-blue-glow {
-      position: absolute;
-      width: 390px; height: 230px;
-      border-radius: 50%;
-      background: radial-gradient(ellipse at center,
-        rgba(0,195,255,0.4) 0%,
-        rgba(0,100,200,0.17) 42%,
-        transparent 70%);
-      -webkit-filter: blur(12px);
-      filter: blur(12px);
-      will-change: transform, opacity;
-      -webkit-animation: blueGlowIn 1.1s 1.1s ease-out both;
-      animation: blueGlowIn 1.1s 1.1s ease-out both;
-    }
-    @-webkit-keyframes blueGlowIn {
-      0%   { opacity: 0; -webkit-transform: scale(0.5); }
-      55%  { opacity: 1; -webkit-transform: scale(1.08); }
-      100% { opacity: 0.92; -webkit-transform: scale(1); }
-    }
-    @keyframes blueGlowIn {
-      0%   { opacity: 0; transform: scale(0.5); }
-      55%  { opacity: 1; transform: scale(1.08); }
-      100% { opacity: 0.92; transform: scale(1); }
-    }
-
-    /* Red glow pulse */
-    .intro-red-glow {
-      position: absolute;
-      width: 340px; height: 195px;
-      border-radius: 50%;
-      background: radial-gradient(ellipse at center,
-        rgba(212,43,43,0.34) 0%,
-        rgba(180,20,20,0.13) 45%,
-        transparent 70%);
-      -webkit-filter: blur(9px);
-      filter: blur(9px);
-      will-change: transform, opacity;
-      -webkit-animation: redPulseIn 1.3s 1.5s ease-in-out infinite alternate both;
-      animation: redPulseIn 1.3s 1.5s ease-in-out infinite alternate both;
-    }
-    @-webkit-keyframes redPulseIn {
-      0%   { opacity: 0; -webkit-transform: scale(0.8); }
-      100% { opacity: 0.88; -webkit-transform: scale(1.2); }
-    }
-    @keyframes redPulseIn {
-      0%   { opacity: 0; transform: scale(0.8); }
-      100% { opacity: 0.88; transform: scale(1.2); }
-    }
-
-    /* Logo */
-    .intro-logo {
-      position: relative;
-      z-index: 3;
-      width: clamp(180px, 36vw, 320px);
-      height: auto;
-      will-change: transform, opacity;
-      -webkit-animation: logoIn 1.3s 1.0s ease-out both;
-      animation: logoIn 1.3s 1.0s ease-out both;
-      -webkit-filter: drop-shadow(0 0 26px rgba(0,195,255,0.48));
-      filter: drop-shadow(0 0 26px rgba(0,195,255,0.48));
-    }
-    @-webkit-keyframes logoIn {
-      0%   { opacity: 0; -webkit-transform: scale(0.83) translateY(10px); }
-      55%  { opacity: 1; -webkit-transform: scale(1.04) translateY(-3px); }
-      100% { opacity: 1; -webkit-transform: scale(1) translateY(0); }
-    }
-    @keyframes logoIn {
-      0%   { opacity: 0; transform: scale(0.83) translateY(10px); }
-      55%  { opacity: 1; transform: scale(1.04) translateY(-3px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    /* Site content reveal */
-    #site-content {
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.75s ease, transform 0.75s ease;
-    }
-    #site-content.revealed {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ── Modals ──────────────────────────────────────────── */
-    .glo-modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      z-index: 99998;
-      display: none;
-      -webkit-box-align: center;
-      -webkit-align-items: center;
-      align-items: center;
-      -webkit-justify-content: center;
-      justify-content: center;
-      padding: 1rem;
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-    }
-    .glo-modal.open   { display: -webkit-flex; display: flex; }
-
-    .glo-modal-backdrop {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.88);
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
-      opacity: 0;
-      -webkit-transition: opacity 0.3s ease;
-      transition: opacity 0.3s ease;
-      cursor: pointer;
-    }
-    .glo-modal.visible .glo-modal-backdrop { opacity: 1; }
-
-    .glo-modal-card {
-      position: relative;
-      z-index: 1;
-      background: rgba(6,6,10,0.98);
-      border: 1px solid rgba(0,195,255,0.22);
-      border-radius: 18px;
-      padding: 2.5rem 2.25rem 2rem;
-      width: 100%;
-      max-width: 520px;
-      max-height: 90vh;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      box-shadow:
-        0 0 0 1px rgba(0,195,255,0.06),
-        0 40px 100px rgba(0,0,0,0.9),
-        0 0 60px rgba(0,195,255,0.05);
-      -webkit-transform: scale(0.94) translateY(18px);
-      transform: scale(0.94) translateY(18px);
-      -webkit-transition: -webkit-transform 0.38s cubic-bezier(0.34,1.56,0.64,1);
-      transition: transform 0.38s cubic-bezier(0.34,1.56,0.64,1);
-    }
-    .glo-modal.visible .glo-modal-card {
-      -webkit-transform: scale(1) translateY(0);
-      transform: scale(1) translateY(0);
-    }
-    /* Electric accent line across card top */
-    .glo-modal-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 10%; right: 10%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0,195,255,0.7), transparent);
-    }
-
-    .glo-modal-close {
-      position: absolute;
-      top: 1rem; right: 1rem;
-      width: 34px; height: 34px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #777;
-      font-size: 1rem;
-      line-height: 1;
-      cursor: pointer;
+      background: transparent;
       display: -webkit-flex; display: flex;
       -webkit-align-items: center; align-items: center;
       -webkit-justify-content: center; justify-content: center;
-      -webkit-transition: background 0.2s, color 0.2s;
-      transition: background 0.2s, color 0.2s;
+      overflow: hidden;
+      -webkit-transform: translateZ(0); transform: translateZ(0);
     }
-    .glo-modal-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    .i-base {
+      position: absolute; inset: 0; background: #000; z-index: 0;
+      pointer-events: none;
+      -webkit-animation: iBaseFade 0.35s 2.2s ease forwards;
+      animation: iBaseFade 0.35s 2.2s ease forwards;
+    }
+    @-webkit-keyframes iBaseFade { to { opacity: 0; } }
+    @keyframes iBaseFade { to { opacity: 0; } }
 
-    .glo-modal-eyebrow {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 0.45rem;
+    .i-skyline {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 42%;
+      background: #060608; pointer-events: none; z-index: 1;
+      -webkit-clip-path: polygon(0% 100%,0% 84%,3% 84%,3% 78%,5% 78%,5% 84%,7% 84%,7% 72%,9% 72%,9% 84%,11% 84%,11% 66%,13% 66%,13% 78%,15% 78%,15% 58%,16% 46%,17% 34%,17.5% 20%,18% 8%,18.3% 2%,18.7% 8%,19.2% 20%,19.8% 34%,20.6% 46%,21.5% 58%,22% 68%,24% 68%,24% 76%,27% 76%,27% 62%,30% 62%,30% 70%,33% 70%,33% 58%,35% 56%,35% 42%,36% 30%,36.5% 16%,37% 6%,37.5% 16%,38% 30%,38.5% 42%,38.5% 58%,40% 58%,40% 66%,43% 66%,43% 72%,46% 72%,46% 64%,49% 64%,49% 72%,53% 72%,53% 78%,57% 78%,57% 68%,60% 68%,60% 76%,64% 76%,64% 82%,68% 82%,68% 74%,71% 74%,71% 80%,75% 80%,75% 84%,79% 84%,79% 78%,82% 78%,82% 84%,86% 84%,86% 80%,89% 80%,89% 86%,93% 86%,93% 82%,96% 82%,96% 88%,100% 88%,100% 100%);
+      clip-path: polygon(0% 100%,0% 84%,3% 84%,3% 78%,5% 78%,5% 84%,7% 84%,7% 72%,9% 72%,9% 84%,11% 84%,11% 66%,13% 66%,13% 78%,15% 78%,15% 58%,16% 46%,17% 34%,17.5% 20%,18% 8%,18.3% 2%,18.7% 8%,19.2% 20%,19.8% 34%,20.6% 46%,21.5% 58%,22% 68%,24% 68%,24% 76%,27% 76%,27% 62%,30% 62%,30% 70%,33% 70%,33% 58%,35% 56%,35% 42%,36% 30%,36.5% 16%,37% 6%,37.5% 16%,38% 30%,38.5% 42%,38.5% 58%,40% 58%,40% 66%,43% 66%,43% 72%,46% 72%,46% 64%,49% 64%,49% 72%,53% 72%,53% 78%,57% 78%,57% 68%,60% 68%,60% 76%,64% 76%,64% 82%,68% 82%,68% 74%,71% 74%,71% 80%,75% 80%,75% 84%,79% 84%,79% 78%,82% 78%,82% 84%,86% 84%,86% 80%,89% 80%,89% 86%,93% 86%,93% 82%,96% 82%,96% 88%,100% 88%,100% 100%);
+      -webkit-animation: iSkyline 1.4s 0.5s ease-out both;
+      animation: iSkyline 1.4s 0.5s ease-out both;
     }
-    .glo-modal-heading {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.8rem, 6vw, 2.5rem);
-      letter-spacing: 0.04em;
-      line-height: 1.05;
-      color: #fff;
-      margin-bottom: 0.4rem;
-    }
-    .glo-modal-sub {
-      font-size: 0.88rem;
-      color: #888;
-      line-height: 1.6;
-      margin-bottom: 1.6rem;
-    }
+    @-webkit-keyframes iSkyline { 0% { opacity:0; -webkit-transform:translateY(14px); } 100% { opacity:1; -webkit-transform:translateY(0); } }
+    @keyframes iSkyline { 0% { opacity:0; transform:translateY(14px); } 100% { opacity:1; transform:translateY(0); } }
 
-    .glo-form {
+    .i-door {
+      position: absolute; top: 0; bottom: 0; width: 51%; z-index: 5;
+      background:
+        linear-gradient(108deg, rgba(0,160,255,0.03) 0%, transparent 50%, rgba(0,160,255,0.03) 100%),
+        linear-gradient(180deg, #050508 0%, #08080f 15%, #0c0c1a 40%, #08080f 80%, #050508 100%);
+      will-change: transform;
+      -webkit-transform: translateZ(0); transform: translateZ(0);
+    }
+    .i-door::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,195,255,0.055) 0%, transparent 20%, transparent 82%, rgba(0,0,0,0.35) 100%);
+      pointer-events: none;
+    }
+    .i-door-left  { left: 0;  -webkit-transform: translateX(-102%); transform: translateX(-102%); }
+    .i-door-right { right: 0; -webkit-transform: translateX(102%);  transform: translateX(102%); }
+    .i-door-left::after {
+      content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 1.5px;
+      background: rgba(0,195,255,0.9);
+      box-shadow: 0 0 10px rgba(0,195,255,0.8), 0 0 28px rgba(0,195,255,0.4);
+      -webkit-animation: iSeam 0.9s 0.3s ease-in-out infinite alternate;
+      animation: iSeam 0.9s 0.3s ease-in-out infinite alternate;
+    }
+    .i-door-right::after {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1.5px;
+      background: rgba(0,195,255,0.9);
+      box-shadow: 0 0 10px rgba(0,195,255,0.8), 0 0 28px rgba(0,195,255,0.4);
+      -webkit-animation: iSeam 0.9s 0.3s ease-in-out infinite alternate;
+      animation: iSeam 0.9s 0.3s ease-in-out infinite alternate;
+    }
+    @-webkit-keyframes iSeam { 0% { opacity:0.5; } 100% { opacity:1; } }
+    @keyframes iSeam { 0% { opacity:0.5; } 100% { opacity:1; } }
+
+    .i-door-left {
+      -webkit-animation:
+        iSlideInL 0.65s 1.55s cubic-bezier(0.22,1,0.36,1) forwards,
+        iOpenL    0.90s 2.45s cubic-bezier(0.65,0,0.35,1) forwards;
+      animation:
+        iSlideInL 0.65s 1.55s cubic-bezier(0.22,1,0.36,1) forwards,
+        iOpenL    0.90s 2.45s cubic-bezier(0.65,0,0.35,1) forwards;
+    }
+    .i-door-right {
+      -webkit-animation:
+        iSlideInR 0.65s 1.55s cubic-bezier(0.22,1,0.36,1) forwards,
+        iOpenR    0.90s 2.45s cubic-bezier(0.65,0,0.35,1) forwards;
+      animation:
+        iSlideInR 0.65s 1.55s cubic-bezier(0.22,1,0.36,1) forwards,
+        iOpenR    0.90s 2.45s cubic-bezier(0.65,0,0.35,1) forwards;
+    }
+    @-webkit-keyframes iSlideInL { from{-webkit-transform:translateX(-102%);}to{-webkit-transform:translateX(0);} }
+    @keyframes iSlideInL { from{transform:translateX(-102%);}to{transform:translateX(0);} }
+    @-webkit-keyframes iSlideInR { from{-webkit-transform:translateX(102%);}to{-webkit-transform:translateX(0);} }
+    @keyframes iSlideInR { from{transform:translateX(102%);}to{transform:translateX(0);} }
+    @-webkit-keyframes iOpenL { from{-webkit-transform:translateX(0);}to{-webkit-transform:translateX(-102%);} }
+    @keyframes iOpenL { from{transform:translateX(0);}to{transform:translateX(-102%);} }
+    @-webkit-keyframes iOpenR { from{-webkit-transform:translateX(0);}to{-webkit-transform:translateX(102%);} }
+    @keyframes iOpenR { from{transform:translateX(0);}to{transform:translateX(102%);} }
+
+    .i-center {
+      position: relative; z-index: 6;
       display: -webkit-flex; display: flex;
       -webkit-flex-direction: column; flex-direction: column;
-      gap: 0.9rem;
+      -webkit-align-items: center; align-items: center;
+      text-align: center; padding: 0 6%;
+      pointer-events: none;
+      -webkit-animation: iCenterOut 0.45s 1.92s ease-out forwards;
+      animation: iCenterOut 0.45s 1.92s ease-out forwards;
     }
-    .glo-form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.9rem;
+    @-webkit-keyframes iCenterOut { to { opacity:0; -webkit-transform:scale(0.97); } }
+    @keyframes iCenterOut { to { opacity:0; transform:scale(0.97); } }
+
+    .i-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 16vw, 9rem);
+      letter-spacing: 0.12em; line-height: 1;
+      display: -webkit-flex; display: flex;
+      position: relative; overflow: hidden;
     }
-    .glo-form-submit {
-      width: 100%;
-      padding: 0.95rem;
-      background: var(--red);
+    .i-logo::after {
+      content: ''; position: absolute; top: 0; bottom: 0; left: -100%; width: 50%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+      pointer-events: none;
+      -webkit-animation: iShimmer 0.5s 1.6s ease-out both;
+      animation: iShimmer 0.5s 1.6s ease-out both;
+    }
+    @-webkit-keyframes iShimmer { 0%{left:-100%;}100%{left:150%;} }
+    @keyframes iShimmer { 0%{left:-100%;}100%{left:150%;} }
+
+    .i-glo {
       color: #fff;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: var(--glow-red);
-      -webkit-transition: background 0.18s, box-shadow 0.18s, -webkit-transform 0.18s;
-      transition: background 0.18s, box-shadow 0.18s, transform 0.18s;
-      margin-top: 0.25rem;
+      text-shadow: 0 0 30px rgba(0,195,255,0.9), 0 0 65px rgba(0,160,255,0.55), 0 0 120px rgba(0,110,255,0.25);
+      -webkit-animation: iWord 0.55s 0.82s ease-out both;
+      animation: iWord 0.55s 0.82s ease-out both;
     }
-    .glo-form-submit:hover {
-      background: var(--red-bright);
-      box-shadow: 0 0 36px rgba(255,58,58,0.65);
-      -webkit-transform: translateY(-1px); transform: translateY(-1px);
+    .i-karts {
+      color: #fff;
+      text-shadow: 0 0 30px rgba(255,255,255,0.25);
+      margin-left: 0.08em;
+      -webkit-animation: iWord 0.55s 1.18s ease-out both;
+      animation: iWord 0.55s 1.18s ease-out both;
     }
-    .glo-form-submit:disabled {
-      opacity: 0.6; cursor: not-allowed;
-      -webkit-transform: none; transform: none;
+    @-webkit-keyframes iWord {
+      0%  {opacity:0;-webkit-transform:translateY(20px) scaleY(0.84);}
+      60% {opacity:1;-webkit-transform:translateY(-4px) scaleY(1.02);}
+      100%{opacity:1;-webkit-transform:translateY(0) scaleY(1);}
+    }
+    @keyframes iWord {
+      0%  {opacity:0;transform:translateY(20px) scaleY(0.84);}
+      60% {opacity:1;transform:translateY(-4px) scaleY(1.02);}
+      100%{opacity:1;transform:translateY(0) scaleY(1);}
     }
 
-    .glo-modal-success { display: none; text-align: center; padding: 1rem 0 0.5rem; }
-    .glo-modal-success.visible { display: block; }
-    .glo-modal-success .check { font-size: 2.5rem; margin-bottom: 0.6rem; }
-    .glo-modal-success h3 { font-size: 1.1rem; font-weight: 700; color: var(--blue); margin-bottom: 0.4rem; }
-    .glo-modal-success p  { font-size: 0.87rem; color: #aaa; line-height: 1.7; }
-
-    @media (max-width: 600px) {
-      .glo-modal      { padding: 0.6rem; }
-      .glo-modal-card {
-        padding: 2rem 1.35rem 1.75rem;
-        border-radius: 16px;
-        max-height: 92vh;
-        max-width: 100%;
-      }
-      .glo-form-row   { grid-template-columns: 1fr; }
+    .i-tagline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(0.8rem, 3.5vw, 1.2rem);
+      letter-spacing: 0.42em;
+      color: rgba(255,255,255,0.5);
+      margin-top: 0.6rem;
+      -webkit-animation: iTagline 0.5s 1.45s ease-out both;
+      animation: iTagline 0.5s 1.45s ease-out both;
     }
+    @-webkit-keyframes iTagline { 0%{opacity:0;-webkit-transform:translateY(12px);}100%{opacity:1;-webkit-transform:translateY(0);} }
+    @keyframes iTagline { 0%{opacity:0;transform:translateY(12px);}100%{opacity:1;transform:translateY(0);} }
+
+    .i-skip {
+      position: absolute; top: 1.4rem; right: 1.4rem; z-index: 10;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.45);
+      font-family: 'Inter', sans-serif; font-size: 0.7rem;
+      font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.55rem 1.1rem; border-radius: 100px;
+      cursor: pointer; min-height: 44px;
+      -webkit-transition: background 0.2s, color 0.2s;
+      transition: background 0.2s, color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-animation: iSkip 0.5s 0.5s ease both;
+      animation: iSkip 0.5s 0.5s ease both;
+    }
+    .i-skip:hover { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85); }
+    @-webkit-keyframes iSkip { 0%{opacity:0;}100%{opacity:1;} }
+    @keyframes iSkip { 0%{opacity:0;}100%{opacity:1;} }
   </style>
 </head>
 
 <body>
 
-  <!-- ── Intro smoke/logo reveal overlay ──────────────── -->
-  <div id="intro-overlay" aria-hidden="true">
-    <div class="intro-smoke-layer">
-      <div class="intro-smoke is1"></div>
-      <div class="intro-smoke is2"></div>
-      <div class="intro-smoke is3"></div>
-      <div class="intro-smoke is4"></div>
-      <div class="intro-smoke is5"></div>
+<!-- ── Cinematic Intro ──────────────────────────────────── -->
+<div id="intro-overlay" role="presentation" aria-hidden="true">
+  <div class="i-base"></div>
+  <div class="i-skyline"></div>
+  <div class="i-door i-door-left"></div>
+  <div class="i-door i-door-right"></div>
+  <div class="i-center">
+    <div class="i-logo" aria-label="Glo Karts">
+      <span class="i-glo">GLO</span><span class="i-karts">KARTS</span>
     </div>
-    <div class="intro-logo-wrap">
-      <div class="intro-blue-glow"></div>
-      <div class="intro-red-glow"></div>
-      <img src="./glo-karts-logo.png" alt="" class="intro-logo" />
-    </div>
+    <p class="i-tagline">RIDE THE GLO</p>
   </div>
+  <button class="i-skip" id="intro-skip-btn" type="button">Skip Intro</button>
+</div>
 
-  <div id="site-content">
+<div id="site-content">
 
-  <!-- ── HEADER ────────────────────────────────────────── -->
+  <!-- ── Header ──────────────────────────────────────────── -->
   <header id="site-header" role="banner">
-    <a href="#hero" aria-label="Glo Karts Chicago — Home">
-      <img src="./glo-karts-logo.png" alt="Glo Karts Chicago" class="header-logo" />
+    <a href="#hero" class="site-logo" aria-label="Glo Karts Chicago — Home">
+      <img src="./glo-karts-logo.png" alt="Glo Karts Chicago" class="logo-img" />
     </a>
 
     <nav class="header-nav" aria-label="Primary navigation">
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-      <a href="#inquiry">Inquiry</a>
-      <a href="#contact">Contact</a>
+      <a href="#tours">Tours</a>
+      <a href="#private">Private Events</a>
+      <a href="#faq">FAQ</a>
     </nav>
 
-    <a href="#inquiry" class="btn btn-primary header-cta">Join the Waitlist</a>
+    <button class="btn-book-header hd-only" id="btn-book-header" type="button">BOOK NOW</button>
 
     <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </header>
 
-  <!-- mobile nav drawer -->
+  <!-- Mobile nav -->
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
-    <a href="#services" class="mobile-link">Services</a>
-    <a href="#about"    class="mobile-link">About</a>
-    <a href="#inquiry"  class="mobile-link">Inquiry</a>
-    <a href="#contact"  class="mobile-link">Contact</a>
-    <button id="btn-glolist-nav" class="btn btn-primary mobile-link" type="button" style="margin-top:0.5rem;align-self:flex-start;">Join the Glo List</button>
+    <a href="#tours"   class="mobile-link">Tours</a>
+    <a href="#private" class="mobile-link">Private Events</a>
+    <a href="#faq"     class="mobile-link">FAQ</a>
+    <button class="btn btn-primary mobile-link" id="btn-book-mobile" type="button" style="align-self:flex-start;margin-top:0.5rem;">BOOK NOW</button>
   </nav>
 
 
-  <!-- ── HERO ──────────────────────────────────────────── -->
+  <!-- ── Hero ────────────────────────────────────────────── -->
   <section id="hero" aria-labelledby="hero-headline">
+    <div class="hero-bg"></div>
+    <div class="hero-skyline"></div>
+    <div class="hero-horizon"></div>
 
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span class="dot"></span>
-        Coming Soon — Chicago, IL
-      </div>
-
-      <h1 class="hero-headline" id="hero-headline">
-        Chicago Is About<br />To Move Different
-      </h1>
-
-      <p class="hero-subheadline">
-        Luxury electric cart experiences for scenic rides, events, nightlife, and unforgettable city moments.
-      </p>
-
-      <div class="hero-cta-group">
-        <button id="btn-glolist" class="btn btn-primary" type="button">Join the Glo List</button>
-        <button id="btn-plan"    class="btn btn-outline" type="button">Plan Your Experience</button>
-      </div>
-
-      <p class="hero-status">
-        Preparing for launch — licensing, inspections, and approved routes in progress.
-      </p>
-    </div>
-
-  </section>
-
-
-  <!-- ── SERVICES ──────────────────────────────────────── -->
-  <section id="services" class="section" aria-labelledby="services-title">
-    <div class="section-inner">
-      <p class="section-label reveal">What We Offer</p>
-      <h2 class="section-title reveal" id="services-title">
-        Built for the Moments<br />
-        <span class="red">You Don't Want to Forget</span>
-      </h2>
-      <div class="section-divider reveal"></div>
-
-      <div class="services-grid">
-
-        <article class="service-card reveal">
-          <div class="service-icon">🏙️</div>
-          <h3>Chicago City Tours</h3>
-          <p>Drift through iconic neighborhoods, the lakefront, and skyline corridors. Every route tells a story about the city you think you know.</p>
-        </article>
-
-        <article class="service-card reveal">
-          <div class="service-icon">🌃</div>
-          <h3>Night Rides</h3>
-          <p>Chicago comes alive after dark. LED-lit karts, music, and the city glowing all around you — this is the experience people talk about for years.</p>
-        </article>
-
-        <article class="service-card reveal">
-          <div class="service-icon">🎉</div>
-          <h3>Private Events</h3>
-          <p>Birthdays, proposals, date nights, anniversaries. We craft the atmosphere — you bring the people who matter most.</p>
-        </article>
-
-        <article class="service-card reveal">
-          <div class="service-icon">🏨</div>
-          <h3>Hotel &amp; Event Transport</h3>
-          <p>Premium group rides for guests, venues, and special occasions. Arrive somewhere worth arriving — no surge pricing, just pure experience.</p>
-        </article>
-
-        <article class="service-card reveal">
-          <div class="service-icon">✨</div>
-          <h3>Custom Experiences</h3>
-          <p>Your vision, your route, your vibe. Tell us the occasion and we'll build something that fits exactly what you're imagining.</p>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ── ABOUT ─────────────────────────────────────────── -->
-  <section id="about" class="section" aria-labelledby="about-title">
-    <div class="section-inner">
-      <div class="about-grid">
-
-        <div class="about-text reveal">
-          <p class="section-label">Our Story</p>
-          <h2 class="section-title" id="about-title">
-            What Is <span class="blue">Glo Karts?</span>
-          </h2>
-          <div class="section-divider"></div>
-
-          <p>
-            Glo Karts, LLC is preparing to bring a bold new private ride experience to Chicago. With stylish street-ready golf carts, LED lighting, music, and city energy, Glo Karts is designed for tours, celebrations, nightlife, and private event transportation.
-          </p>
-
-          <div class="about-note">
-            Service availability will depend on licensing approval, city requirements, weather, route restrictions, and operational readiness.
-          </div>
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-eyebrow">
+          <span class="eyebrow-dot"></span>
+          Now Booking &middot; Chicago, IL
         </div>
 
-        <div class="about-stats reveal">
-          <div class="stat-card">
-            <div class="stat-icon">🔵</div>
-            <div>
-              <h4>LED-Lit Karts</h4>
-              <p>Street-ready carts built for the city at night</p>
-            </div>
+        <h1 class="hero-headline" id="hero-headline">
+          RIDE<br>THE <span class="glo-blue">GLO</span>
+        </h1>
+
+        <p class="hero-sub">Chicago's First Luxury Electric Sightseeing Experience</p>
+
+        <div class="hero-trust">
+          <span class="trust-item t-road">Street-Legal</span>
+          <span class="trust-item t-person">Licensed Chauffeurs</span>
+          <span class="trust-item t-route">Curated Routes</span>
+        </div>
+
+        <div class="hero-cta">
+          <button class="btn btn-primary" id="btn-book-tour" type="button">BOOK YOUR TOUR &nbsp;&#8594;</button>
+          <button class="btn btn-ghost"   id="btn-watch"     type="button">WATCH EXPERIENCE</button>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="./glo-karts-hero.png" alt="Glo Karts luxury electric cart on Chicago streets at night" />
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Booking Bar ──────────────────────────────────────── -->
+  <div id="booking-bar" role="search" aria-label="Book a tour">
+    <div class="booking-inner">
+      <div class="booking-field">
+        <label for="book-date">Tour Date</label>
+        <select id="book-date">
+          <option value="">Select Date</option>
+          <option>Tonight</option>
+          <option>Tomorrow</option>
+          <option>This Weekend</option>
+          <option>Pick a date&hellip;</option>
+        </select>
+      </div>
+      <div class="booking-field">
+        <label for="book-time">Time</label>
+        <select id="book-time">
+          <option value="">Select Time</option>
+          <option>6:00 PM</option>
+          <option>7:00 PM</option>
+          <option>8:00 PM</option>
+          <option>9:00 PM</option>
+          <option>10:00 PM</option>
+        </select>
+      </div>
+      <div class="booking-field">
+        <label for="book-tour-sel">Tour</label>
+        <select id="book-tour-sel">
+          <option value="">All Tours</option>
+          <option>Chicago After Dark</option>
+          <option>Riverwalk Glow Tour</option>
+          <option>Navy Pier Lights</option>
+          <option>Private Glo Experience</option>
+        </select>
+      </div>
+      <div class="booking-field">
+        <label for="book-guests">Guests</label>
+        <select id="book-guests">
+          <option value="2">2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4">4 Guests</option>
+          <option value="5">5 Guests</option>
+          <option value="6">6 Guests</option>
+          <option value="7">7+ Guests</option>
+        </select>
+      </div>
+      <div class="booking-submit">
+        <button type="button" id="btn-check-avail">CHECK AVAILABILITY</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── Why Glo Karts ────────────────────────────────────── -->
+  <section id="why" class="section">
+    <div class="section-inner">
+      <span class="section-eyebrow reveal">Why Glo Karts</span>
+      <div class="why-grid">
+
+        <div class="why-card reveal">
+          <div class="why-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 20h20M5 20l-2-9 5 4 4-7 4 7 5-4-2 9"/>
+            </svg>
           </div>
-          <div class="stat-card">
-            <div class="stat-icon">🗺️</div>
-            <div>
-              <h4>Chicago Routes</h4>
-              <p>Curated routes through Chicago's most iconic areas</p>
-            </div>
+          <h3>Luxury Experience</h3>
+          <p>Premium lighting, luxury seating and immersive rides through Chicago.</p>
+        </div>
+
+        <div class="why-card reveal">
+          <div class="why-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
           </div>
-          <div class="stat-card">
-            <div class="stat-icon">🎶</div>
-            <div>
-              <h4>Music &amp; Vibes</h4>
-              <p>Sound, lighting, and atmosphere on every ride</p>
-            </div>
+          <h3>Iconic Routes</h3>
+          <p>Explore Chicago's most iconic landmarks and views after dark.</p>
+        </div>
+
+        <div class="why-card reveal">
+          <div class="why-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
+            </svg>
           </div>
-          <div class="stat-card">
-            <div class="stat-icon">🛡️</div>
-            <div>
-              <h4>Licensed &amp; Insured</h4>
-              <p>Fully compliant with city and state requirements</p>
-            </div>
+          <h3>Licensed &amp; Insured</h3>
+          <p>Fully licensed, insured and operated by Chicago professionals.</p>
+        </div>
+
+        <div class="why-card reveal">
+          <div class="why-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8"  y1="2" x2="8"  y2="6"/>
+              <line x1="3"  y1="10" x2="21" y2="10"/>
+            </svg>
           </div>
+          <h3>Easy Booking</h3>
+          <p>Reserve your experience online in just minutes, 24/7.</p>
         </div>
 
       </div>
@@ -599,419 +395,401 @@
   </section>
 
 
-  <!-- ── INQUIRY FORM ───────────────────────────────────── -->
-  <section id="inquiry" class="section" aria-labelledby="inquiry-title">
+  <!-- ── Our Tours ────────────────────────────────────────── -->
+  <section id="tours" class="section" aria-labelledby="tours-title">
     <div class="section-inner">
-      <div class="form-wrap">
-        <p class="section-label reveal">Early Access</p>
-        <h2 class="section-title reveal" id="inquiry-title">
-          Be First in Line<br />
-          <span class="red">When We Launch</span>
-        </h2>
-        <div class="section-divider reveal"></div>
+      <span class="section-eyebrow reveal" id="tours-title">Our Tours</span>
 
-        <p class="form-intro reveal">
-          Join the early access list for launch updates, private event inquiries, route announcements, and opening specials.
-        </p>
+      <div class="tours-grid reveal">
 
-        <!-- success state -->
-        <div id="form-success" role="alert" aria-live="polite">
-          <div class="check">✅</div>
-          <h3>You're on the list!</h3>
-          <p>Thank you! Your inquiry has been received. Glo Karts Chicago will contact you soon with launch updates and event information.</p>
-        </div>
-
-        <form
-          id="inquiry-form"
-          method="POST"
-          action="https://formspree.io/f/mjglqega"
-          novalidate
-          aria-label="New Event Inquiry Form"
-        >
-          <input type="hidden" name="form-name" value="New Event Inquiry Form" />
-
-          <div class="form-group reveal">
-            <label for="full-name">Full Name <span style="color:var(--red)">*</span></label>
-            <input id="full-name" name="full_name" type="text" placeholder="Your full name" required autocomplete="name" />
+        <article class="tour-card tc-1">
+          <div class="tc-img"></div>
+          <div class="tc-sky"></div>
+          <div class="tc-overlay"></div>
+          <span class="tc-badge">Most Popular</span>
+          <div class="tc-content">
+            <h3>CHICAGO<br>AFTER DARK</h3>
+            <div class="tc-meta">
+              <span class="tc-price">From $79 / Guest</span>
+              <span>2 Hours</span>
+            </div>
+            <button class="tc-arrow" type="button" id="btn-tour-1">
+              Book Now
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
           </div>
+        </article>
 
-          <div class="form-group reveal">
-            <label for="email">Email Address <span style="color:var(--red)">*</span></label>
-            <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
+        <article class="tour-card tc-2">
+          <div class="tc-img"></div>
+          <div class="tc-sky"></div>
+          <div class="tc-overlay"></div>
+          <div class="tc-content">
+            <h3>RIVERWALK<br>GLOW TOUR</h3>
+            <div class="tc-meta">
+              <span class="tc-price">From $79 / Guest</span>
+              <span>90 Minutes</span>
+            </div>
+            <button class="tc-arrow" type="button" id="btn-tour-2">
+              Book Now
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
           </div>
+        </article>
 
-          <div class="form-group reveal">
-            <label for="phone">Phone Number</label>
-            <input id="phone" name="phone" type="tel" placeholder="(000) 000-0000" autocomplete="tel" />
+        <article class="tour-card tc-3">
+          <div class="tc-img"></div>
+          <div class="tc-sky"></div>
+          <div class="tc-overlay"></div>
+          <div class="tc-content">
+            <h3>NAVY PIER<br>LIGHTS</h3>
+            <div class="tc-meta">
+              <span class="tc-price">From $79 / Guest</span>
+              <span>2 Hours</span>
+            </div>
+            <button class="tc-arrow" type="button" id="btn-tour-3">
+              Book Now
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
           </div>
+        </article>
 
-          <div class="form-group reveal">
-            <label for="event-type">Event Type</label>
-            <select id="event-type" name="event_type">
-              <option value="" disabled selected>Select an event type</option>
-              <option value="City Tour">City Tour</option>
-              <option value="Birthday">Birthday</option>
-              <option value="Wedding">Wedding</option>
-              <option value="Date Night">Date Night</option>
-              <option value="Bar Crawl / Nightlife">Bar Crawl / Nightlife</option>
-              <option value="Corporate / Hotel Event">Corporate / Hotel Event</option>
-              <option value="Other">Other</option>
-            </select>
+        <article class="tour-card tc-4" id="private">
+          <div class="tc-img"></div>
+          <div class="tc-sky"></div>
+          <div class="tc-overlay"></div>
+          <div class="tc-content">
+            <h3>PRIVATE GLO<br>EXPERIENCE</h3>
+            <div class="tc-meta">
+              <span class="tc-price">From $149 / Guest</span>
+              <span>Custom Duration</span>
+            </div>
+            <button class="tc-arrow" type="button" id="btn-tour-4">
+              Inquire Now
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
           </div>
+        </article>
 
-          <div class="form-group reveal">
-            <label for="pref-date">Preferred Date</label>
-            <input id="pref-date" name="preferred_date" type="date" />
-          </div>
+      </div>
 
-          <div class="form-group field-full reveal">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" placeholder="Tell us about your event, group size, or anything else we should know…"></textarea>
-          </div>
-
-          <div class="form-submit-wrap reveal">
-            <button type="submit" class="btn-submit" id="submit-btn">Send My Inquiry</button>
-            <span class="form-note">No spam. We only contact you about your inquiry.</span>
-          </div>
-        </form>
-
+      <div class="tours-view-all reveal">
+        <button class="btn btn-outline-blue" type="button" id="btn-view-tours">VIEW ALL TOURS</button>
       </div>
     </div>
   </section>
 
 
-  <!-- ── CONTACT ────────────────────────────────────────── -->
-  <section id="contact" class="section" aria-labelledby="contact-title">
-    <div class="section-inner">
-      <p class="section-label reveal">Get in Touch</p>
-      <h2 class="section-title reveal" id="contact-title">
-        Contact <span class="blue">Glo Karts Chicago</span>
-      </h2>
-      <div class="section-divider reveal"></div>
+  <!-- ── Social Proof ─────────────────────────────────────── -->
+  <div id="social-proof" role="complementary" aria-label="As seen in">
+    <div class="social-proof-inner">
+      <span class="pub-name">TimeOut<br>Chicago</span>
+      <div class="sp-div"></div>
+      <span class="pub-name">Chicago<br>Magazine</span>
+      <div class="sp-div"></div>
+      <span class="pub-name">Thrillist</span>
+      <div class="sp-div"></div>
+      <span class="pub-name">Secret<br>Chicago</span>
+      <div class="sp-div"></div>
+      <span class="pub-name">Urban<br>Matter</span>
+      <div class="sp-div"></div>
+      <div class="sp-rating">
+        <div class="sp-stars">
+          <span class="sp-star">&#9733;</span>
+          <span class="sp-star">&#9733;</span>
+          <span class="sp-star">&#9733;</span>
+          <span class="sp-star">&#9733;</span>
+          <span class="sp-star">&#9733;</span>
+        </div>
+        <div class="sp-info">
+          <div class="sp-score">4.9 out of 5 Stars</div>
+          <div class="sp-count">Thousands of Happy Riders</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-      <div class="contact-grid">
 
-        <div class="contact-card reveal">
-          <div class="contact-card-icon">📞</div>
-          <div class="contact-card-body">
-            <h4>Phone</h4>
+  <!-- ── Final CTA ────────────────────────────────────────── -->
+  <section id="cta-final" aria-label="Book your tour">
+    <div class="cta-bg"></div>
+    <div class="cta-skyline"></div>
+    <div class="cta-kart" aria-hidden="true">
+      <img src="./glo-karts-hero.png" alt="" />
+    </div>
+    <div class="cta-inner">
+      <h2 class="cta-headline reveal">CHICAGO<br>IS WAITING</h2>
+      <p class="cta-sub reveal">Book your unforgettable night.</p>
+      <button class="btn btn-primary reveal" id="btn-reserve" type="button">RESERVE YOUR TOUR &nbsp;&#8594;</button>
+    </div>
+  </section>
+
+
+  <!-- ── Footer ───────────────────────────────────────────── -->
+  <footer id="faq" role="contentinfo">
+    <div class="footer-inner">
+
+      <div class="footer-top">
+        <div class="footer-logo">
+          <div class="logo-name">GLO KARTS</div>
+          <div class="logo-sub">Chicago Tours</div>
+        </div>
+
+        <div class="footer-contacts">
+          <div class="footer-contact">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.59 10.9a19.79 19.79 0 01-3.07-8.67A2 2 0 012.49 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.63 6.63l.87-.87a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
             <a href="tel:+16303290885">(630) 329-0885</a>
           </div>
-        </div>
-
-        <div class="contact-card reveal">
-          <div class="contact-card-icon">✉️</div>
-          <div class="contact-card-body">
-            <h4>Email</h4>
+          <div class="footer-contact">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             <a href="mailto:info@glokarts.com">info@glokarts.com</a>
           </div>
-        </div>
-
-        <div class="contact-card reveal">
-          <div class="contact-card-icon">📸</div>
-          <div class="contact-card-body">
-            <h4>Instagram / Facebook</h4>
-            <p>@glokartschicago</p>
+          <div class="footer-contact">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Chicago, Illinois</span>
           </div>
         </div>
 
-        <div class="contact-card reveal">
-          <div class="contact-card-icon">📍</div>
-          <div class="contact-card-body">
-            <h4>Service Area</h4>
-            <p>Chicago, Illinois</p>
-          </div>
+        <div class="footer-socials">
+          <a href="https://instagram.com/glokartschicago" class="social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://tiktok.com/@glokartschicago" class="social-link tiktok" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.17 8.17 0 004.77 1.52V6.78a4.85 4.85 0 01-1-.09z"/></svg>
+          </a>
+          <a href="https://facebook.com/glokartschicago" class="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
         </div>
-
       </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; <span id="footer-year"></span> Glo Karts, LLC. All rights reserved. Service subject to licensing and city requirements.</p>
+        <div class="footer-links">
+          <a href="#">Terms &amp; Conditions</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+      </div>
+
     </div>
-  </section>
-
-
-  <!-- ── FOOTER ─────────────────────────────────────────── -->
-  <footer role="contentinfo">
-    <img src="./glo-karts-logo.png" alt="Glo Karts Chicago" class="footer-logo" />
-    <p class="footer-tagline">Glo Karts, LLC — Chicago, Illinois</p>
-    <span class="coming-soon-label">Coming Soon</span>
-
-    <p class="footer-disclaimer">
-      Service availability subject to licensing, inspections, approved routes, weather, and local regulations. Glo Karts, LLC is not yet officially launched or accepting paid bookings.
-    </p>
-
-    <p class="footer-bottom">
-      &copy; <span id="footer-year"></span> Glo Karts, LLC. All rights reserved.
-    </p>
   </footer>
 
-  <script src="./main.js"></script>
-
-  <!-- ── JOIN THE GLO LIST MODAL ───────────────────────── -->
-  <div id="glolist-modal" class="glo-modal" role="dialog" aria-modal="true" aria-label="Join the Glo List">
-    <div class="glo-modal-backdrop"></div>
-    <div class="glo-modal-card">
-      <button class="glo-modal-close" type="button" aria-label="Close">&#x2715;</button>
-      <p class="glo-modal-eyebrow">Early Access</p>
-      <h2 class="glo-modal-heading">Join the Glo List</h2>
-      <p class="glo-modal-sub">Be first to know when Glo Karts launches in Chicago.</p>
-
-      <div id="glolist-success" class="glo-modal-success" role="alert">
-        <div class="check">✅</div>
-        <h3>You're on the Glo List!</h3>
-        <p>We'll reach out as soon as Glo Karts is live. Chicago's about to experience something new.</p>
-      </div>
-
-      <form id="glolist-form" class="glo-form" method="POST" action="https://formspree.io/f/mjglqega" novalidate>
-        <input type="hidden" name="form-name" value="Glo List Signup" />
-
-        <div class="form-group">
-          <label for="gl-name">Full Name <span style="color:var(--red)">*</span></label>
-          <input id="gl-name" name="full_name" type="text" placeholder="Your full name" required autocomplete="name" />
-        </div>
-
-        <div class="form-group">
-          <label for="gl-email">Email Address <span style="color:var(--red)">*</span></label>
-          <input id="gl-email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
-        </div>
-
-        <div class="form-group">
-          <label for="gl-phone">Phone Number <span style="color:var(--muted);font-weight:400;font-size:0.78rem;">(optional)</span></label>
-          <input id="gl-phone" name="phone" type="tel" placeholder="(000) 000-0000" autocomplete="tel" />
-        </div>
-
-        <button type="submit" id="glolist-submit" class="glo-form-submit">Get Early Access</button>
-      </form>
-    </div>
+  <!-- Mobile sticky CTA -->
+  <div class="mobile-sticky-cta" id="mobile-sticky-cta">
+    <button type="button" id="btn-book-sticky">BOOK YOUR TOUR</button>
   </div>
 
-  <!-- ── PLAN YOUR EXPERIENCE MODAL ────────────────────── -->
-  <div id="plan-modal" class="glo-modal" role="dialog" aria-modal="true" aria-label="Plan Your Experience">
-    <div class="glo-modal-backdrop"></div>
-    <div class="glo-modal-card">
-      <button class="glo-modal-close" type="button" aria-label="Close">&#x2715;</button>
-      <p class="glo-modal-eyebrow">Inquire</p>
-      <h2 class="glo-modal-heading">Plan Your Experience</h2>
-      <p class="glo-modal-sub">Tell us what you have in mind — we'll craft something unforgettable.</p>
+</div><!-- /#site-content -->
 
-      <div id="plan-success" class="glo-modal-success" role="alert">
-        <div class="check">✅</div>
-        <h3>Request Received!</h3>
-        <p>We'll be in touch soon to start planning your Glo Karts experience in Chicago.</p>
-      </div>
 
-      <form id="plan-form" class="glo-form" method="POST" action="https://formspree.io/f/mjglqega" novalidate>
-        <input type="hidden" name="form-name" value="Experience Inquiry" />
+<!-- ── Booking Modal ────────────────────────────────────── -->
+<div id="booking-modal" class="glo-modal" role="dialog" aria-modal="true" aria-label="Book a Tour">
+  <div class="glo-modal-backdrop"></div>
+  <div class="glo-modal-card">
+    <button class="glo-modal-close" type="button" aria-label="Close">&#x2715;</button>
+    <p class="glo-modal-eyebrow">Reservations</p>
+    <h2 class="glo-modal-heading">Book Your Tour</h2>
+    <p class="glo-modal-sub">Fill in your details and we'll confirm your spot on the Glo.</p>
 
-        <div class="glo-form-row">
-          <div class="form-group">
-            <label for="pl-name">Full Name <span style="color:var(--red)">*</span></label>
-            <input id="pl-name" name="full_name" type="text" placeholder="Your name" required autocomplete="name" />
-          </div>
-          <div class="form-group">
-            <label for="pl-email">Email <span style="color:var(--red)">*</span></label>
-            <input id="pl-email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
-          </div>
-        </div>
+    <div id="booking-success" class="glo-modal-success" role="alert">
+      <div class="check">&#10003;</div>
+      <h3>You're confirmed!</h3>
+      <p>We'll reach out shortly to lock in your booking. Chicago is waiting.</p>
+    </div>
 
-        <div class="glo-form-row">
-          <div class="form-group">
-            <label for="pl-phone">Phone Number</label>
-            <input id="pl-phone" name="phone" type="tel" placeholder="(000) 000-0000" autocomplete="tel" />
-          </div>
-          <div class="form-group">
-            <label for="pl-group">Group Size</label>
-            <select id="pl-group" name="group_size">
-              <option value="" disabled selected>Select size</option>
-              <option>1–2 people</option>
-              <option>3–5 people</option>
-              <option>6–10 people</option>
-              <option>11–20 people</option>
-              <option>20+ people</option>
-            </select>
-          </div>
-        </div>
-
+    <form id="booking-form" class="glo-form" method="POST" action="https://formspree.io/f/mjglqega" novalidate>
+      <input type="hidden" name="form-name" value="Tour Booking" />
+      <div class="glo-form-row">
         <div class="form-group">
-          <label for="pl-experience">Type of Experience</label>
-          <select id="pl-experience" name="experience_type">
-            <option value="" disabled selected>Select an experience</option>
-            <option>Scenic City Ride</option>
-            <option>Sunset Experience</option>
-            <option>Night Ride</option>
-            <option>Birthday</option>
-            <option>Wedding / Event</option>
-            <option>Date Night</option>
-            <option>Corporate Event</option>
-            <option>Private Group Ride</option>
-            <option>Tourism Experience</option>
+          <label for="bk-name">Full Name <span style="color:#444">*</span></label>
+          <input id="bk-name" name="full_name" type="text" placeholder="Your name" required autocomplete="name" />
+        </div>
+        <div class="form-group">
+          <label for="bk-email">Email <span style="color:#444">*</span></label>
+          <input id="bk-email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+      </div>
+      <div class="glo-form-row">
+        <div class="form-group">
+          <label for="bk-phone">Phone</label>
+          <input id="bk-phone" name="phone" type="tel" placeholder="(000) 000-0000" autocomplete="tel" />
+        </div>
+        <div class="form-group">
+          <label for="bk-guests-m">Group Size</label>
+          <select id="bk-guests-m" name="group_size">
+            <option value="" disabled selected>Select</option>
+            <option>1–2</option><option>3–5</option>
+            <option>6–10</option><option>11–20</option><option>20+</option>
           </select>
         </div>
-
-        <div class="form-group">
-          <label for="pl-date">Preferred Date</label>
-          <input id="pl-date" name="preferred_date" type="date" />
-        </div>
-
-        <div class="form-group field-full">
-          <label for="pl-notes">Tell us more</label>
-          <textarea id="pl-notes" name="message" placeholder="Describe your vision — occasion, vibe, anything special…" style="min-height:88px;"></textarea>
-        </div>
-
-        <button type="submit" id="plan-submit" class="glo-form-submit">Submit My Request</button>
-      </form>
-    </div>
+      </div>
+      <div class="form-group">
+        <label for="bk-tour-m">Tour</label>
+        <select id="bk-tour-m" name="tour">
+          <option value="" disabled selected>Select a tour</option>
+          <option>Chicago After Dark</option>
+          <option>Riverwalk Glow Tour</option>
+          <option>Navy Pier Lights</option>
+          <option>Private Glo Experience</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="bk-date-m">Preferred Date</label>
+        <input id="bk-date-m" name="preferred_date" type="date" />
+      </div>
+      <div class="form-group">
+        <label for="bk-notes">Anything else?</label>
+        <textarea id="bk-notes" name="message" placeholder="Special requests, occasion, group details…" style="min-height:80px;"></textarea>
+      </div>
+      <button type="submit" id="bk-submit" class="glo-form-submit">CONFIRM RESERVATION</button>
+    </form>
   </div>
+</div>
 
-  </div><!-- /#site-content -->
 
-  <script>
-    /* ── Intro reveal ───────────────────────────────────── */
-    (function () {
-      function runIntro() {
-        var overlay     = document.getElementById('intro-overlay');
-        var siteContent = document.getElementById('site-content');
-        if (!overlay || !siteContent) return;
-        document.documentElement.style.overflow = 'hidden';
-        document.body.style.overflow            = 'hidden';
-        setTimeout(function () {
-          overlay.classList.add('hide');
-          siteContent.classList.add('revealed');
-          document.documentElement.style.overflow = '';
-          document.body.style.overflow            = '';
-          setTimeout(function () {
-            if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
-          }, 1000);
-        }, 3000);
-      }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', runIntro);
-      } else {
-        runIntro();
-      }
-    })();
+<script src="./main.js"></script>
 
-    /* ── Modals ─────────────────────────────────────────── */
-    (function () {
-      function init() {
-        var modals = {
-          glolist: document.getElementById('glolist-modal'),
-          plan:    document.getElementById('plan-modal')
-        };
+<script>
+  /* ── Cinematic intro ───────────────────────────────────
+     Timing: GLO 0.82s | KARTS 1.18s | tagline 1.45s |
+     doors in 1.55s | fade 1.92s | doors closed 2.20s |
+     doors open 2.45s | removed 3.50s | Force: ?intro=1
+  ─────────────────────────────────────────────────────── */
+  (function () {
+    var overlay     = document.getElementById('intro-overlay');
+    var siteContent = document.getElementById('site-content');
+    if (!overlay || !siteContent) return;
 
-        function lockScroll() {
-          document.documentElement.style.overflow = 'hidden';
-          document.body.style.overflow            = 'hidden';
-        }
-        function unlockScroll() {
-          document.documentElement.style.overflow = '';
-          document.body.style.overflow            = '';
-        }
+    var forcePlay = location.search.indexOf('intro=1') !== -1;
 
-        function openModal(id) {
-          /* Close any open modal first */
-          Object.keys(modals).forEach(function (k) {
-            if (modals[k].classList.contains('open')) _close(k);
-          });
-          var m = modals[id];
-          if (!m) return;
-          m.classList.add('open');
-          lockScroll();
-          /* Double rAF so display:flex is painted before opacity transition */
-          requestAnimationFrame(function () {
-            requestAnimationFrame(function () {
-              m.classList.add('visible');
-            });
-          });
-          setTimeout(function () {
-            var first = m.querySelector('input, select, textarea');
-            if (first) first.focus();
-          }, 400);
-        }
+    if (!forcePlay && sessionStorage.getItem('gloKartsIntroPlayed')) {
+      overlay.style.display = 'none';
+      siteContent.classList.add('revealed');
+      return;
+    }
 
-        function _close(id) {
-          var m = modals[id];
-          if (!m) return;
-          m.classList.remove('visible');
-          setTimeout(function () {
-            m.classList.remove('open');
-            unlockScroll();
-          }, 330);
-        }
+    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      overlay.style.display = 'none';
+      siteContent.classList.add('revealed');
+      sessionStorage.setItem('gloKartsIntroPlayed', 'true');
+      return;
+    }
 
-        function closeAll() {
-          Object.keys(modals).forEach(_close);
-        }
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow            = 'hidden';
+    var revealTimer, removeTimer;
 
-        /* ── Open triggers ── */
-        var btnGlolist    = document.getElementById('btn-glolist');
-        var btnPlan       = document.getElementById('btn-plan');
-        var btnGlolistNav = document.getElementById('btn-glolist-nav');
-        var hamburger     = document.getElementById('hamburger-btn');
-        var mobileNav     = document.getElementById('mobile-nav');
+    function unlockScroll() {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow            = '';
+    }
 
-        function openAndCloseNav(id) {
-          if (hamburger) { hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); }
-          if (mobileNav)   mobileNav.classList.remove('open');
-          openModal(id);
-        }
+    function skipNow() {
+      clearTimeout(revealTimer);
+      clearTimeout(removeTimer);
+      sessionStorage.setItem('gloKartsIntroPlayed', 'true');
+      unlockScroll();
+      siteContent.classList.add('revealed');
+      overlay.style.opacity       = '0';
+      overlay.style.transition    = 'opacity 0.3s ease';
+      overlay.style.pointerEvents = 'none';
+      setTimeout(function () {
+        if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+      }, 350);
+    }
 
-        if (btnGlolist)    btnGlolist.addEventListener('click',    function () { openAndCloseNav('glolist'); });
-        if (btnPlan)       btnPlan.addEventListener('click',       function () { openAndCloseNav('plan'); });
-        if (btnGlolistNav) btnGlolistNav.addEventListener('click', function () { openAndCloseNav('glolist'); });
+    var skipBtn = document.getElementById('intro-skip-btn');
+    if (skipBtn) skipBtn.addEventListener('click', skipNow);
 
-        /* ── Close triggers ── */
-        document.querySelectorAll('.glo-modal-backdrop').forEach(function (el) {
-          el.addEventListener('click', closeAll);
+    revealTimer = setTimeout(function () { siteContent.classList.add('revealed'); }, 2300);
+    removeTimer = setTimeout(function () {
+      sessionStorage.setItem('gloKartsIntroPlayed', 'true');
+      unlockScroll();
+      if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    }, 3500);
+  })();
+
+  /* ── Booking Modal ────────────────────────────────────── */
+  (function () {
+    var modal    = document.getElementById('booking-modal');
+    var backdrop = modal && modal.querySelector('.glo-modal-backdrop');
+    var closeBtn = modal && modal.querySelector('.glo-modal-close');
+    var form     = document.getElementById('booking-form');
+    var success  = document.getElementById('booking-success');
+    var submitBtn = document.getElementById('bk-submit');
+
+    function openModal() {
+      if (!modal) return;
+      modal.classList.add('open');
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow            = 'hidden';
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { modal.classList.add('visible'); });
+      });
+      setTimeout(function () {
+        var first = modal.querySelector('input, select, textarea');
+        if (first) first.focus();
+      }, 380);
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.classList.remove('visible');
+      setTimeout(function () {
+        modal.classList.remove('open');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow            = '';
+      }, 330);
+    }
+
+    [
+      'btn-book-header','btn-book-mobile','btn-book-tour',
+      'btn-book-sticky','btn-reserve','btn-check-avail',
+      'btn-view-tours','btn-watch',
+      'btn-tour-1','btn-tour-2','btn-tour-3','btn-tour-4'
+    ].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('click', openModal);
+    });
+
+    if (backdrop) backdrop.addEventListener('click', closeModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+    if (form && submitBtn) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var name  = document.getElementById('bk-name').value.trim();
+        var email = document.getElementById('bk-email').value.trim();
+        if (!name)  { document.getElementById('bk-name').focus();  return; }
+        if (!email) { document.getElementById('bk-email').focus(); return; }
+        submitBtn.disabled    = true;
+        submitBtn.textContent = 'Sending…';
+        fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' }
+        })
+        .then(function (res) {
+          if (res.ok) {
+            form.style.display = 'none';
+            if (success) success.classList.add('visible');
+          } else {
+            submitBtn.disabled    = false;
+            submitBtn.textContent = 'CONFIRM RESERVATION';
+            alert('Something went wrong. Please email info@glokarts.com.');
+          }
+        })
+        .catch(function () {
+          submitBtn.disabled    = false;
+          submitBtn.textContent = 'CONFIRM RESERVATION';
+          alert('Network error. Please check your connection.');
         });
-        document.querySelectorAll('.glo-modal-close').forEach(function (el) {
-          el.addEventListener('click', closeAll);
-        });
-        document.addEventListener('keydown', function (e) {
-          if (e.key === 'Escape') closeAll();
-        });
+      });
+    }
+  })();
+</script>
 
-        /* ── Glo List form submission ── */
-        var glForm = document.getElementById('glolist-form');
-        var glSucc = document.getElementById('glolist-success');
-        var glBtn  = document.getElementById('glolist-submit');
-
-        glForm.addEventListener('submit', function (e) {
-          e.preventDefault();
-          if (!document.getElementById('gl-name').value.trim())  { document.getElementById('gl-name').focus();  return; }
-          if (!document.getElementById('gl-email').value.trim()) { document.getElementById('gl-email').focus(); return; }
-          glBtn.disabled = true; glBtn.textContent = 'Sending…';
-          fetch(glForm.action, { method: 'POST', body: new FormData(glForm), headers: { Accept: 'application/json' } })
-            .then(function (res) {
-              if (res.ok) { glForm.style.display = 'none'; glSucc.classList.add('visible'); }
-              else { glBtn.disabled = false; glBtn.textContent = 'Get Early Access'; alert('Something went wrong. Please email info@glokarts.com.'); }
-            })
-            .catch(function () { glBtn.disabled = false; glBtn.textContent = 'Get Early Access'; alert('Network error. Please check your connection.'); });
-        });
-
-        /* ── Plan Experience form submission ── */
-        var plForm = document.getElementById('plan-form');
-        var plSucc = document.getElementById('plan-success');
-        var plBtn  = document.getElementById('plan-submit');
-
-        plForm.addEventListener('submit', function (e) {
-          e.preventDefault();
-          if (!document.getElementById('pl-name').value.trim())  { document.getElementById('pl-name').focus();  return; }
-          if (!document.getElementById('pl-email').value.trim()) { document.getElementById('pl-email').focus(); return; }
-          plBtn.disabled = true; plBtn.textContent = 'Sending…';
-          fetch(plForm.action, { method: 'POST', body: new FormData(plForm), headers: { Accept: 'application/json' } })
-            .then(function (res) {
-              if (res.ok) { plForm.style.display = 'none'; plSucc.classList.add('visible'); }
-              else { plBtn.disabled = false; plBtn.textContent = 'Submit My Request'; alert('Something went wrong. Please email info@glokarts.com.'); }
-            })
-            .catch(function () { plBtn.disabled = false; plBtn.textContent = 'Submit My Request'; alert('Network error. Please check your connection.'); });
-        });
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-      } else {
-        init();
-      }
-    })();
-  </script>
 </body>
 </html>
