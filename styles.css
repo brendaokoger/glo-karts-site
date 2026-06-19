@@ -517,28 +517,33 @@ a   { color: inherit; text-decoration: none; }
 .section-inner { max-width: 1200px; margin: 0 auto; }
 
 .section-eyebrow {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--blue);
   text-align: center;
   display: block;
 }
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-align: center;
+  margin-top: 0.55rem;
+  line-height: 1;
+}
 
 /* ── Why Glo Karts ────────────────────────────────────── */
 #why {
   background: var(--s1);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  border-top: 1px solid rgba(0,195,255,0.07);
 }
 .why-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  margin-top: 3rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
+  margin-top: 4rem;
 }
 .why-card {
   display: -webkit-flex;
@@ -548,35 +553,46 @@ a   { color: inherit; text-decoration: none; }
   -webkit-align-items: center;
   align-items: center;
   text-align: center;
-  padding: 2.5rem 1.75rem 2.25rem;
-  border-right: 1px solid var(--border);
-  transition: background 0.2s;
+  padding: 3rem 2rem 2.75rem;
+  border-right: 1px solid rgba(0,195,255,0.07);
+  transition: background 0.22s;
 }
 .why-card:last-child { border-right: none; }
-.why-card:hover { background: rgba(0,195,255,0.02); }
+.why-card:hover { background: rgba(0,195,255,0.025); }
 
 .why-icon {
-  width: 50px; height: 50px;
-  border-radius: 12px;
-  border: 1px solid var(--border-b);
-  background: rgba(0,195,255,0.04);
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,195,255,0.22);
+  background: rgba(0,195,255,0.05);
+  box-shadow: 0 0 20px rgba(0,195,255,0.06);
   display: -webkit-flex; display: flex;
   -webkit-align-items: center; align-items: center;
   -webkit-justify-content: center; justify-content: center;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.5rem;
   flex-shrink: 0;
+  transition: background 0.22s, box-shadow 0.22s;
+}
+.why-card:hover .why-icon {
+  background: rgba(0,195,255,0.1);
+  box-shadow: 0 0 28px rgba(0,195,255,0.14);
 }
 .why-icon svg {
-  width: 22px; height: 22px;
+  width: 24px; height: 24px;
   stroke: var(--blue); fill: none;
-  stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
 }
 .why-card h3 {
-  font-size: 0.75rem; font-weight: 700;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: #fff; margin-bottom: 0.55rem;
+  font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #fff; margin-bottom: 0.65rem;
 }
-.why-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+.why-card p {
+  font-size: 0.83rem;
+  color: var(--muted2);
+  line-height: 1.72;
+  max-width: 200px;
+}
 
 /* ── Our Tours ────────────────────────────────────────── */
 #tours { background: #000; }
@@ -1016,8 +1032,8 @@ footer {
 @media (max-width: 1060px) {
   .why-grid { grid-template-columns: repeat(2, 1fr); }
   .why-card:nth-child(2) { border-right: none; }
-  .why-card:nth-child(3) { border-top: 1px solid var(--border); border-right: 1px solid var(--border); }
-  .why-card:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+  .why-card:nth-child(3) { border-top: 1px solid rgba(0,195,255,0.07); border-right: 1px solid rgba(0,195,255,0.07); }
+  .why-card:nth-child(4) { border-top: 1px solid rgba(0,195,255,0.07); border-right: none; }
   .tours-grid { grid-template-columns: repeat(2, 1fr); }
   .tour-card  { min-height: 280px; }
 }
@@ -1066,9 +1082,9 @@ footer {
   .section     { padding: 72px 4%; }
   .hero-headline { font-size: clamp(4.2rem, 19vw, 7rem); }
   .why-grid { grid-template-columns: 1fr; }
-  .why-card { border-right: none; border-bottom: 1px solid var(--border); }
+  .why-card { border-right: none; border-bottom: 1px solid rgba(0,195,255,0.07); padding: 2.25rem 1.5rem; }
   .why-card:last-child { border-bottom: none; }
-  .why-card:nth-child(3),.why-card:nth-child(4) { border-right: none; }
+  .why-card:nth-child(3),.why-card:nth-child(4) { border-right: none; border-top: none; }
   .tours-grid { grid-template-columns: 1fr; }
   .tour-card  { min-height: 220px; }
   .social-proof-inner { -webkit-justify-content: flex-start; justify-content: flex-start; gap: 1.75rem; }
