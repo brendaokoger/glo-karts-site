@@ -210,7 +210,7 @@
     }
     .intro-kart-scene.active { opacity: 1; }
 
-    /* Kart wrap — contains image, light layers, beams */
+    /* Kart wrap — holds cinematic starting position; camera pans in from right */
     .kart-wrap {
       position: relative;
       width: 88vw; max-width: 980px;
@@ -220,45 +220,62 @@
       will-change: transform;
       -webkit-transform-origin: center center;
       transform-origin: center center;
+      /* camera starts panned right and slightly pulled back */
+      -webkit-transform: scale(0.84) translateX(10vw) translateY(4vh);
+      transform: scale(0.84) translateX(10vw) translateY(4vh);
     }
-    .kart-wrap.push {
-      -webkit-animation: kartPush 3s cubic-bezier(0.25,0.05,0.1,1) forwards;
-      animation:         kartPush 3s cubic-bezier(0.25,0.05,0.1,1) forwards;
+    .kart-wrap.cinematic {
+      -webkit-animation: kartCinematic 14s cubic-bezier(0.25,0.05,0.1,1) forwards;
+      animation:         kartCinematic 14s cubic-bezier(0.25,0.05,0.1,1) forwards;
     }
-    @-webkit-keyframes kartPush {
-      from { -webkit-transform: scale(1); }
-      to   { -webkit-transform: scale(1.09); }
+    @-webkit-keyframes kartCinematic {
+      0%   { -webkit-transform: scale(0.84) translateX(10vw)  translateY(4vh); }
+      18%  { -webkit-transform: scale(0.90) translateX(5vw)   translateY(2vh); }
+      38%  { -webkit-transform: scale(0.97) translateX(1vw)   translateY(0.5vh); }
+      50%  { -webkit-transform: scale(1.01) translateX(0)     translateY(0); }
+      60%  { -webkit-transform: scale(1.04) translateX(0)     translateY(0); }
+      72%  { -webkit-transform: scale(1.09) translateX(1.5vw) translateY(1.5vh); }
+      86%  { -webkit-transform: scale(1.18) translateX(3vw)   translateY(4vh); }
+      100% { -webkit-transform: scale(1.28) translateX(5vw)   translateY(8vh); }
     }
-    @keyframes kartPush {
-      from { transform: scale(1); }
-      to   { transform: scale(1.09); }
+    @keyframes kartCinematic {
+      0%   { transform: scale(0.84) translateX(10vw)  translateY(4vh); }
+      18%  { transform: scale(0.90) translateX(5vw)   translateY(2vh); }
+      38%  { transform: scale(0.97) translateX(1vw)   translateY(0.5vh); }
+      50%  { transform: scale(1.01) translateX(0)     translateY(0); }
+      60%  { transform: scale(1.04) translateX(0)     translateY(0); }
+      72%  { transform: scale(1.09) translateX(1.5vw) translateY(1.5vh); }
+      86%  { transform: scale(1.18) translateX(3vw)   translateY(4vh); }
+      100% { transform: scale(1.28) translateX(5vw)   translateY(8vh); }
     }
 
-    /* Kart image — starts as pure silhouette */
+    /* Kart image — begins in total darkness; lights reveal before image brightens */
     .kart-reveal-img {
       display: block; width: 100%; height: auto;
-      -webkit-filter: brightness(0.07) contrast(1.2);
-      filter: brightness(0.07) contrast(1.2);
+      -webkit-filter: brightness(0) contrast(1.1);
+      filter: brightness(0) contrast(1.1);
     }
     .kart-reveal-img.lit {
-      -webkit-animation: kartBrighten 3.2s ease-out forwards;
-      animation:         kartBrighten 3.2s ease-out forwards;
+      -webkit-animation: kartReveal 13s ease-out forwards;
+      animation:         kartReveal 13s ease-out forwards;
     }
-    @-webkit-keyframes kartBrighten {
-      0%   { -webkit-filter: brightness(0.07) contrast(1.2); }
-      16%  { -webkit-filter: brightness(0.16) contrast(1.12); }
-      34%  { -webkit-filter: brightness(0.34) contrast(1.06); }
-      55%  { -webkit-filter: brightness(0.55) contrast(1.03); }
-      76%  { -webkit-filter: brightness(0.78) contrast(1.01); }
-      100% { -webkit-filter: brightness(1)    contrast(1); }
+    @-webkit-keyframes kartReveal {
+      0%   { -webkit-filter: brightness(0)    contrast(1.1); }
+      12%  { -webkit-filter: brightness(0.04) contrast(1.3); }
+      26%  { -webkit-filter: brightness(0.18) contrast(1.18); }
+      42%  { -webkit-filter: brightness(0.42) contrast(1.08); }
+      60%  { -webkit-filter: brightness(0.72) contrast(1.03); }
+      78%  { -webkit-filter: brightness(0.90) contrast(1.01); }
+      100% { -webkit-filter: brightness(1.0)  contrast(1); }
     }
-    @keyframes kartBrighten {
-      0%   { filter: brightness(0.07) contrast(1.2); }
-      16%  { filter: brightness(0.16) contrast(1.12); }
-      34%  { filter: brightness(0.34) contrast(1.06); }
-      55%  { filter: brightness(0.55) contrast(1.03); }
-      76%  { filter: brightness(0.78) contrast(1.01); }
-      100% { filter: brightness(1)    contrast(1); }
+    @keyframes kartReveal {
+      0%   { filter: brightness(0)    contrast(1.1); }
+      12%  { filter: brightness(0.04) contrast(1.3); }
+      26%  { filter: brightness(0.18) contrast(1.18); }
+      42%  { filter: brightness(0.42) contrast(1.08); }
+      60%  { filter: brightness(0.72) contrast(1.03); }
+      78%  { filter: brightness(0.90) contrast(1.01); }
+      100% { filter: brightness(1.0)  contrast(1); }
     }
 
     /* Light-source layers — all screen-blended over the dark image */
@@ -373,6 +390,21 @@
     }
 
     /* ── Scene 4: Chicago Night Environment ──────────────── */
+
+    /* Pre-reveal atmospheric glow — suggests a glowing presence before the kart is visible */
+    .pre-glow {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      height: 52%;
+      background:
+        radial-gradient(ellipse 55% 68% at 50% 100%, rgba(0,195,255,0.18) 0%, rgba(0,160,255,0.04) 60%, transparent 80%),
+        radial-gradient(ellipse 28% 40% at 50% 100%, rgba(0,218,255,0.28) 0%, transparent 46%);
+      opacity: 0;
+      -webkit-transition: opacity 2.6s ease;
+      transition: opacity 2.6s ease;
+      pointer-events: none;
+    }
+    .pre-glow.on { opacity: 1; }
+
     /* Sits behind kart-wrap by DOM order (absolute, appears first in markup) */
     .chi-env {
       position: absolute; inset: 0;
@@ -514,6 +546,7 @@
   <div class="intro-kart-scene" id="scene-kart">
     <!-- Scene 4: Chicago night environment (sits behind kart-wrap in DOM order) -->
     <div class="chi-env" id="chi-env">
+      <div class="pre-glow"    id="pre-glow"></div>
       <div class="chi-sky"     id="chi-sky"></div>
       <div class="chi-horizon" id="chi-horizon"></div>
       <div class="chi-skyline" id="chi-skyline"></div>
@@ -968,10 +1001,15 @@
 <script src="./main.js"></script>
 
 <script>
-  /* ── Luxury intro ──────────────────────────────────────────
-     Beam: 0.5s → 2.05s | G: 1.0s | L: 1.15s | O: 1.3s
-     KARTS: 1.8s | CHICAGO TOURS: 2.5s
-     Site reveal: 3.1s | Overlay out: 3.6s | Force: ?intro=1
+  /* ── Luxury intro sequence ─────────────────────────────────
+     Logo:      G 1.0s | L 1.15s | O 1.3s | KARTS 1.8s | CHICAGO 2.5s
+     Camera:    cinematic pan-in starts 3.5s (14s animation)
+     Pre-glow:  3.7s | Underglow: 4.6s | Headlights: 5.4s
+     Kart lit:  5.6s (13s reveal) | Interior: 6.4s | Accents: 7.0s
+     Beam:      7.4s | Sky: 7.9s | Skyline: 8.2s | Horizon: 8.8s
+     Shimmer:   9.3s | Refl: 9.9s | Ground: 10.5s | ChiRefl: 11.0s
+     Site in:   12.5s | Overlay fade: 13.2s (1.0s) | Out: 14.3s
+     Force replay: ?intro=1
   ─────────────────────────────────────────────────────────── */
   (function () {
     var overlay     = document.getElementById('intro-overlay');
@@ -1036,6 +1074,7 @@
     var klAcc   = document.getElementById('kl-acc');
     var kBeam   = document.getElementById('kart-beam');
     var kRefl   = document.getElementById('kart-refl');
+    var preGlow = document.getElementById('pre-glow');
     var chiSky  = document.getElementById('chi-sky');
     var chiHz   = document.getElementById('chi-horizon');
     var chiSl   = document.getElementById('chi-skyline');
@@ -1050,8 +1089,8 @@
     timers.push(setTimeout(function () { if (kt) kt.classList.add('visible'); }, 1800));
     timers.push(setTimeout(function () { if (ch) ch.classList.add('visible'); }, 2500));
 
-    /* ── Scene 3: Kart reveal ─────────────────────────── */
-    /* Logo fades, kart scene crossfades in as dark silhouette */
+    /* ── Scene 3+4: Cinematic experience ─────────────── */
+    /* Logo exits; kart scene appears dark */
     timers.push(setTimeout(function () {
       if (logoEl) logoEl.classList.add('exit');
     }, 3050));
@@ -1059,87 +1098,89 @@
       if (sceneK) sceneK.classList.add('active');
     }, 3350));
 
-    /* Beam sweeps the silhouette + brightness animation begins */
+    /* Camera begins slow pan from right — kart still in darkness */
     timers.push(setTimeout(function () {
-      if (kartImg) kartImg.classList.add('lit');
-      if (kBeam)   kBeam.classList.add('sweep');
+      if (kartWp) kartWp.classList.add('cinematic');
     }, 3500));
 
-    /* 1 — LED headlights power on */
+    /* A blue glow spreads across the pavement — something electric is here */
     timers.push(setTimeout(function () {
-      if (klHead) klHead.classList.add('on');
-    }, 3950));
+      if (preGlow) preGlow.classList.add('on');
+    }, 3700));
 
-    /* 2 — Interior dashboard + seating lights */
-    timers.push(setTimeout(function () {
-      if (klInt) klInt.classList.add('on');
-    }, 4650));
-
-    /* 3 — Side underglow activates */
+    /* Underglow appears first: light before form — camera still panning */
     timers.push(setTimeout(function () {
       if (klGlow) klGlow.classList.add('on');
-    }, 5300));
+    }, 4600));
 
-    /* 4 — Accent + wheel lighting completes the sequence */
+    /* Headlights power on as the camera draws closer */
+    timers.push(setTimeout(function () {
+      if (klHead) klHead.classList.add('on');
+    }, 5400));
+
+    /* Kart image begins emerging from darkness — lights already burning */
+    timers.push(setTimeout(function () {
+      if (kartImg) kartImg.classList.add('lit');
+    }, 5600));
+
+    /* Interior illuminates as the vehicle takes shape */
+    timers.push(setTimeout(function () {
+      if (klInt) klInt.classList.add('on');
+    }, 6400));
+
+    /* Accent + wheel lighting — the full vehicle is revealed */
     timers.push(setTimeout(function () {
       if (klAcc) klAcc.classList.add('on');
-    }, 5950));
+    }, 7000));
 
-    /* Cinematic camera push — slow scale toward the kart */
+    /* Reveal beam sweeps as the camera nearly reaches center */
     timers.push(setTimeout(function () {
-      if (kartWp) kartWp.classList.add('push');
-    }, 6100));
-
-    /* Reflection sweep — highlight travels across the body */
-    timers.push(setTimeout(function () {
-      if (kRefl) kRefl.classList.add('sweep');
-    }, 6600));
-
-    /* ── Scene 4: Chicago environment reveals ─────────── */
-    /* Night sky rises as kart lighting peaks */
-    timers.push(setTimeout(function () {
-      if (chiSky) chiSky.classList.add('on');
-    }, 6500));
-
-    /* Skyline silhouette emerges from darkness */
-    timers.push(setTimeout(function () {
-      if (chiSl) chiSl.classList.add('on');
-    }, 6900));
-
-    /* Warm amber city glow blooms above the skyline */
-    timers.push(setTimeout(function () {
-      if (chiHz) chiHz.classList.add('on');
+      if (kBeam) kBeam.classList.add('sweep');
     }, 7400));
 
-    /* Building window lights shimmer in */
+    /* Night sky rises — Chicago comes alive around the kart */
+    timers.push(setTimeout(function () {
+      if (chiSky) chiSky.classList.add('on');
+    }, 7900));
+    timers.push(setTimeout(function () {
+      if (chiSl) chiSl.classList.add('on');
+    }, 8200));
+    timers.push(setTimeout(function () {
+      if (chiHz) chiHz.classList.add('on');
+    }, 8800));
     timers.push(setTimeout(function () {
       if (chiSh) chiSh.classList.add('on');
-    }, 8000));
-
-    /* Wet ground surfaces from darkness below the kart */
-    timers.push(setTimeout(function () {
-      if (chiGnd) chiGnd.classList.add('on');
-    }, 8800));
-
-    /* Underglow reflected on wet asphalt — completes the scene */
-    timers.push(setTimeout(function () {
-      if (chiRfl) chiRfl.classList.add('on');
     }, 9300));
 
-    /* ── Transition to homepage — hold the movie poster frame ── */
+    /* Reflection sweep as the kart begins rolling forward */
+    timers.push(setTimeout(function () {
+      if (kRefl) kRefl.classList.add('sweep');
+    }, 9900));
+
+    /* Wet ground and underglow reflection — full scene complete */
+    timers.push(setTimeout(function () {
+      if (chiGnd) chiGnd.classList.add('on');
+    }, 10500));
+    timers.push(setTimeout(function () {
+      if (chiRfl) chiRfl.classList.add('on');
+    }, 11000));
+
+    /* Site content fades in — the kart rolls naturally into the hero */
     timers.push(setTimeout(function () {
       siteContent.classList.add('revealed');
-    }, 11500));
+    }, 12500));
 
+    /* Overlay dissolves — seamless cross-fade to the homepage hero */
     timers.push(setTimeout(function () {
       sessionStorage.setItem('gloKartsIntroPlayed', 'true');
       unlockScroll();
+      overlay.style.transition    = 'opacity 1.0s ease';
       overlay.style.opacity       = '0';
       overlay.style.pointerEvents = 'none';
       setTimeout(function () {
         if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
-      }, 700);
-    }, 12100));
+      }, 1100);
+    }, 13200));
   })();
 
   /* ── Booking Modal ────────────────────────────────────── */
