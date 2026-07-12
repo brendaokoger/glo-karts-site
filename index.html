@@ -371,6 +371,128 @@
       from { transform: translateX(0);    opacity: 1; }
       to   { transform: translateX(445%); opacity: 0.2; }
     }
+
+    /* ── Scene 4: Chicago Night Environment ──────────────── */
+    /* Sits behind kart-wrap by DOM order (absolute, appears first in markup) */
+    .chi-env {
+      position: absolute; inset: 0;
+      pointer-events: none;
+    }
+
+    /* Deep night sky — dark blue-black, lightest near city center */
+    .chi-sky {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 140% 70% at 50% 0%, #090d1c 0%, #040609 52%, #000 100%);
+      opacity: 0;
+      -webkit-transition: opacity 2.2s ease;
+      transition: opacity 2.2s ease;
+    }
+    .chi-sky.on { opacity: 1; }
+
+    /* Warm amber city glow — light pollution drifting above the skyline */
+    .chi-horizon {
+      position: absolute; left: 0; right: 0; top: 30%; bottom: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 85%, rgba(255,145,42,0.09) 0%, transparent 60%),
+        radial-gradient(ellipse 38% 35% at 22% 82%, rgba(0,195,255,0.04) 0%, transparent 55%),
+        radial-gradient(ellipse 38% 35% at 78% 82%, rgba(0,195,255,0.04) 0%, transparent 55%);
+      opacity: 0;
+      -webkit-transition: opacity 2.8s ease;
+      transition: opacity 2.8s ease;
+    }
+    .chi-horizon.on { opacity: 1; }
+
+    /* Chicago skyline silhouette */
+    .chi-skyline {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      height: 55%;
+      background: #060810;
+      -webkit-clip-path: polygon(0% 100%,0% 78%,5% 78%,5% 65%,8% 65%,8% 72%,12% 72%,12% 55%,14% 50%,15% 38%,15.5% 25%,16% 12%,16.5% 4%,17% 12%,17.5% 25%,18% 38%,18.5% 55%,20% 55%,20% 64%,25% 64%,25% 70%,30% 70%,30% 58%,33% 52%,34% 36%,34.5% 20%,35% 8%,35.5% 20%,36% 36%,36.5% 52%,37% 58%,42% 58%,42% 66%,48% 66%,48% 72%,54% 72%,54% 65%,60% 65%,60% 72%,65% 72%,65% 78%,70% 78%,70% 72%,75% 72%,75% 78%,80% 78%,80% 72%,85% 72%,85% 78%,90% 78%,90% 82%,95% 82%,95% 78%,100% 78%,100% 100%);
+      clip-path:          polygon(0% 100%,0% 78%,5% 78%,5% 65%,8% 65%,8% 72%,12% 72%,12% 55%,14% 50%,15% 38%,15.5% 25%,16% 12%,16.5% 4%,17% 12%,17.5% 25%,18% 38%,18.5% 55%,20% 55%,20% 64%,25% 64%,25% 70%,30% 70%,30% 58%,33% 52%,34% 36%,34.5% 20%,35% 8%,35.5% 20%,36% 36%,36.5% 52%,37% 58%,42% 58%,42% 66%,48% 66%,48% 72%,54% 72%,54% 65%,60% 65%,60% 72%,65% 72%,65% 78%,70% 78%,70% 72%,75% 72%,75% 78%,80% 78%,80% 72%,85% 72%,85% 78%,90% 78%,90% 82%,95% 82%,95% 78%,100% 78%,100% 100%);
+      opacity: 0;
+      -webkit-transition: opacity 2.0s ease;
+      transition: opacity 2.0s ease;
+    }
+    .chi-skyline.on { opacity: 1; }
+
+    /* Building window clusters — Willis Tower (16-17% x) and Hancock-area (35% x) */
+    .chi-skyline::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 2%   3%   at 16%   10%, rgba(255,232,165,0.6)  0%, transparent 68%),
+        radial-gradient(ellipse 1.5% 2.5% at 16.5% 18%, rgba(255,228,158,0.5)  0%, transparent 68%),
+        radial-gradient(ellipse 1.5% 2.5% at 15.8% 27%, rgba(255,224,150,0.4)  0%, transparent 68%),
+        radial-gradient(ellipse 1.5% 2.5% at 35%   14%, rgba(255,230,162,0.55) 0%, transparent 68%),
+        radial-gradient(ellipse 1.5% 2.5% at 34.5% 24%, rgba(255,225,152,0.45) 0%, transparent 68%),
+        radial-gradient(ellipse 3%   2%   at 14%   38%, rgba(255,220,142,0.3)  0%, transparent 65%),
+        radial-gradient(ellipse 2.5% 2%   at 27%   34%, rgba(255,222,145,0.32) 0%, transparent 65%),
+        radial-gradient(ellipse 2%   2%   at 42%   42%, rgba(255,224,148,0.28) 0%, transparent 65%),
+        radial-gradient(ellipse 0.6% 1%   at 16.2% 5%,  rgba(0,215,255,0.65)   0%, transparent 65%),
+        radial-gradient(ellipse 0.6% 1%   at 35%   9%,  rgba(0,212,255,0.55)   0%, transparent 65%);
+      opacity: 0.7;
+    }
+
+    /* Scattered secondary window lights — gentle shimmer */
+    .chi-shimmer {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      height: 55%;
+      pointer-events: none; opacity: 0;
+      -webkit-transition: opacity 1.6s ease;
+      transition: opacity 1.6s ease;
+    }
+    .chi-shimmer.on { opacity: 1; }
+    .chi-shimmer::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 1%   1.5% at 7%   42%, rgba(255,220,140,0.28) 0%, transparent 65%),
+        radial-gradient(ellipse 1%   1.5% at 10%  36%, rgba(255,218,132,0.24) 0%, transparent 65%),
+        radial-gradient(ellipse 1.2% 1.8% at 23%  30%, rgba(255,226,148,0.32) 0%, transparent 65%),
+        radial-gradient(ellipse 1%   1.5% at 47%  27%, rgba(255,222,142,0.26) 0%, transparent 65%),
+        radial-gradient(ellipse 1%   1.5% at 56%  32%, rgba(255,220,140,0.26) 0%, transparent 65%),
+        radial-gradient(ellipse 1%   1.5% at 63%  44%, rgba(255,218,136,0.22) 0%, transparent 65%),
+        radial-gradient(ellipse 1%   1.5% at 72%  40%, rgba(255,220,140,0.22) 0%, transparent 65%),
+        radial-gradient(ellipse 1%   1.5% at 81%  46%, rgba(255,215,132,0.2)  0%, transparent 65%),
+        radial-gradient(ellipse 1%   1.5% at 89%  42%, rgba(255,218,136,0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 0.8% 1.2% at 94%  50%, rgba(255,215,130,0.18) 0%, transparent 65%);
+      -webkit-animation: winPulse 3.8s ease-in-out infinite alternate;
+      animation:         winPulse 3.8s ease-in-out infinite alternate;
+    }
+    @-webkit-keyframes winPulse {
+      from { opacity: 0.45; }
+      to   { opacity: 1.0;  }
+    }
+    @keyframes winPulse {
+      from { opacity: 0.45; }
+      to   { opacity: 1.0;  }
+    }
+
+    /* Dark wet asphalt ground plane */
+    .chi-ground {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      height: 24%;
+      background: linear-gradient(to bottom, #070810 0%, #040507 55%, #020304 100%);
+      opacity: 0;
+      -webkit-transition: opacity 1.6s ease;
+      transition: opacity 1.6s ease;
+    }
+    .chi-ground.on { opacity: 1; }
+
+    /* Kart underglow reflected on wet ground */
+    .chi-refl {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      height: 18%;
+      background:
+        radial-gradient(ellipse 62% 80% at 50% 0%, rgba(0,195,255,0.16) 0%, rgba(0,160,255,0.04) 55%, transparent 75%),
+        radial-gradient(ellipse 36% 50% at 50% 0%, rgba(0,212,255,0.24) 0%, transparent 52%);
+      mix-blend-mode: screen;
+      opacity: 0;
+      -webkit-transition: opacity 1.4s ease;
+      transition: opacity 1.4s ease;
+    }
+    .chi-refl.on { opacity: 1; }
   </style>
 </head>
 
@@ -388,8 +510,17 @@
     <div class="intro-karts" id="il-karts">KARTS</div>
     <div class="intro-chicago" id="il-chicago">CHICAGO TOURS</div>
   </div>
-  <!-- Scene 3: Glo Kart reveal -->
+  <!-- Scene 3+4: Kart reveal + Chicago environment -->
   <div class="intro-kart-scene" id="scene-kart">
+    <!-- Scene 4: Chicago night environment (sits behind kart-wrap in DOM order) -->
+    <div class="chi-env" id="chi-env">
+      <div class="chi-sky"     id="chi-sky"></div>
+      <div class="chi-horizon" id="chi-horizon"></div>
+      <div class="chi-skyline" id="chi-skyline"></div>
+      <div class="chi-shimmer" id="chi-shimmer"></div>
+      <div class="chi-ground"  id="chi-ground"></div>
+      <div class="chi-refl"    id="chi-refl"></div>
+    </div>
     <div class="kart-wrap" id="kart-wrap">
       <img src="./glo-karts-hero.png" class="kart-reveal-img" id="kart-img"
            alt="Glo Karts luxury electric vehicle" />
@@ -905,6 +1036,12 @@
     var klAcc   = document.getElementById('kl-acc');
     var kBeam   = document.getElementById('kart-beam');
     var kRefl   = document.getElementById('kart-refl');
+    var chiSky  = document.getElementById('chi-sky');
+    var chiHz   = document.getElementById('chi-horizon');
+    var chiSl   = document.getElementById('chi-skyline');
+    var chiSh   = document.getElementById('chi-shimmer');
+    var chiGnd  = document.getElementById('chi-ground');
+    var chiRfl  = document.getElementById('chi-refl');
 
     /* ── Scene 1+2: Logo reveal ───────────────────────── */
     timers.push(setTimeout(function () { if (g)  g.classList.add('lit');      }, 1000));
@@ -958,10 +1095,41 @@
       if (kRefl) kRefl.classList.add('sweep');
     }, 6600));
 
-    /* ── Transition to homepage ────────────────────────── */
+    /* ── Scene 4: Chicago environment reveals ─────────── */
+    /* Night sky rises as kart lighting peaks */
+    timers.push(setTimeout(function () {
+      if (chiSky) chiSky.classList.add('on');
+    }, 6500));
+
+    /* Skyline silhouette emerges from darkness */
+    timers.push(setTimeout(function () {
+      if (chiSl) chiSl.classList.add('on');
+    }, 6900));
+
+    /* Warm amber city glow blooms above the skyline */
+    timers.push(setTimeout(function () {
+      if (chiHz) chiHz.classList.add('on');
+    }, 7400));
+
+    /* Building window lights shimmer in */
+    timers.push(setTimeout(function () {
+      if (chiSh) chiSh.classList.add('on');
+    }, 8000));
+
+    /* Wet ground surfaces from darkness below the kart */
+    timers.push(setTimeout(function () {
+      if (chiGnd) chiGnd.classList.add('on');
+    }, 8800));
+
+    /* Underglow reflected on wet asphalt — completes the scene */
+    timers.push(setTimeout(function () {
+      if (chiRfl) chiRfl.classList.add('on');
+    }, 9300));
+
+    /* ── Transition to homepage — hold the movie poster frame ── */
     timers.push(setTimeout(function () {
       siteContent.classList.add('revealed');
-    }, 7600));
+    }, 11500));
 
     timers.push(setTimeout(function () {
       sessionStorage.setItem('gloKartsIntroPlayed', 'true');
@@ -971,7 +1139,7 @@
       setTimeout(function () {
         if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
       }, 700);
-    }, 8100));
+    }, 12100));
   })();
 
   /* ── Booking Modal ────────────────────────────────────── */
