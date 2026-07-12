@@ -29,196 +29,184 @@
   <link rel="stylesheet" href="./styles.css" />
 
   <style>
-    /* ── Cinematic Intro ─────────────────────────────────── */
+    /* ── Luxury Intro Sequence ─────────────────────────────── */
     #intro-overlay {
       position: fixed; inset: 0;
       z-index: 999999;
-      background: transparent;
+      background: #000;
       display: -webkit-flex; display: flex;
       -webkit-align-items: center; align-items: center;
       -webkit-justify-content: center; justify-content: center;
       overflow: hidden;
-      -webkit-transform: translateZ(0); transform: translateZ(0);
+      -webkit-transition: opacity 0.65s ease;
+      transition: opacity 0.65s ease;
     }
-    .i-base {
-      position: absolute; inset: 0; background: #000; z-index: 0;
+
+    /* Electricity sweep — soft vertical beam with bright filament */
+    .intro-beam {
+      position: absolute; top: 0; bottom: 0; left: -22vw;
+      width: 22vw;
+      background: linear-gradient(to right,
+        transparent                   0%,
+        rgba(0,195,255,0.015)        20%,
+        rgba(0,195,255,0.1)          44%,
+        rgba(0,195,255,0.26)         50%,
+        rgba(0,195,255,0.1)          56%,
+        rgba(0,195,255,0.015)        80%,
+        transparent                  100%
+      );
+      -webkit-mask-image: linear-gradient(to bottom,
+        transparent 0%, rgba(0,0,0,0.18) 16%, black 36%,
+        black 64%, rgba(0,0,0,0.18) 84%, transparent 100%);
+      mask-image: linear-gradient(to bottom,
+        transparent 0%, rgba(0,0,0,0.18) 16%, black 36%,
+        black 64%, rgba(0,0,0,0.18) 84%, transparent 100%);
       pointer-events: none;
-      -webkit-animation: iBaseFade 0.35s 2.2s ease forwards;
-      animation: iBaseFade 0.35s 2.2s ease forwards;
+      -webkit-animation: beamSweep 1.55s 0.5s cubic-bezier(0.42,0,0.58,1) forwards;
+      animation:         beamSweep 1.55s 0.5s cubic-bezier(0.42,0,0.58,1) forwards;
     }
-    @-webkit-keyframes iBaseFade { to { opacity: 0; } }
-    @keyframes iBaseFade { to { opacity: 0; } }
+    /* Crisp 1px filament at beam center */
+    .intro-beam::after {
+      content: '';
+      position: absolute; left: 50%; top: 18%; bottom: 18%;
+      width: 1px;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+      background: rgba(0,220,255,0.92);
+      box-shadow: 0 0 5px rgba(0,210,255,0.9), 0 0 14px rgba(0,195,255,0.5);
+    }
+    @-webkit-keyframes beamSweep {
+      from { -webkit-transform: translateX(0); }
+      to   { -webkit-transform: translateX(144vw); }
+    }
+    @keyframes beamSweep {
+      from { transform: translateX(0); }
+      to   { transform: translateX(144vw); }
+    }
 
-    .i-skyline {
-      position: absolute; left: 0; right: 0; bottom: 0; height: 42%;
-      background: #060608; pointer-events: none; z-index: 1;
-      -webkit-clip-path: polygon(0% 100%,0% 84%,3% 84%,3% 78%,5% 78%,5% 84%,7% 84%,7% 72%,9% 72%,9% 84%,11% 84%,11% 66%,13% 66%,13% 78%,15% 78%,15% 58%,16% 46%,17% 34%,17.5% 20%,18% 8%,18.3% 2%,18.7% 8%,19.2% 20%,19.8% 34%,20.6% 46%,21.5% 58%,22% 68%,24% 68%,24% 76%,27% 76%,27% 62%,30% 62%,30% 70%,33% 70%,33% 58%,35% 56%,35% 42%,36% 30%,36.5% 16%,37% 6%,37.5% 16%,38% 30%,38.5% 42%,38.5% 58%,40% 58%,40% 66%,43% 66%,43% 72%,46% 72%,46% 64%,49% 64%,49% 72%,53% 72%,53% 78%,57% 78%,57% 68%,60% 68%,60% 76%,64% 76%,64% 82%,68% 82%,68% 74%,71% 74%,71% 80%,75% 80%,75% 84%,79% 84%,79% 78%,82% 78%,82% 84%,86% 84%,86% 80%,89% 80%,89% 86%,93% 86%,93% 82%,96% 82%,96% 88%,100% 88%,100% 100%);
-      clip-path: polygon(0% 100%,0% 84%,3% 84%,3% 78%,5% 78%,5% 84%,7% 84%,7% 72%,9% 72%,9% 84%,11% 84%,11% 66%,13% 66%,13% 78%,15% 78%,15% 58%,16% 46%,17% 34%,17.5% 20%,18% 8%,18.3% 2%,18.7% 8%,19.2% 20%,19.8% 34%,20.6% 46%,21.5% 58%,22% 68%,24% 68%,24% 76%,27% 76%,27% 62%,30% 62%,30% 70%,33% 70%,33% 58%,35% 56%,35% 42%,36% 30%,36.5% 16%,37% 6%,37.5% 16%,38% 30%,38.5% 42%,38.5% 58%,40% 58%,40% 66%,43% 66%,43% 72%,46% 72%,46% 64%,49% 64%,49% 72%,53% 72%,53% 78%,57% 78%,57% 68%,60% 68%,60% 76%,64% 76%,64% 82%,68% 82%,68% 74%,71% 74%,71% 80%,75% 80%,75% 84%,79% 84%,79% 78%,82% 78%,82% 84%,86% 84%,86% 80%,89% 80%,89% 86%,93% 86%,93% 82%,96% 82%,96% 88%,100% 88%,100% 100%);
-      -webkit-animation: iSkyline 1.4s 0.5s ease-out both;
-      animation: iSkyline 1.4s 0.5s ease-out both;
-    }
-    @-webkit-keyframes iSkyline { 0% { opacity:0; -webkit-transform:translateY(14px); } 100% { opacity:1; -webkit-transform:translateY(0); } }
-    @keyframes iSkyline { 0% { opacity:0; transform:translateY(14px); } 100% { opacity:1; transform:translateY(0); } }
-
-    .i-door {
-      position: absolute; top: 0; bottom: 0; width: 51%; z-index: 5;
-      background:
-        linear-gradient(108deg, rgba(0,160,255,0.03) 0%, transparent 50%, rgba(0,160,255,0.03) 100%),
-        linear-gradient(180deg, #050508 0%, #08080f 15%, #0c0c1a 40%, #08080f 80%, #050508 100%);
-      will-change: transform;
-      -webkit-transform: translateZ(0); transform: translateZ(0);
-    }
-    .i-door::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(0,195,255,0.055) 0%, transparent 20%, transparent 82%, rgba(0,0,0,0.35) 100%);
-      pointer-events: none;
-    }
-    .i-door-left  { left: 0;  -webkit-transform: translateX(-102%); transform: translateX(-102%); }
-    .i-door-right { right: 0; -webkit-transform: translateX(102%);  transform: translateX(102%); }
-    .i-door-left::after {
-      content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 1.5px;
-      background: rgba(0,195,255,0.9);
-      box-shadow: 0 0 10px rgba(0,195,255,0.8), 0 0 28px rgba(0,195,255,0.4);
-      -webkit-animation: iSeam 0.9s 0.3s ease-in-out infinite alternate;
-      animation: iSeam 0.9s 0.3s ease-in-out infinite alternate;
-    }
-    .i-door-right::after {
-      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1.5px;
-      background: rgba(0,195,255,0.9);
-      box-shadow: 0 0 10px rgba(0,195,255,0.8), 0 0 28px rgba(0,195,255,0.4);
-      -webkit-animation: iSeam 0.9s 0.3s ease-in-out infinite alternate;
-      animation: iSeam 0.9s 0.3s ease-in-out infinite alternate;
-    }
-    @-webkit-keyframes iSeam { 0% { opacity:0.5; } 100% { opacity:1; } }
-    @keyframes iSeam { 0% { opacity:0.5; } 100% { opacity:1; } }
-
-    .i-door-left {
-      -webkit-animation:
-        iSlideInL 0.65s 1.55s cubic-bezier(0.22,1,0.36,1) forwards,
-        iOpenL    0.90s 2.45s cubic-bezier(0.65,0,0.35,1) forwards;
-      animation:
-        iSlideInL 0.65s 1.55s cubic-bezier(0.22,1,0.36,1) forwards,
-        iOpenL    0.90s 2.45s cubic-bezier(0.65,0,0.35,1) forwards;
-    }
-    .i-door-right {
-      -webkit-animation:
-        iSlideInR 0.65s 1.55s cubic-bezier(0.22,1,0.36,1) forwards,
-        iOpenR    0.90s 2.45s cubic-bezier(0.65,0,0.35,1) forwards;
-      animation:
-        iSlideInR 0.65s 1.55s cubic-bezier(0.22,1,0.36,1) forwards,
-        iOpenR    0.90s 2.45s cubic-bezier(0.65,0,0.35,1) forwards;
-    }
-    @-webkit-keyframes iSlideInL { from{-webkit-transform:translateX(-102%);}to{-webkit-transform:translateX(0);} }
-    @keyframes iSlideInL { from{transform:translateX(-102%);}to{transform:translateX(0);} }
-    @-webkit-keyframes iSlideInR { from{-webkit-transform:translateX(102%);}to{-webkit-transform:translateX(0);} }
-    @keyframes iSlideInR { from{transform:translateX(102%);}to{transform:translateX(0);} }
-    @-webkit-keyframes iOpenL { from{-webkit-transform:translateX(0);}to{-webkit-transform:translateX(-102%);} }
-    @keyframes iOpenL { from{transform:translateX(0);}to{transform:translateX(-102%);} }
-    @-webkit-keyframes iOpenR { from{-webkit-transform:translateX(0);}to{-webkit-transform:translateX(102%);} }
-    @keyframes iOpenR { from{transform:translateX(0);}to{transform:translateX(102%);} }
-
-    .i-center {
-      position: relative; z-index: 6;
+    /* Logo container */
+    .intro-logo {
+      position: relative; z-index: 2;
       display: -webkit-flex; display: flex;
       -webkit-flex-direction: column; flex-direction: column;
       -webkit-align-items: center; align-items: center;
-      text-align: center; padding: 0 6%;
+      text-align: center;
+      -webkit-user-select: none; user-select: none;
       pointer-events: none;
-      -webkit-animation: iCenterOut 0.45s 1.92s ease-out forwards;
-      animation: iCenterOut 0.45s 1.92s ease-out forwards;
     }
-    @-webkit-keyframes iCenterOut { to { opacity:0; -webkit-transform:scale(0.97); } }
-    @keyframes iCenterOut { to { opacity:0; transform:scale(0.97); } }
 
-    .i-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(4rem, 16vw, 9rem);
-      letter-spacing: 0.12em; line-height: 1;
+    /* GLO — each letter revealed one at a time */
+    .intro-glo {
       display: -webkit-flex; display: flex;
-      position: relative; overflow: hidden;
+      letter-spacing: 0.2em;
+      line-height: 1;
     }
-    .i-logo::after {
-      content: ''; position: absolute; top: 0; bottom: 0; left: -100%; width: 50%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
-      pointer-events: none;
-      -webkit-animation: iShimmer 0.5s 1.6s ease-out both;
-      animation: iShimmer 0.5s 1.6s ease-out both;
-    }
-    @-webkit-keyframes iShimmer { 0%{left:-100%;}100%{left:150%;} }
-    @keyframes iShimmer { 0%{left:-100%;}100%{left:150%;} }
-
-    .i-glo {
-      color: #fff;
-      text-shadow: 0 0 30px rgba(0,195,255,0.9), 0 0 65px rgba(0,160,255,0.55), 0 0 120px rgba(0,110,255,0.25);
-      -webkit-animation: iWord 0.55s 0.82s ease-out both;
-      animation: iWord 0.55s 0.82s ease-out both;
-    }
-    .i-karts {
-      color: #fff;
-      text-shadow: 0 0 30px rgba(255,255,255,0.25);
-      margin-left: 0.08em;
-      -webkit-animation: iWord 0.55s 1.18s ease-out both;
-      animation: iWord 0.55s 1.18s ease-out both;
-    }
-    @-webkit-keyframes iWord {
-      0%  {opacity:0;-webkit-transform:translateY(20px) scaleY(0.84);}
-      60% {opacity:1;-webkit-transform:translateY(-4px) scaleY(1.02);}
-      100%{opacity:1;-webkit-transform:translateY(0) scaleY(1);}
-    }
-    @keyframes iWord {
-      0%  {opacity:0;transform:translateY(20px) scaleY(0.84);}
-      60% {opacity:1;transform:translateY(-4px) scaleY(1.02);}
-      100%{opacity:1;transform:translateY(0) scaleY(1);}
-    }
-
-    .i-tagline {
+    .intro-letter {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(0.8rem, 3.5vw, 1.2rem);
-      letter-spacing: 0.42em;
-      color: rgba(255,255,255,0.5);
-      margin-top: 0.6rem;
-      -webkit-animation: iTagline 0.5s 1.45s ease-out both;
-      animation: iTagline 0.5s 1.45s ease-out both;
+      font-size: clamp(5.5rem, 13vw, 10rem);
+      color: #00c3ff;
+      opacity: 0;
+      display: inline-block;
     }
-    @-webkit-keyframes iTagline { 0%{opacity:0;-webkit-transform:translateY(12px);}100%{opacity:1;-webkit-transform:translateY(0);} }
-    @keyframes iTagline { 0%{opacity:0;transform:translateY(12px);}100%{opacity:1;transform:translateY(0);} }
+    .intro-letter.lit {
+      -webkit-animation: letterBloom 0.6s cubic-bezier(0.22,0.61,0.36,1) forwards;
+      animation:         letterBloom 0.6s cubic-bezier(0.22,0.61,0.36,1) forwards;
+    }
+    @-webkit-keyframes letterBloom {
+      0%   { opacity:0; text-shadow:none; }
+      30%  { opacity:0.75; text-shadow:0 0 8px rgba(0,195,255,0.75); }
+      65%  { opacity:1;
+              text-shadow:0 0 14px rgba(0,195,255,1),
+                          0 0 36px rgba(0,195,255,0.65),
+                          0 0 72px rgba(0,195,255,0.3); }
+      100% { opacity:1;
+              text-shadow:0 0 10px rgba(0,195,255,0.88),
+                          0 0 26px rgba(0,195,255,0.46),
+                          0 0 55px rgba(0,195,255,0.2); }
+    }
+    @keyframes letterBloom {
+      0%   { opacity:0; text-shadow:none; }
+      30%  { opacity:0.75; text-shadow:0 0 8px rgba(0,195,255,0.75); }
+      65%  { opacity:1;
+              text-shadow:0 0 14px rgba(0,195,255,1),
+                          0 0 36px rgba(0,195,255,0.65),
+                          0 0 72px rgba(0,195,255,0.3); }
+      100% { opacity:1;
+              text-shadow:0 0 10px rgba(0,195,255,0.88),
+                          0 0 26px rgba(0,195,255,0.46),
+                          0 0 55px rgba(0,195,255,0.2); }
+    }
 
-    .i-skip {
-      position: absolute; top: 1.4rem; right: 1.4rem; z-index: 10;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: rgba(255,255,255,0.45);
-      font-family: 'Inter', sans-serif; font-size: 0.7rem;
-      font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 0.55rem 1.1rem; border-radius: 100px;
-      cursor: pointer; min-height: 44px;
-      -webkit-transition: background 0.2s, color 0.2s;
-      transition: background 0.2s, color 0.2s;
-      -webkit-tap-highlight-color: transparent;
-      -webkit-animation: iSkip 0.5s 0.5s ease both;
-      animation: iSkip 0.5s 0.5s ease both;
+    /* KARTS — white, fades in after GLO is complete */
+    .intro-karts {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4.8vw, 3.6rem);
+      color: #fff;
+      letter-spacing: 0.24em;
+      line-height: 1;
+      margin-top: -0.06em;
+      opacity: 0;
+      -webkit-transition: opacity 0.75s ease;
+      transition: opacity 0.75s ease;
     }
-    .i-skip:hover { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85); }
-    @-webkit-keyframes iSkip { 0%{opacity:0;}100%{opacity:1;} }
-    @keyframes iSkip { 0%{opacity:0;}100%{opacity:1;} }
+    .intro-karts.visible { opacity: 1; }
+
+    /* CHICAGO TOURS — fine, wide-tracked, understated */
+    .intro-chicago {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.52rem, 0.95vw, 0.7rem);
+      font-weight: 600;
+      letter-spacing: 0.44em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.28);
+      margin-top: 1.1rem;
+      opacity: 0;
+      -webkit-transition: opacity 0.9s ease;
+      transition: opacity 0.9s ease;
+    }
+    .intro-chicago.visible { opacity: 1; }
+
+    /* Skip button */
+    .intro-skip {
+      position: absolute; bottom: 2rem; right: 2rem; z-index: 10;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.28);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.63rem; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      padding: 0.5rem 1rem; border-radius: 3px;
+      cursor: pointer; min-height: 44px;
+      -webkit-transition: color 0.2s, border-color 0.2s;
+      transition: color 0.2s, border-color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-animation: iSkipIn 0.4s 0.8s ease both;
+      animation:         iSkipIn 0.4s 0.8s ease both;
+    }
+    .intro-skip:hover {
+      color: rgba(255,255,255,0.62);
+      border-color: rgba(255,255,255,0.28);
+    }
+    @-webkit-keyframes iSkipIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes iSkipIn { from { opacity:0; } to { opacity:1; } }
   </style>
 </head>
 
 <body>
 
-<!-- ── Cinematic Intro ──────────────────────────────────── -->
+<!-- ── Luxury Intro ───────────────────────────────────────── -->
 <div id="intro-overlay" role="presentation" aria-hidden="true">
-  <div class="i-base"></div>
-  <div class="i-skyline"></div>
-  <div class="i-door i-door-left"></div>
-  <div class="i-door i-door-right"></div>
-  <div class="i-center">
-    <div class="i-logo" aria-label="Glo Karts">
-      <span class="i-glo">GLO</span><span class="i-karts">KARTS</span>
+  <div class="intro-beam"></div>
+  <div class="intro-logo" aria-label="Glo Karts Chicago Tours">
+    <div class="intro-glo">
+      <span class="intro-letter" id="il-g">G</span>
+      <span class="intro-letter" id="il-l">L</span>
+      <span class="intro-letter" id="il-o">O</span>
     </div>
-    <p class="i-tagline">RIDE THE GLO</p>
+    <div class="intro-karts" id="il-karts">KARTS</div>
+    <div class="intro-chicago" id="il-chicago">CHICAGO TOURS</div>
   </div>
-  <button class="i-skip" id="intro-skip-btn" type="button">Skip Intro</button>
+  <button class="intro-skip" id="intro-skip-btn" type="button">Skip</button>
 </div>
 
 <div id="site-content">
@@ -653,11 +641,11 @@
 <script src="./main.js"></script>
 
 <script>
-  /* ── Cinematic intro ───────────────────────────────────
-     Timing: GLO 0.82s | KARTS 1.18s | tagline 1.45s |
-     doors in 1.55s | fade 1.92s | doors closed 2.20s |
-     doors open 2.45s | removed 3.50s | Force: ?intro=1
-  ─────────────────────────────────────────────────────── */
+  /* ── Luxury intro ──────────────────────────────────────────
+     Beam: 0.5s → 2.05s | G: 1.0s | L: 1.15s | O: 1.3s
+     KARTS: 1.8s | CHICAGO TOURS: 2.5s
+     Site reveal: 3.1s | Overlay out: 3.6s | Force: ?intro=1
+  ─────────────────────────────────────────────────────────── */
   (function () {
     var overlay     = document.getElementById('intro-overlay');
     var siteContent = document.getElementById('site-content');
@@ -681,7 +669,8 @@
 
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow            = 'hidden';
-    var revealTimer, removeTimer;
+
+    var timers = [];
 
     function unlockScroll() {
       document.documentElement.style.overflow = '';
@@ -689,8 +678,7 @@
     }
 
     function skipNow() {
-      clearTimeout(revealTimer);
-      clearTimeout(removeTimer);
+      timers.forEach(clearTimeout);
       sessionStorage.setItem('gloKartsIntroPlayed', 'true');
       unlockScroll();
       siteContent.classList.add('revealed');
@@ -705,12 +693,31 @@
     var skipBtn = document.getElementById('intro-skip-btn');
     if (skipBtn) skipBtn.addEventListener('click', skipNow);
 
-    revealTimer = setTimeout(function () { siteContent.classList.add('revealed'); }, 2300);
-    removeTimer = setTimeout(function () {
+    var g  = document.getElementById('il-g');
+    var l  = document.getElementById('il-l');
+    var o  = document.getElementById('il-o');
+    var kt = document.getElementById('il-karts');
+    var ch = document.getElementById('il-chicago');
+
+    timers.push(setTimeout(function () { if (g)  g.classList.add('lit');      }, 1000));
+    timers.push(setTimeout(function () { if (l)  l.classList.add('lit');      }, 1150));
+    timers.push(setTimeout(function () { if (o)  o.classList.add('lit');      }, 1300));
+    timers.push(setTimeout(function () { if (kt) kt.classList.add('visible'); }, 1800));
+    timers.push(setTimeout(function () { if (ch) ch.classList.add('visible'); }, 2500));
+
+    timers.push(setTimeout(function () {
+      siteContent.classList.add('revealed');
+    }, 3100));
+
+    timers.push(setTimeout(function () {
       sessionStorage.setItem('gloKartsIntroPlayed', 'true');
       unlockScroll();
-      if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
-    }, 3500);
+      overlay.style.opacity       = '0';
+      overlay.style.pointerEvents = 'none';
+      setTimeout(function () {
+        if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+      }, 700);
+    }, 3600));
   })();
 
   /* ── Booking Modal ────────────────────────────────────── */
