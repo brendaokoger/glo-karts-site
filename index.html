@@ -189,6 +189,188 @@
     }
     @-webkit-keyframes iSkipIn { from { opacity:0; } to { opacity:1; } }
     @keyframes iSkipIn { from { opacity:0; } to { opacity:1; } }
+
+    /* ── Logo exit (crossfade to kart scene) ──────────────── */
+    .intro-logo.exit {
+      opacity: 0;
+      -webkit-transition: opacity 0.55s ease;
+      transition: opacity 0.55s ease;
+    }
+
+    /* ── Scene 3: Glo Kart Reveal ─────────────────────────── */
+    .intro-kart-scene {
+      position: absolute; inset: 0;
+      display: -webkit-flex; display: flex;
+      -webkit-align-items: center; align-items: center;
+      -webkit-justify-content: center; justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      -webkit-transition: opacity 0.55s ease;
+      transition: opacity 0.55s ease;
+    }
+    .intro-kart-scene.active { opacity: 1; }
+
+    /* Kart wrap — contains image, light layers, beams */
+    .kart-wrap {
+      position: relative;
+      width: 88vw; max-width: 980px;
+      overflow: hidden;
+      -webkit-isolation: isolate;
+      isolation: isolate;
+      will-change: transform;
+      -webkit-transform-origin: center center;
+      transform-origin: center center;
+    }
+    .kart-wrap.push {
+      -webkit-animation: kartPush 3s cubic-bezier(0.25,0.05,0.1,1) forwards;
+      animation:         kartPush 3s cubic-bezier(0.25,0.05,0.1,1) forwards;
+    }
+    @-webkit-keyframes kartPush {
+      from { -webkit-transform: scale(1); }
+      to   { -webkit-transform: scale(1.09); }
+    }
+    @keyframes kartPush {
+      from { transform: scale(1); }
+      to   { transform: scale(1.09); }
+    }
+
+    /* Kart image — starts as pure silhouette */
+    .kart-reveal-img {
+      display: block; width: 100%; height: auto;
+      -webkit-filter: brightness(0.07) contrast(1.2);
+      filter: brightness(0.07) contrast(1.2);
+    }
+    .kart-reveal-img.lit {
+      -webkit-animation: kartBrighten 3.2s ease-out forwards;
+      animation:         kartBrighten 3.2s ease-out forwards;
+    }
+    @-webkit-keyframes kartBrighten {
+      0%   { -webkit-filter: brightness(0.07) contrast(1.2); }
+      16%  { -webkit-filter: brightness(0.16) contrast(1.12); }
+      34%  { -webkit-filter: brightness(0.34) contrast(1.06); }
+      55%  { -webkit-filter: brightness(0.55) contrast(1.03); }
+      76%  { -webkit-filter: brightness(0.78) contrast(1.01); }
+      100% { -webkit-filter: brightness(1)    contrast(1); }
+    }
+    @keyframes kartBrighten {
+      0%   { filter: brightness(0.07) contrast(1.2); }
+      16%  { filter: brightness(0.16) contrast(1.12); }
+      34%  { filter: brightness(0.34) contrast(1.06); }
+      55%  { filter: brightness(0.55) contrast(1.03); }
+      76%  { filter: brightness(0.78) contrast(1.01); }
+      100% { filter: brightness(1)    contrast(1); }
+    }
+
+    /* Light-source layers — all screen-blended over the dark image */
+    .kl {
+      position: absolute; inset: 0;
+      pointer-events: none; opacity: 0;
+      mix-blend-mode: screen;
+    }
+
+    /* 1. LED Headlights — cool white-blue, front of vehicle */
+    .kl-head {
+      background:
+        radial-gradient(ellipse 14% 9% at 34% 65%, rgba(225,242,255,0.95) 0%, rgba(185,225,255,0.5) 42%, transparent 68%),
+        radial-gradient(ellipse 11% 7% at 48% 65%, rgba(215,238,255,0.9)  0%, rgba(178,220,255,0.45) 42%, transparent 68%),
+        radial-gradient(ellipse 35% 20% at 41% 70%, rgba(0,195,255,0.13)  0%, transparent 65%);
+      -webkit-transition: opacity 0.45s ease;
+      transition: opacity 0.45s ease;
+    }
+    /* 2. Interior / dashboard — warm white with dash blue */
+    .kl-int {
+      background:
+        radial-gradient(ellipse 22% 15% at 49% 40%, rgba(255,248,225,0.72) 0%, rgba(255,242,205,0.3) 52%, transparent 74%),
+        radial-gradient(ellipse 14% 9%  at 49% 33%, rgba(0,195,255,0.28)   0%, transparent 58%);
+      -webkit-transition: opacity 0.65s ease;
+      transition: opacity 0.65s ease;
+    }
+    /* 3. Side underglow — electric blue, hugs the ground */
+    .kl-glow {
+      background:
+        radial-gradient(ellipse 88% 18% at 50% 93%, rgba(0,195,255,0.78)  0%, rgba(0,160,255,0.42) 44%, transparent 68%),
+        radial-gradient(ellipse 58% 8%  at 50% 97%, rgba(0,220,255,0.55)  0%, transparent 55%);
+      -webkit-transition: opacity 0.55s ease;
+      transition: opacity 0.55s ease;
+    }
+    /* 4. Accent + wheel lighting — sides, roofline, wheel wells */
+    .kl-acc {
+      background:
+        radial-gradient(ellipse 6%  38% at 11% 56%, rgba(0,195,255,0.4)  0%, transparent 58%),
+        radial-gradient(ellipse 6%  38% at 89% 56%, rgba(0,195,255,0.4)  0%, transparent 58%),
+        radial-gradient(ellipse 68% 5%  at 50% 19%, rgba(0,195,255,0.18) 0%, transparent 62%),
+        radial-gradient(ellipse 18% 10% at 21% 76%, rgba(0,195,255,0.48) 0%, transparent 58%),
+        radial-gradient(ellipse 18% 10% at 77% 76%, rgba(0,195,255,0.48) 0%, transparent 58%);
+      -webkit-transition: opacity 0.72s ease;
+      transition: opacity 0.72s ease;
+    }
+    .kl.on { opacity: 1; }
+
+    /* Second sweep beam — over the kart */
+    .kart-beam {
+      position: absolute; top: 0; bottom: 0; left: -24%;
+      width: 24%; pointer-events: none;
+      background: linear-gradient(to right,
+        transparent             0%,
+        rgba(0,195,255,0.015) 22%,
+        rgba(0,195,255,0.1)   44%,
+        rgba(0,195,255,0.28)  50%,
+        rgba(0,195,255,0.1)   56%,
+        rgba(0,195,255,0.015) 78%,
+        transparent           100%
+      );
+    }
+    .kart-beam::after {
+      content: '';
+      position: absolute; left: 50%; top: 0; bottom: 0;
+      width: 1px;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+      background: rgba(0,220,255,0.88);
+      box-shadow: 0 0 5px rgba(0,210,255,0.9), 0 0 12px rgba(0,195,255,0.5);
+    }
+    .kart-beam.sweep {
+      -webkit-animation: kartBeamSweep 1.25s cubic-bezier(0.42,0,0.58,1) forwards;
+      animation:         kartBeamSweep 1.25s cubic-bezier(0.42,0,0.58,1) forwards;
+    }
+    @-webkit-keyframes kartBeamSweep {
+      from { -webkit-transform: translateX(0); }
+      to   { -webkit-transform: translateX(520%); }
+    }
+    @keyframes kartBeamSweep {
+      from { transform: translateX(0); }
+      to   { transform: translateX(520%); }
+    }
+
+    /* Cinematic reflection — thin diagonal highlight sweeps the body */
+    .kart-refl {
+      position: absolute; top: 0; bottom: 0; left: -30%;
+      width: 30%; pointer-events: none;
+      background: linear-gradient(
+        110deg,
+        transparent           0%,
+        transparent          34%,
+        rgba(255,255,255,0)  41%,
+        rgba(255,255,255,0.11) 48%,
+        rgba(255,255,255,0.2)  50%,
+        rgba(255,255,255,0.11) 52%,
+        rgba(255,255,255,0)  59%,
+        transparent          66%,
+        transparent          100%
+      );
+    }
+    .kart-refl.sweep {
+      -webkit-animation: reflSweep 1.7s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+      animation:         reflSweep 1.7s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+    }
+    @-webkit-keyframes reflSweep {
+      from { -webkit-transform: translateX(0);    opacity: 1; }
+      to   { -webkit-transform: translateX(445%); opacity: 0.2; }
+    }
+    @keyframes reflSweep {
+      from { transform: translateX(0);    opacity: 1; }
+      to   { transform: translateX(445%); opacity: 0.2; }
+    }
   </style>
 </head>
 
@@ -197,7 +379,7 @@
 <!-- ── Luxury Intro ───────────────────────────────────────── -->
 <div id="intro-overlay" role="presentation" aria-hidden="true">
   <div class="intro-beam"></div>
-  <div class="intro-logo" aria-label="Glo Karts Chicago Tours">
+  <div class="intro-logo" id="intro-logo-wrap" aria-label="Glo Karts Chicago Tours">
     <div class="intro-glo">
       <span class="intro-letter" id="il-g">G</span>
       <span class="intro-letter" id="il-l">L</span>
@@ -206,6 +388,20 @@
     <div class="intro-karts" id="il-karts">KARTS</div>
     <div class="intro-chicago" id="il-chicago">CHICAGO TOURS</div>
   </div>
+  <!-- Scene 3: Glo Kart reveal -->
+  <div class="intro-kart-scene" id="scene-kart">
+    <div class="kart-wrap" id="kart-wrap">
+      <img src="./glo-karts-hero.png" class="kart-reveal-img" id="kart-img"
+           alt="Glo Karts luxury electric vehicle" />
+      <div class="kl kl-head" id="kl-head"></div>
+      <div class="kl kl-int"  id="kl-int"></div>
+      <div class="kl kl-glow" id="kl-glow"></div>
+      <div class="kl kl-acc"  id="kl-acc"></div>
+      <div class="kart-beam"  id="kart-beam"></div>
+      <div class="kart-refl"  id="kart-refl"></div>
+    </div>
+  </div>
+
   <button class="intro-skip" id="intro-skip-btn" type="button">Skip</button>
 </div>
 
@@ -693,21 +889,79 @@
     var skipBtn = document.getElementById('intro-skip-btn');
     if (skipBtn) skipBtn.addEventListener('click', skipNow);
 
-    var g  = document.getElementById('il-g');
-    var l  = document.getElementById('il-l');
-    var o  = document.getElementById('il-o');
-    var kt = document.getElementById('il-karts');
-    var ch = document.getElementById('il-chicago');
+    /* ── Element refs ─────────────────────────────────── */
+    var g       = document.getElementById('il-g');
+    var l       = document.getElementById('il-l');
+    var o       = document.getElementById('il-o');
+    var kt      = document.getElementById('il-karts');
+    var ch      = document.getElementById('il-chicago');
+    var logoEl  = document.getElementById('intro-logo-wrap');
+    var sceneK  = document.getElementById('scene-kart');
+    var kartImg = document.getElementById('kart-img');
+    var kartWp  = document.getElementById('kart-wrap');
+    var klHead  = document.getElementById('kl-head');
+    var klInt   = document.getElementById('kl-int');
+    var klGlow  = document.getElementById('kl-glow');
+    var klAcc   = document.getElementById('kl-acc');
+    var kBeam   = document.getElementById('kart-beam');
+    var kRefl   = document.getElementById('kart-refl');
 
+    /* ── Scene 1+2: Logo reveal ───────────────────────── */
     timers.push(setTimeout(function () { if (g)  g.classList.add('lit');      }, 1000));
     timers.push(setTimeout(function () { if (l)  l.classList.add('lit');      }, 1150));
     timers.push(setTimeout(function () { if (o)  o.classList.add('lit');      }, 1300));
     timers.push(setTimeout(function () { if (kt) kt.classList.add('visible'); }, 1800));
     timers.push(setTimeout(function () { if (ch) ch.classList.add('visible'); }, 2500));
 
+    /* ── Scene 3: Kart reveal ─────────────────────────── */
+    /* Logo fades, kart scene crossfades in as dark silhouette */
+    timers.push(setTimeout(function () {
+      if (logoEl) logoEl.classList.add('exit');
+    }, 3050));
+    timers.push(setTimeout(function () {
+      if (sceneK) sceneK.classList.add('active');
+    }, 3350));
+
+    /* Beam sweeps the silhouette + brightness animation begins */
+    timers.push(setTimeout(function () {
+      if (kartImg) kartImg.classList.add('lit');
+      if (kBeam)   kBeam.classList.add('sweep');
+    }, 3500));
+
+    /* 1 — LED headlights power on */
+    timers.push(setTimeout(function () {
+      if (klHead) klHead.classList.add('on');
+    }, 3950));
+
+    /* 2 — Interior dashboard + seating lights */
+    timers.push(setTimeout(function () {
+      if (klInt) klInt.classList.add('on');
+    }, 4650));
+
+    /* 3 — Side underglow activates */
+    timers.push(setTimeout(function () {
+      if (klGlow) klGlow.classList.add('on');
+    }, 5300));
+
+    /* 4 — Accent + wheel lighting completes the sequence */
+    timers.push(setTimeout(function () {
+      if (klAcc) klAcc.classList.add('on');
+    }, 5950));
+
+    /* Cinematic camera push — slow scale toward the kart */
+    timers.push(setTimeout(function () {
+      if (kartWp) kartWp.classList.add('push');
+    }, 6100));
+
+    /* Reflection sweep — highlight travels across the body */
+    timers.push(setTimeout(function () {
+      if (kRefl) kRefl.classList.add('sweep');
+    }, 6600));
+
+    /* ── Transition to homepage ────────────────────────── */
     timers.push(setTimeout(function () {
       siteContent.classList.add('revealed');
-    }, 3100));
+    }, 7600));
 
     timers.push(setTimeout(function () {
       sessionStorage.setItem('gloKartsIntroPlayed', 'true');
@@ -717,7 +971,7 @@
       setTimeout(function () {
         if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
       }, 700);
-    }, 3600));
+    }, 8100));
   })();
 
   /* ── Booking Modal ────────────────────────────────────── */
