@@ -180,7 +180,7 @@
       <a href="#faq">FAQ</a>
     </nav>
 
-    <button class="btn-book-header hd-only" id="btn-book-header" type="button">BOOK NOW</button>
+    <button class="btn-book-header hd-only" id="btn-book-header" type="button">JOIN WAITLIST</button>
 
     <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -192,7 +192,7 @@
     <a href="#tours"   class="mobile-link">Tours</a>
     <a href="#private" class="mobile-link">Private Events</a>
     <a href="#faq"     class="mobile-link">FAQ</a>
-    <button class="btn btn-primary mobile-link" id="btn-book-mobile" type="button" style="align-self:flex-start;margin-top:0.5rem;">BOOK NOW</button>
+    <button class="btn btn-primary mobile-link" id="btn-book-mobile" type="button" style="align-self:flex-start;margin-top:0.5rem;">JOIN WAITLIST</button>
   </nav>
 
 
@@ -207,7 +207,7 @@
       <div class="hero-text">
         <div class="hero-eyebrow">
           <span class="eyebrow-dot"></span>
-          Now Booking &middot; Chicago, IL
+          Launching Soon &middot; Chicago, IL
         </div>
 
         <h1 class="hero-headline" id="hero-headline">
@@ -243,7 +243,7 @@
         </div>
 
         <div class="hero-cta">
-          <button class="btn btn-primary" id="btn-book-tour" type="button">BOOK YOUR TOUR &nbsp;&#8594;</button>
+          <button class="btn btn-primary" id="btn-book-tour" type="button">JOIN THE VIP WAITLIST &nbsp;&#8594;</button>
           <button class="btn btn-ghost"   id="btn-watch"     type="button">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
             WATCH EXPERIENCE
@@ -254,34 +254,21 @@
   </section>
 
 
-  <!-- ── Booking Bar ──────────────────────────────────────── -->
-  <div id="booking-bar" role="search" aria-label="Book a tour">
+  <!-- ── Waitlist Bar ────────────────────────────────────── -->
+  <div id="booking-bar" role="form" aria-label="Join the VIP waitlist">
     <div class="booking-inner">
       <div class="booking-field">
-        <label for="book-date">Tour Date</label>
-        <select id="book-date">
-          <option value="">Select Date</option>
-          <option>Tonight</option>
-          <option>Tomorrow</option>
-          <option>This Weekend</option>
-          <option>Pick a date&hellip;</option>
-        </select>
+        <label for="book-name">Your Name</label>
+        <input id="book-name" type="text" placeholder="Full name" autocomplete="name" />
       </div>
       <div class="booking-field">
-        <label for="book-time">Time</label>
-        <select id="book-time">
-          <option value="">Select Time</option>
-          <option>6:00 PM</option>
-          <option>7:00 PM</option>
-          <option>8:00 PM</option>
-          <option>9:00 PM</option>
-          <option>10:00 PM</option>
-        </select>
+        <label for="book-email">Email Address</label>
+        <input id="book-email" type="email" placeholder="you@example.com" autocomplete="email" />
       </div>
       <div class="booking-field">
-        <label for="book-tour-sel">Tour</label>
+        <label for="book-tour-sel">Experience</label>
         <select id="book-tour-sel">
-          <option value="">All Tours</option>
+          <option value="">Any Experience</option>
           <option>Chicago After Dark</option>
           <option>Riverwalk Glow Tour</option>
           <option>Navy Pier Lights</option>
@@ -289,18 +276,17 @@
         </select>
       </div>
       <div class="booking-field">
-        <label for="book-guests">Guests</label>
+        <label for="book-guests">Group Size</label>
         <select id="book-guests">
-          <option value="2">2 Guests</option>
-          <option value="3">3 Guests</option>
-          <option value="4">4 Guests</option>
-          <option value="5">5 Guests</option>
-          <option value="6">6 Guests</option>
-          <option value="7">7+ Guests</option>
+          <option value="">Select Size</option>
+          <option value="2">1–2 Guests</option>
+          <option value="4">3–5 Guests</option>
+          <option value="6">6–10 Guests</option>
+          <option value="10">11+ Guests</option>
         </select>
       </div>
       <div class="booking-submit">
-        <button type="button" id="btn-check-avail">CHECK AVAILABILITY</button>
+        <button type="button" id="btn-check-avail">GET EARLY ACCESS</button>
       </div>
     </div>
   </div>
@@ -346,14 +332,12 @@
         <div class="why-card reveal">
           <div class="why-icon">
             <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-              <line x1="16" y1="2" x2="16" y2="6"/>
-              <line x1="8"  y1="2" x2="8"  y2="6"/>
-              <line x1="3"  y1="10" x2="21" y2="10"/>
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 11 14 15 10"/>
             </svg>
           </div>
-          <h3>Easy Booking</h3>
-          <p>Reserve your experience online in just minutes, 24/7.</p>
+          <h3>VIP Access</h3>
+          <p>Join our waitlist and be first to secure your spot when we launch in Chicago.</p>
         </div>
 
       </div>
@@ -380,7 +364,7 @@
               <span>2 Hours</span>
             </div>
             <button class="tc-arrow" type="button" id="btn-tour-1">
-              Book Now
+              Get Early Access
               <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
           </div>
@@ -397,7 +381,7 @@
               <span>90 Minutes</span>
             </div>
             <button class="tc-arrow" type="button" id="btn-tour-2">
-              Book Now
+              Get Early Access
               <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
           </div>
@@ -414,7 +398,7 @@
               <span>2 Hours</span>
             </div>
             <button class="tc-arrow" type="button" id="btn-tour-3">
-              Book Now
+              Get Early Access
               <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
           </div>
@@ -440,7 +424,7 @@
       </div>
 
       <div class="tours-view-all reveal">
-        <button class="btn btn-outline-blue" type="button" id="btn-view-tours">VIEW ALL TOURS</button>
+        <button class="btn btn-outline-blue" type="button" id="btn-view-tours">EXPLORE ALL EXPERIENCES</button>
       </div>
     </div>
   </section>
@@ -485,8 +469,8 @@
     </div>
     <div class="cta-inner">
       <h2 class="cta-headline reveal">CHICAGO<br>IS WAITING</h2>
-      <p class="cta-sub reveal">Book your unforgettable night.</p>
-      <button class="btn btn-primary reveal" id="btn-reserve" type="button">RESERVE YOUR TOUR &nbsp;&#8594;</button>
+      <p class="cta-sub reveal">Be the first to experience the glo.</p>
+      <button class="btn btn-primary reveal" id="btn-reserve" type="button">JOIN THE VIP WAITLIST &nbsp;&#8594;</button>
     </div>
   </section>
 
@@ -542,7 +526,7 @@
 
   <!-- Mobile sticky CTA -->
   <div class="mobile-sticky-cta" id="mobile-sticky-cta">
-    <button type="button" id="btn-book-sticky">BOOK YOUR TOUR</button>
+    <button type="button" id="btn-book-sticky">JOIN THE VIP WAITLIST</button>
   </div>
 
 </div><!-- /#site-content -->
@@ -553,18 +537,18 @@
   <div class="glo-modal-backdrop"></div>
   <div class="glo-modal-card">
     <button class="glo-modal-close" type="button" aria-label="Close">&#x2715;</button>
-    <p class="glo-modal-eyebrow">Reservations</p>
-    <h2 class="glo-modal-heading">Book Your Tour</h2>
-    <p class="glo-modal-sub">Fill in your details and we'll confirm your spot on the Glo.</p>
+    <p class="glo-modal-eyebrow">Early Access</p>
+    <h2 class="glo-modal-heading">Join the VIP Waitlist</h2>
+    <p class="glo-modal-sub">Be the first to experience Chicago's most exclusive electric night tour. We'll notify you the moment bookings open.</p>
 
     <div id="booking-success" class="glo-modal-success" role="alert">
       <div class="check">&#10003;</div>
-      <h3>You're confirmed!</h3>
-      <p>We'll reach out shortly to lock in your booking. Chicago is waiting.</p>
+      <h3>You're on the list!</h3>
+      <p>We'll notify you the moment bookings open. Get ready — Chicago's most exclusive experience is coming soon.</p>
     </div>
 
     <form id="booking-form" class="glo-form" method="POST" action="https://formspree.io/f/mjglqega" novalidate>
-      <input type="hidden" name="form-name" value="Tour Booking" />
+      <input type="hidden" name="form-name" value="VIP Waitlist" />
       <div class="glo-form-row">
         <div class="form-group">
           <label for="bk-name">Full Name <span style="color:#444">*</span></label>
@@ -590,24 +574,25 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="bk-tour-m">Tour</label>
-        <select id="bk-tour-m" name="tour">
-          <option value="" disabled selected>Select a tour</option>
+        <label for="bk-tour-m">Experience Interest</label>
+        <select id="bk-tour-m" name="experience_interest">
+          <option value="" disabled selected>Select an experience</option>
           <option>Chicago After Dark</option>
           <option>Riverwalk Glow Tour</option>
           <option>Navy Pier Lights</option>
           <option>Private Glo Experience</option>
+          <option>Surprise me!</option>
         </select>
       </div>
       <div class="form-group">
-        <label for="bk-date-m">Preferred Date</label>
-        <input id="bk-date-m" name="preferred_date" type="date" />
+        <label for="bk-date-m">When are you visiting Chicago?</label>
+        <input id="bk-date-m" name="visit_timeframe" type="text" placeholder="e.g. Summer 2025, TBD…" />
       </div>
       <div class="form-group">
-        <label for="bk-notes">Anything else?</label>
-        <textarea id="bk-notes" name="message" placeholder="Special requests, occasion, group details…" style="min-height:80px;"></textarea>
+        <label for="bk-notes">Anything to share?</label>
+        <textarea id="bk-notes" name="message" placeholder="Special occasion, group details, questions…" style="min-height:80px;"></textarea>
       </div>
-      <button type="submit" id="bk-submit" class="glo-form-submit">CONFIRM RESERVATION</button>
+      <button type="submit" id="bk-submit" class="glo-form-submit">SECURE MY SPOT &nbsp;&#8594;</button>
     </form>
   </div>
 </div>
@@ -864,8 +849,8 @@
             if (success) success.classList.add('visible');
           } else {
             submitBtn.disabled    = false;
-            submitBtn.textContent = 'CONFIRM RESERVATION';
-            alert('Something went wrong. Please email info@glokarts.com.');
+            submitBtn.textContent = 'SECURE MY SPOT →';
+            alert('Something went wrong. Please email us at info@glokarts.com.');
           }
         })
         .catch(function () {

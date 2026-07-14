@@ -50,15 +50,26 @@ if (header) {
   }, { passive: true });
 }
 
-/* ── Hide mobile sticky CTA when booking bar is visible ── */
-var bookingBar     = document.getElementById('booking-bar');
+/* ── Mobile sticky CTA: visible only after hero exits, hides at booking bar ── */
 var mobileStickyEl = document.getElementById('mobile-sticky-cta');
-
-if (bookingBar && mobileStickyEl && 'IntersectionObserver' in window) {
-  var barObserver = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      mobileStickyEl.style.display = entry.isIntersecting ? 'none' : '';
-    });
-  }, { threshold: 0.1 });
-  barObserver.observe(bookingBar);
+if (mobileStickyEl && 'IntersectionObserver' in window) {
+  var _heroVis = true;
+  var _barVis  = false;
+  function _updateSticky() {
+    mobileStickyEl.style.display = (!_heroVis && !_barVis) ? '' : 'none';
+  }
+  var _heroEl = document.getElementById('hero');
+  if (_heroEl) {
+    new IntersectionObserver(function (entries) {
+      _heroVis = entries[0].isIntersecting;
+      _updateSticky();
+    }, { threshold: 0.05 }).observe(_heroEl);
+  }
+  var _barEl = document.getElementById('booking-bar');
+  if (_barEl) {
+    new IntersectionObserver(function (entries) {
+      _barVis = entries[0].isIntersecting;
+      _updateSticky();
+    }, { threshold: 0.1 }).observe(_barEl);
+  }
 }
