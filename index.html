@@ -505,9 +505,9 @@
 <script src="./main.js"></script>
 
 <script>
-  /* ── Glo Karts Intro — cinematic smoke reveal ──────────────
-     Smoke covers the screen. A hand sweeps in from the right,
-     pushes the smoke away, and the homepage is revealed beneath.
+  /* ── Glo Karts Intro — kart drives through smoke ────────────
+     Smoke covers the screen. The Glo Kart rolls in from the right,
+     pushes smoke away, and the homepage is revealed in its wake.
      Force replay: ?intro=1
   ─────────────────────────────────────────────────────────── */
   (function () {
@@ -547,11 +547,15 @@
     function eo2(t)  { return 1 - (1-t)*(1-t); }
 
     /* ── Smoke particles ──────────────────────────────────── */
-    var TOTAL_MS  = 4400;
-    var NP = clamp(Math.floor((W * H) / 4500), 140, 280);
-    var particles = [];
+    var TOTAL_MS = 4600;
+    var KART_IN  = 440;
+    var KART_OUT = 3200;
+    var PUSH_R   = 300;
+
+    var NP   = clamp(Math.floor((W * H) / 4500), 140, 280);
     var cols = Math.ceil(Math.sqrt(NP * (W / H)));
     var rows = Math.ceil(NP / cols);
+    var particles = [];
 
     for (var pi = 0; pi < NP; pi++) {
       var col = pi % cols;
@@ -580,205 +584,199 @@
       });
     }
 
-    /* ── Hand silhouette ──────────────────────────────────── */
-    function drawHand(cx, cy, progress) {
-      var sc = clamp(Math.min(W,H)/720, 0.6, 1.4);
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(-0.08 - progress * 0.08);
-      ctx.scale(sc, sc);
-
-      ctx.shadowColor = 'rgba(0,135,255,0.82)';
-      ctx.shadowBlur  = 42;
-      var hc = 'rgba(13,13,17,0.98)';
-      ctx.fillStyle = hc;
-
-      /* Arm / wrist — extends right off screen */
-      ctx.beginPath();
-      ctx.moveTo(88, -40);
-      ctx.bezierCurveTo(160,-36, 260,-26, 340,-20);
-      ctx.lineTo(340, 44);
-      ctx.bezierCurveTo(260,48, 160,50, 88,50);
-      ctx.closePath();
-      ctx.fill();
-
-      /* Palm */
-      ctx.shadowBlur = 28;
-      ctx.beginPath();
-      ctx.moveTo(-85,-55);
-      ctx.bezierCurveTo(-40,-58, 40,-58, 88,-52);
-      ctx.bezierCurveTo(96,-25, 94,22, 90,55);
-      ctx.bezierCurveTo(55,68, 10,72, -22,70);
-      ctx.bezierCurveTo(-60,68, -88,38, -88,-5);
-      ctx.bezierCurveTo(-88,-32, -85,-55, -85,-55);
-      ctx.closePath();
-      ctx.fill();
-
-      /* Four fingers — spread slightly, pointing upward */
-      ctx.shadowBlur = 16;
-      var fgrs = [
-        { x:-52, a:-0.18, l:105, w:19 },
-        { x:-17, a:-0.06, l:120, w:22 },
-        { x: 17, a: 0.04, l:112, w:20 },
-        { x: 50, a: 0.14, l: 94, w:17 }
-      ];
-      fgrs.forEach(function(f) {
-        ctx.save();
-        ctx.translate(f.x, -55);
-        ctx.rotate(f.a);
-        ctx.fillStyle = hc;
-        ctx.beginPath();
-        var hw = f.w/2;
-        ctx.moveTo(-hw, 0);
-        ctx.lineTo(-hw, -(f.l-hw));
-        ctx.arc(0, -(f.l-hw), hw, Math.PI, 0, false);
-        ctx.lineTo(hw, 0);
-        ctx.arc(0, 0, hw, 0, Math.PI, false);
-        ctx.closePath();
-        ctx.fill();
-        ctx.restore();
-      });
-
-      /* Thumb — lower-left of palm */
-      ctx.save();
-      ctx.translate(-55, 38);
-      ctx.rotate(-0.8);
-      ctx.fillStyle = hc;
-      ctx.beginPath();
-      var tw = 17;
-      ctx.moveTo(-tw, 0);
-      ctx.lineTo(-tw, -76);
-      ctx.arc(0, -76, tw, Math.PI, 0, false);
-      ctx.lineTo(tw, 0);
-      ctx.arc(0, 0, tw, 0, Math.PI, false);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-
-      ctx.restore();
-    }
-
-    /* ── Animation loop ───────────────────────────────────── */
+    /* ── Kart image — load & build vignette mask ─────────── */
+    var kartDW = 0, kartDH = 0;
+    var kartMask = document.createElement('canvas');
+    var kmctx    = kartMask.getContext('2d');
+    var kartReady = false;
+    var skipped   = false;
     var rafId;
-    var startMs    = null;
-    var revStarted = false;
 
-    var HAND_IN_MS  = 480;
-    var HAND_OUT_MS = 2650;
-    var PUSH_R      = 265;
+    var kartImg = new Image();
+    kartImg.onload = function () {
+      var aspect = kartImg.naturalWidth / kartImg.naturalHeight;
+      kartDH = Math.round(H * 0.90);
+      kartDW = Math.round(kartDH * aspect);
+      kartMask.width  = kartDW;
+      kartMask.height = kartDH;
 
-    function getHand(ms) {
-      if (ms < HAND_IN_MS || ms > HAND_OUT_MS + 280) return null;
-      var p  = clamp((ms - HAND_IN_MS) / (HAND_OUT_MS - HAND_IN_MS), 0, 1);
+      kmctx.drawImage(kartImg, 0, 0, kartDW, kartDH);
+
+      /* Two destination-in passes for a 2-D soft vignette */
+      kmctx.globalCompositeOperation = 'destination-in';
+
+      /* Pass 1 — vertical: fade top sky heavily, keep kart solid */
+      var mv = kmctx.createLinearGradient(0, 0, 0, kartDH);
+      mv.addColorStop(0,    'rgba(0,0,0,0)');
+      mv.addColorStop(0.08, 'rgba(0,0,0,0.6)');
+      mv.addColorStop(0.20, 'rgba(0,0,0,1)');
+      mv.addColorStop(0.88, 'rgba(0,0,0,1)');
+      mv.addColorStop(1,    'rgba(0,0,0,0.15)');
+      kmctx.fillStyle = mv;
+      kmctx.fillRect(0, 0, kartDW, kartDH);
+
+      /* Pass 2 — horizontal: keep front (left) sharp, fade rear (right) */
+      var mh = kmctx.createLinearGradient(0, 0, kartDW, 0);
+      mh.addColorStop(0,    'rgba(0,0,0,1)');
+      mh.addColorStop(0.58, 'rgba(0,0,0,0.95)');
+      mh.addColorStop(0.82, 'rgba(0,0,0,0.40)');
+      mh.addColorStop(1,    'rgba(0,0,0,0)');
+      kmctx.fillStyle = mh;
+      kmctx.fillRect(0, 0, kartDW, kartDH);
+
+      kmctx.globalCompositeOperation = 'source-over';
+      kartReady = true;
+      if (!skipped) rafId = requestAnimationFrame(frame);
+    };
+    kartImg.onerror = function () {
+      if (!skipped) rafId = requestAnimationFrame(frame);
+    };
+    kartImg.src = './glo-karts-cart.jpeg';
+
+    /* ── Kart position (image left edge = front of kart) ─── */
+    function getKart(ms) {
+      if (ms < KART_IN) return null;
+      var p  = clamp((ms - KART_IN) / (KART_OUT - KART_IN), 0, 1);
       var ep = eio3(p);
       return {
-        x: lerp(W+210, -215, ep),
-        y: lerp(H*0.44, H*0.36, ep),
-        p: p, ep: ep
+        imgX: lerp(W + 60, -(kartDW + 60), ep),
+        imgY: H - kartDH * 0.95,
+        p: p
       };
     }
 
+    /* ── Draw kart with headlights + underglow ────────────── */
+    function drawKart(kp) {
+      if (!kartReady) return;
+      var ix = kp.imgX, iy = kp.imgY;
+
+      /* Headlight cone — projects leftward from kart nose */
+      ctx.save();
+      var hlX = ix + kartDW * 0.04;
+      var hlY = iy + kartDH * 0.50;
+      var coneLen = kartDW * 0.6;
+      ctx.beginPath();
+      ctx.moveTo(hlX, hlY);
+      ctx.lineTo(hlX - coneLen, hlY - coneLen * 0.42);
+      ctx.lineTo(hlX - coneLen, hlY + coneLen * 0.42);
+      ctx.closePath();
+      var beam = ctx.createLinearGradient(hlX, hlY, hlX - coneLen, hlY);
+      beam.addColorStop(0,   'rgba(210,240,255,0.38)');
+      beam.addColorStop(0.45,'rgba(0,195,255,0.14)');
+      beam.addColorStop(1,   'rgba(0,195,255,0)');
+      ctx.fillStyle = beam;
+      ctx.fill();
+      ctx.restore();
+
+      /* Kart image (vignette-masked) */
+      ctx.drawImage(kartMask, ix, iy);
+
+      /* Blue LED underglow on ground */
+      var ugX = ix + kartDW * 0.40;
+      var ugY = iy + kartDH * 0.98;
+      var ug  = ctx.createRadialGradient(ugX, ugY, 0, ugX, ugY, kartDW * 0.65);
+      ug.addColorStop(0,   'rgba(0,195,255,0.55)');
+      ug.addColorStop(0.38,'rgba(0,195,255,0.20)');
+      ug.addColorStop(1,   'rgba(0,195,255,0)');
+      ctx.fillStyle = ug;
+      ctx.fillRect(ugX - kartDW*0.65, ugY - 18, kartDW*1.3, 46);
+    }
+
+    /* ── Animation loop ───────────────────────────────────── */
+    var startMs    = null;
+    var revStarted = false;
+
     function frame(ts) {
+      if (skipped) return;
       if (!startMs) startMs = ts;
       var ms = ts - startMs;
       var t  = clamp(ms / TOTAL_MS, 0, 1);
 
       ctx.clearRect(0, 0, W, H);
 
-      /* Black veil fades as sweep progresses */
-      var blackA;
-      if (ms < 480) {
-        blackA = 0.98;
-      } else {
-        blackA = lerp(0.98, 0, eo2(clamp((ms-480)/2800, 0, 1)));
-      }
+      /* Black veil — full until kart enters, then fades in its wake */
+      var blackA = ms < KART_IN
+        ? 0.98
+        : lerp(0.98, 0, eo2(clamp((ms - KART_IN) / 2900, 0, 1)));
       if (blackA > 0.004) {
         ctx.fillStyle = 'rgba(0,0,0,' + blackA + ')';
         ctx.fillRect(0, 0, W, H);
       }
 
-      var hand   = getHand(ms);
+      var kp     = getKart(ms);
       var offCnt = 0;
 
-      /* Update and draw smoke particles */
+      /* Kart bounding box for surface push */
+      var kL, kR, kT, kB;
+      if (kp && kartDW > 0) {
+        kL = kp.imgX;
+        kR = kp.imgX + kartDW;
+        kT = kp.imgY + kartDH * 0.18;
+        kB = kp.imgY + kartDH * 0.96;
+      }
+
+      /* Update + draw smoke */
       for (var i = 0; i < particles.length; i++) {
         var p = particles[i];
         if (p.done) { offCnt++; continue; }
 
-        /* Natural turbulence */
+        /* Turbulence */
         p.tp += p.ts * 0.018;
         p.vx += Math.cos(p.tp) * 0.016;
         p.vy += Math.sin(p.tp) * 0.010 - 0.006;
 
-        /* Hand push force */
-        if (hand) {
-          var dx = p.x - hand.x;
-          var dy = p.y - hand.y;
-          var d2 = dx*dx + dy*dy;
-          if (d2 < PUSH_R*PUSH_R && d2 > 0.01) {
-            var d = Math.sqrt(d2);
-            var f = Math.pow(1 - d/PUSH_R, 1.8) * 15;
-            p.vx += (dx/d) * f;
-            p.vy += (dy/d) * f;
+        /* Kart body push — force from nearest surface point */
+        if (kp && kartDW > 0) {
+          var nearX = clamp(p.x, kL, kR);
+          var nearY = clamp(p.y, kT, kB);
+          var ddx   = p.x - nearX;
+          var ddy   = p.y - nearY;
+          var dd2   = ddx*ddx + ddy*ddy;
+          if (dd2 < PUSH_R*PUSH_R) {
+            var dd = Math.sqrt(dd2);
+            var ff = Math.pow(1 - (dd > 0 ? dd : 0)/PUSH_R, 1.6) * 17;
+            p.vx += (dd > 0.5 ? ddx/dd : -1) * ff;
+            p.vy += (dd > 0.5 ? ddy/dd :  0) * ff;
           }
         }
 
-        /* Leftward drift that builds after sweep begins */
-        if (ms > 1100) {
-          p.vx -= clamp((ms-1100)/1600, 0, 1) * 0.14;
+        /* Leftward drift builds after kart enters */
+        if (ms > KART_IN + 150) {
+          p.vx -= clamp((ms - KART_IN - 150) / 1900, 0, 1) * 0.13;
         }
 
-        p.vx *= 0.975;
-        p.vy *= 0.980;
-        p.x  += p.vx;
-        p.y  += p.vy;
+        p.vx *= 0.975; p.vy *= 0.980;
+        p.x  += p.vx;  p.y  += p.vy;
         p.r   = Math.min(p.br * 1.65, p.r + 0.25);
 
-        /* Off screen? */
         var mg = p.r * 1.2;
         if (p.x+mg<0 || p.x-mg>W || p.y+mg<0 || p.y-mg>H) {
           p.done = true; offCnt++; continue;
         }
 
-        /* Draw: outer halo + inner body */
-        var asc = clamp(1 - ms/4200, 0.04, 1);
+        var asc = clamp(1 - ms/4500, 0.04, 1);
         var da  = p.a * asc;
         if (da < 0.015) continue;
         var col = p.pr+','+p.pg+','+p.pb;
         ctx.globalAlpha = da * 0.48;
         ctx.fillStyle   = 'rgb('+col+')';
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r*1.55, 0, 6.28318);
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r*1.55, 0, 6.28318); ctx.fill();
         ctx.globalAlpha = da;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, 6.28318);
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.28318); ctx.fill();
       }
       ctx.globalAlpha = 1;
 
-      /* Draw hand on top of smoke */
-      if (hand) {
-        var hA = clamp(hand.p/0.06, 0, 1) * (hand.p > 0.94 ? clamp((1-hand.p)/0.06,0,1) : 1);
-        if (hA > 0.01) {
-          ctx.globalAlpha = hA;
-          drawHand(hand.x, hand.y, hand.ep);
-          ctx.globalAlpha = 1;
-        }
-      }
+      /* Draw kart on top of smoke */
+      if (kp) drawKart(kp);
 
-      /* Trigger homepage reveal */
-      if (!revStarted && (ms > 1600 || offCnt/particles.length > 0.3)) {
+      /* Reveal homepage */
+      if (!revStarted && (ms > 1700 || offCnt/particles.length > 0.3)) {
         revStarted = true;
         siteContent.classList.add('revealed');
       }
 
-      if (t >= 1) {
-        ctx.clearRect(0, 0, W, H);
-        finish();
-      } else {
-        rafId = requestAnimationFrame(frame);
-      }
+      if (t >= 1) { ctx.clearRect(0, 0, W, H); finish(); }
+      else         { rafId = requestAnimationFrame(frame); }
     }
 
     function finish() {
@@ -789,6 +787,7 @@
     }
 
     function skipNow() {
+      skipped = true;
       cancelAnimationFrame(rafId);
       siteContent.classList.add('revealed');
       finish();
@@ -797,7 +796,7 @@
     var skipBtn = document.getElementById('intro-skip-btn');
     if (skipBtn) skipBtn.addEventListener('click', skipNow);
 
-    rafId = requestAnimationFrame(frame);
+    /* Animation starts in kartImg.onload once image is ready */
   })();
 
   /* ── Booking Modal ────────────────────────────────────── */
