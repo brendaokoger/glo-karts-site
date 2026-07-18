@@ -602,28 +602,16 @@
 
       kmctx.drawImage(kartImg, 0, 0, kartDW, kartDH);
 
-      /* Two destination-in passes for a 2-D soft vignette */
+      /* PNG has clean alpha from black studio background.
+         One horizontal pass: front sharp, rear fades into smoke. */
       kmctx.globalCompositeOperation = 'destination-in';
-
-      /* Pass 1 — vertical: fade top sky heavily, keep kart solid */
-      var mv = kmctx.createLinearGradient(0, 0, 0, kartDH);
-      mv.addColorStop(0,    'rgba(0,0,0,0)');
-      mv.addColorStop(0.08, 'rgba(0,0,0,0.6)');
-      mv.addColorStop(0.20, 'rgba(0,0,0,1)');
-      mv.addColorStop(0.88, 'rgba(0,0,0,1)');
-      mv.addColorStop(1,    'rgba(0,0,0,0.15)');
-      kmctx.fillStyle = mv;
-      kmctx.fillRect(0, 0, kartDW, kartDH);
-
-      /* Pass 2 — horizontal: keep front (left) sharp, fade rear (right) */
       var mh = kmctx.createLinearGradient(0, 0, kartDW, 0);
       mh.addColorStop(0,    'rgba(0,0,0,1)');
-      mh.addColorStop(0.58, 'rgba(0,0,0,0.95)');
-      mh.addColorStop(0.82, 'rgba(0,0,0,0.40)');
+      mh.addColorStop(0.62, 'rgba(0,0,0,0.97)');
+      mh.addColorStop(0.84, 'rgba(0,0,0,0.38)');
       mh.addColorStop(1,    'rgba(0,0,0,0)');
       kmctx.fillStyle = mh;
       kmctx.fillRect(0, 0, kartDW, kartDH);
-
       kmctx.globalCompositeOperation = 'source-over';
       kartReady = true;
       if (!skipped) rafId = requestAnimationFrame(frame);
@@ -631,7 +619,7 @@
     kartImg.onerror = function () {
       if (!skipped) rafId = requestAnimationFrame(frame);
     };
-    kartImg.src = './glo-karts-cart.jpeg';
+    kartImg.src = './glo-karts-cart.png';
 
     /* ── Kart position (image left edge = front of kart) ─── */
     function getKart(ms) {
@@ -650,36 +638,36 @@
       if (!kartReady) return;
       var ix = kp.imgX, iy = kp.imgY;
 
-      /* Headlight cone — projects leftward from kart nose */
+      /* Headlight cone — projects leftward from front bumper */
       ctx.save();
-      var hlX = ix + kartDW * 0.04;
-      var hlY = iy + kartDH * 0.50;
-      var coneLen = kartDW * 0.6;
+      var hlX    = ix + kartDW * 0.22;   /* front bumper center      */
+      var hlY    = iy + kartDH * 0.64;   /* headlight strip height   */
+      var coneLen = kartDW * 0.52;
       ctx.beginPath();
       ctx.moveTo(hlX, hlY);
-      ctx.lineTo(hlX - coneLen, hlY - coneLen * 0.42);
-      ctx.lineTo(hlX - coneLen, hlY + coneLen * 0.42);
+      ctx.lineTo(hlX - coneLen, hlY - coneLen * 0.38);
+      ctx.lineTo(hlX - coneLen, hlY + coneLen * 0.38);
       ctx.closePath();
       var beam = ctx.createLinearGradient(hlX, hlY, hlX - coneLen, hlY);
-      beam.addColorStop(0,   'rgba(210,240,255,0.38)');
-      beam.addColorStop(0.45,'rgba(0,195,255,0.14)');
-      beam.addColorStop(1,   'rgba(0,195,255,0)');
+      beam.addColorStop(0,    'rgba(210,240,255,0.42)');
+      beam.addColorStop(0.40, 'rgba(0,195,255,0.16)');
+      beam.addColorStop(1,    'rgba(0,195,255,0)');
       ctx.fillStyle = beam;
       ctx.fill();
       ctx.restore();
 
-      /* Kart image (vignette-masked) */
+      /* Kart image — PNG has transparent bg, draws cleanly on dark canvas */
       ctx.drawImage(kartMask, ix, iy);
 
-      /* Blue LED underglow on ground */
-      var ugX = ix + kartDW * 0.40;
-      var ugY = iy + kartDH * 0.98;
-      var ug  = ctx.createRadialGradient(ugX, ugY, 0, ugX, ugY, kartDW * 0.65);
-      ug.addColorStop(0,   'rgba(0,195,255,0.55)');
-      ug.addColorStop(0.38,'rgba(0,195,255,0.20)');
-      ug.addColorStop(1,   'rgba(0,195,255,0)');
+      /* Blue LED underglow on ground (strip at ~79% down image) */
+      var ugX = ix + kartDW * 0.45;
+      var ugY = iy + kartDH * 0.79;
+      var ug  = ctx.createRadialGradient(ugX, ugY, 0, ugX, ugY, kartDW * 0.60);
+      ug.addColorStop(0,    'rgba(0,195,255,0.60)');
+      ug.addColorStop(0.35, 'rgba(0,195,255,0.22)');
+      ug.addColorStop(1,    'rgba(0,195,255,0)');
       ctx.fillStyle = ug;
-      ctx.fillRect(ugX - kartDW*0.65, ugY - 18, kartDW*1.3, 46);
+      ctx.fillRect(ugX - kartDW * 0.60, ugY - 14, kartDW * 1.2, 38);
     }
 
     /* ── Animation loop ───────────────────────────────────── */
