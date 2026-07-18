@@ -29,103 +29,16 @@
   <link rel="stylesheet" href="./styles.css" />
 
   <style>
-    /* ── Glo Karts Logo Intro ─────────────────────────────── */
+    /* ── Glo Karts Smoke Intro ──────────────────────────────── */
     #intro-overlay {
       position: fixed; inset: 0;
       z-index: 999999;
-      display: -webkit-flex; display: flex;
-      -webkit-align-items: center; align-items: center;
-      -webkit-justify-content: center; justify-content: center;
       overflow: hidden;
     }
 
-    /* ── Canvas: full-screen particle layer ────────────────── */
     #intro-canvas {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
-      pointer-events: none;
-    }
-
-    /* ── Logo stage: 3D perspective container ────────────── */
-    .intro-stage {
-      position: relative; z-index: 2;
-      -webkit-perspective: 900px;
-      perspective: 900px;
-      -webkit-perspective-origin: center center;
-      perspective-origin: center center;
-      display: -webkit-flex; display: flex;
-      -webkit-align-items: center; align-items: center;
-      -webkit-justify-content: center; justify-content: center;
-    }
-
-    .intro-logo-img {
-      display: block;
-      width: min(400px, 82vw);
-      height: auto;
-      opacity: 0;
-      will-change: transform, filter, opacity;
-      -webkit-transform-style: preserve-3d;
-      transform-style: preserve-3d;
-      -webkit-backface-visibility: visible;
-      backface-visibility: visible;
-      -webkit-user-select: none; user-select: none;
-      pointer-events: none;
-      -webkit-transform: rotateY(0deg);
-      transform: rotateY(0deg);
-    }
-
-    /* Single-class trigger: chained sequence + ambient glow */
-    .intro-logo-img.run {
-      -webkit-animation:
-        iLogoSeq 1.4s cubic-bezier(0.4, 0, 0.6, 1) forwards,
-        iGlow    0.7s 0.3s ease-in-out infinite;
-      animation:
-        iLogoSeq 1.4s cubic-bezier(0.4, 0, 0.6, 1) forwards,
-        iGlow    0.7s 0.3s ease-in-out infinite;
-    }
-
-    /* Fade-in → slow 360° spin → brief pause → rapid 1080° acceleration */
-    @-webkit-keyframes iLogoSeq {
-      0%  { opacity: 0; -webkit-transform: rotateY(0deg)    scale(0.94);
-            -webkit-animation-timing-function: ease-out; }
-      22% { opacity: 1; -webkit-transform: rotateY(0deg)    scale(1);
-            -webkit-animation-timing-function: linear; }
-      72% { opacity: 1; -webkit-transform: rotateY(360deg)  scale(1);
-            -webkit-animation-timing-function: ease-out; }
-      80% { opacity: 1; -webkit-transform: rotateY(360deg)  scale(1);
-            -webkit-animation-timing-function: cubic-bezier(0.18, 0, 1, 1); }
-      100%{ opacity: 1; -webkit-transform: rotateY(1440deg) scale(1.06); }
-    }
-    @keyframes iLogoSeq {
-      0%  { opacity: 0; transform: rotateY(0deg)    scale(0.94);
-            animation-timing-function: ease-out; }
-      22% { opacity: 1; transform: rotateY(0deg)    scale(1);
-            animation-timing-function: linear; }
-      72% { opacity: 1; transform: rotateY(360deg)  scale(1);
-            animation-timing-function: ease-out; }
-      80% { opacity: 1; transform: rotateY(360deg)  scale(1);
-            animation-timing-function: cubic-bezier(0.18, 0, 1, 1); }
-      100%{ opacity: 1; transform: rotateY(1440deg) scale(1.06); }
-    }
-
-    /* Ambient blue glow pulse — breathes with the logo during spin */
-    @-webkit-keyframes iGlow {
-      0%   { -webkit-filter: brightness(1.05) saturate(1.1)
-               drop-shadow(0 0 12px rgba(0,195,255,0.5)); }
-      50%  { -webkit-filter: brightness(1.28) saturate(1.25)
-               drop-shadow(0 0 30px rgba(0,195,255,0.85))
-               drop-shadow(0 0 60px rgba(0,195,255,0.28)); }
-      100% { -webkit-filter: brightness(1.05) saturate(1.1)
-               drop-shadow(0 0 12px rgba(0,195,255,0.5)); }
-    }
-    @keyframes iGlow {
-      0%   { filter: brightness(1.05) saturate(1.1)
-               drop-shadow(0 0 12px rgba(0,195,255,0.5)); }
-      50%  { filter: brightness(1.28) saturate(1.25)
-               drop-shadow(0 0 30px rgba(0,195,255,0.85))
-               drop-shadow(0 0 60px rgba(0,195,255,0.28)); }
-      100% { filter: brightness(1.05) saturate(1.1)
-               drop-shadow(0 0 12px rgba(0,195,255,0.5)); }
     }
 
     /* Skip button */
@@ -158,10 +71,6 @@
 <!-- ── Glo Karts Intro ────────────────────────────────────── -->
 <div id="intro-overlay" role="presentation" aria-hidden="true">
   <canvas id="intro-canvas"></canvas>
-  <div class="intro-stage">
-    <img id="intro-logo-img" class="intro-logo-img"
-         src="./glo-karts-logo.png" alt="" draggable="false" />
-  </div>
   <button class="intro-skip" id="intro-skip-btn" type="button">Skip Intro</button>
 </div>
 
@@ -205,11 +114,6 @@
 
     <div class="hero-inner">
       <div class="hero-text">
-        <div class="hero-eyebrow">
-          <span class="eyebrow-dot"></span>
-          Launching Soon &middot; Chicago, IL
-        </div>
-
         <h1 class="hero-headline" id="hero-headline">
           RIDE<br>THE <span class="glo-blue">GLO</span>
         </h1>
@@ -601,20 +505,16 @@
 <script src="./main.js"></script>
 
 <script>
-  /* ── Glo Karts Intro — logo 3D spin + particle explosion ───
-     0.0 s  logo fades in
-     0.3 s  slow 3D rotateY(360°) + blue glow pulse begins
-     1.0 s  rapid acceleration: rotateY(1440°) in 0.4 s
-     1.4 s  EXPLOSION — logo hidden, canvas particle burst
-     1.4 s  site content begins revealing (0.85 s fade)
-     1.4 s  canvas black veil fades (1.1 s)
-     2.5 s  overlay removed, done
+  /* ── Glo Karts Intro — cinematic smoke reveal ──────────────
+     Smoke covers the screen. A hand sweeps in from the right,
+     pushes the smoke away, and the homepage is revealed beneath.
      Force replay: ?intro=1
   ─────────────────────────────────────────────────────────── */
   (function () {
     var overlay     = document.getElementById('intro-overlay');
+    var canvas      = document.getElementById('intro-canvas');
     var siteContent = document.getElementById('site-content');
-    if (!overlay || !siteContent) return;
+    if (!overlay || !canvas || !siteContent) return;
 
     var forcePlay = location.search.indexOf('intro=1') !== -1;
     if (!forcePlay && sessionStorage.getItem('gloKartsIntroPlayed')) {
@@ -623,8 +523,7 @@
       return;
     }
 
-    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       overlay.style.display = 'none';
       siteContent.classList.add('revealed');
       sessionStorage.setItem('gloKartsIntroPlayed', 'true');
@@ -634,21 +533,263 @@
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow            = 'hidden';
 
-    var timers = [];
+    var W   = canvas.width  = window.innerWidth;
+    var H   = canvas.height = window.innerHeight;
+    var ctx = canvas.getContext('2d');
 
-    function unlockScroll() {
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow            = '';
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, W, H);
+
+    /* ── Utilities ────────────────────────────────────────── */
+    function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+    function lerp(a, b, t)    { return a + (b - a) * t; }
+    function eio3(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
+    function eo2(t)  { return 1 - (1-t)*(1-t); }
+
+    /* ── Smoke particles ──────────────────────────────────── */
+    var TOTAL_MS  = 4400;
+    var NP = clamp(Math.floor((W * H) / 4500), 140, 280);
+    var particles = [];
+    var cols = Math.ceil(Math.sqrt(NP * (W / H)));
+    var rows = Math.ceil(NP / cols);
+
+    for (var pi = 0; pi < NP; pi++) {
+      var col = pi % cols;
+      var row = Math.floor(pi / cols);
+      var cr  = Math.random();
+      var pr, pg, pb;
+      if (cr < 0.68) {
+        var v = 30 + Math.random() * 22; pr = v; pg = v+1; pb = v+5;
+      } else if (cr < 0.90) {
+        pr = 10 + Math.random()*12; pg = 28 + Math.random()*30; pb = 62 + Math.random()*38;
+      } else {
+        pr = 62 + Math.random()*22; pg = 10 + Math.random()*8; pb = 14 + Math.random()*8;
+      }
+      var br = 58 + Math.random() * 82;
+      particles.push({
+        x:  (col/cols)*W + (Math.random()-0.5)*(W/cols)*1.6,
+        y:  (row/rows)*H + (Math.random()-0.5)*(H/rows)*1.6,
+        vx: (Math.random()-0.5)*0.5,
+        vy: (Math.random()-0.5)*0.45 - 0.1,
+        r: br, br: br,
+        a: 0.22 + Math.random()*0.28,
+        pr: pr, pg: pg, pb: pb,
+        tp: Math.random()*6.28,
+        ts: 0.22 + Math.random()*0.42,
+        done: false
+      });
+    }
+
+    /* ── Hand silhouette ──────────────────────────────────── */
+    function drawHand(cx, cy, progress) {
+      var sc = clamp(Math.min(W,H)/720, 0.6, 1.4);
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(-0.08 - progress * 0.08);
+      ctx.scale(sc, sc);
+
+      ctx.shadowColor = 'rgba(0,135,255,0.82)';
+      ctx.shadowBlur  = 42;
+      var hc = 'rgba(13,13,17,0.98)';
+      ctx.fillStyle = hc;
+
+      /* Arm / wrist — extends right off screen */
+      ctx.beginPath();
+      ctx.moveTo(88, -40);
+      ctx.bezierCurveTo(160,-36, 260,-26, 340,-20);
+      ctx.lineTo(340, 44);
+      ctx.bezierCurveTo(260,48, 160,50, 88,50);
+      ctx.closePath();
+      ctx.fill();
+
+      /* Palm */
+      ctx.shadowBlur = 28;
+      ctx.beginPath();
+      ctx.moveTo(-85,-55);
+      ctx.bezierCurveTo(-40,-58, 40,-58, 88,-52);
+      ctx.bezierCurveTo(96,-25, 94,22, 90,55);
+      ctx.bezierCurveTo(55,68, 10,72, -22,70);
+      ctx.bezierCurveTo(-60,68, -88,38, -88,-5);
+      ctx.bezierCurveTo(-88,-32, -85,-55, -85,-55);
+      ctx.closePath();
+      ctx.fill();
+
+      /* Four fingers — spread slightly, pointing upward */
+      ctx.shadowBlur = 16;
+      var fgrs = [
+        { x:-52, a:-0.18, l:105, w:19 },
+        { x:-17, a:-0.06, l:120, w:22 },
+        { x: 17, a: 0.04, l:112, w:20 },
+        { x: 50, a: 0.14, l: 94, w:17 }
+      ];
+      fgrs.forEach(function(f) {
+        ctx.save();
+        ctx.translate(f.x, -55);
+        ctx.rotate(f.a);
+        ctx.fillStyle = hc;
+        ctx.beginPath();
+        var hw = f.w/2;
+        ctx.moveTo(-hw, 0);
+        ctx.lineTo(-hw, -(f.l-hw));
+        ctx.arc(0, -(f.l-hw), hw, Math.PI, 0, false);
+        ctx.lineTo(hw, 0);
+        ctx.arc(0, 0, hw, 0, Math.PI, false);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      });
+
+      /* Thumb — lower-left of palm */
+      ctx.save();
+      ctx.translate(-55, 38);
+      ctx.rotate(-0.8);
+      ctx.fillStyle = hc;
+      ctx.beginPath();
+      var tw = 17;
+      ctx.moveTo(-tw, 0);
+      ctx.lineTo(-tw, -76);
+      ctx.arc(0, -76, tw, Math.PI, 0, false);
+      ctx.lineTo(tw, 0);
+      ctx.arc(0, 0, tw, 0, Math.PI, false);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+
+      ctx.restore();
+    }
+
+    /* ── Animation loop ───────────────────────────────────── */
+    var rafId;
+    var startMs    = null;
+    var revStarted = false;
+
+    var HAND_IN_MS  = 480;
+    var HAND_OUT_MS = 2650;
+    var PUSH_R      = 265;
+
+    function getHand(ms) {
+      if (ms < HAND_IN_MS || ms > HAND_OUT_MS + 280) return null;
+      var p  = clamp((ms - HAND_IN_MS) / (HAND_OUT_MS - HAND_IN_MS), 0, 1);
+      var ep = eio3(p);
+      return {
+        x: lerp(W+210, -215, ep),
+        y: lerp(H*0.44, H*0.36, ep),
+        p: p, ep: ep
+      };
+    }
+
+    function frame(ts) {
+      if (!startMs) startMs = ts;
+      var ms = ts - startMs;
+      var t  = clamp(ms / TOTAL_MS, 0, 1);
+
+      ctx.clearRect(0, 0, W, H);
+
+      /* Black veil fades as sweep progresses */
+      var blackA;
+      if (ms < 480) {
+        blackA = 0.98;
+      } else {
+        blackA = lerp(0.98, 0, eo2(clamp((ms-480)/2800, 0, 1)));
+      }
+      if (blackA > 0.004) {
+        ctx.fillStyle = 'rgba(0,0,0,' + blackA + ')';
+        ctx.fillRect(0, 0, W, H);
+      }
+
+      var hand   = getHand(ms);
+      var offCnt = 0;
+
+      /* Update and draw smoke particles */
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        if (p.done) { offCnt++; continue; }
+
+        /* Natural turbulence */
+        p.tp += p.ts * 0.018;
+        p.vx += Math.cos(p.tp) * 0.016;
+        p.vy += Math.sin(p.tp) * 0.010 - 0.006;
+
+        /* Hand push force */
+        if (hand) {
+          var dx = p.x - hand.x;
+          var dy = p.y - hand.y;
+          var d2 = dx*dx + dy*dy;
+          if (d2 < PUSH_R*PUSH_R && d2 > 0.01) {
+            var d = Math.sqrt(d2);
+            var f = Math.pow(1 - d/PUSH_R, 1.8) * 15;
+            p.vx += (dx/d) * f;
+            p.vy += (dy/d) * f;
+          }
+        }
+
+        /* Leftward drift that builds after sweep begins */
+        if (ms > 1100) {
+          p.vx -= clamp((ms-1100)/1600, 0, 1) * 0.14;
+        }
+
+        p.vx *= 0.975;
+        p.vy *= 0.980;
+        p.x  += p.vx;
+        p.y  += p.vy;
+        p.r   = Math.min(p.br * 1.65, p.r + 0.25);
+
+        /* Off screen? */
+        var mg = p.r * 1.2;
+        if (p.x+mg<0 || p.x-mg>W || p.y+mg<0 || p.y-mg>H) {
+          p.done = true; offCnt++; continue;
+        }
+
+        /* Draw: outer halo + inner body */
+        var asc = clamp(1 - ms/4200, 0.04, 1);
+        var da  = p.a * asc;
+        if (da < 0.015) continue;
+        var col = p.pr+','+p.pg+','+p.pb;
+        ctx.globalAlpha = da * 0.48;
+        ctx.fillStyle   = 'rgb('+col+')';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r*1.55, 0, 6.28318);
+        ctx.fill();
+        ctx.globalAlpha = da;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, 6.28318);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      /* Draw hand on top of smoke */
+      if (hand) {
+        var hA = clamp(hand.p/0.06, 0, 1) * (hand.p > 0.94 ? clamp((1-hand.p)/0.06,0,1) : 1);
+        if (hA > 0.01) {
+          ctx.globalAlpha = hA;
+          drawHand(hand.x, hand.y, hand.ep);
+          ctx.globalAlpha = 1;
+        }
+      }
+
+      /* Trigger homepage reveal */
+      if (!revStarted && (ms > 1600 || offCnt/particles.length > 0.3)) {
+        revStarted = true;
+        siteContent.classList.add('revealed');
+      }
+
+      if (t >= 1) {
+        ctx.clearRect(0, 0, W, H);
+        finish();
+      } else {
+        rafId = requestAnimationFrame(frame);
+      }
     }
 
     function finish() {
       sessionStorage.setItem('gloKartsIntroPlayed', 'true');
-      unlockScroll();
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow            = '';
       if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
     }
 
     function skipNow() {
-      timers.forEach(clearTimeout);
+      cancelAnimationFrame(rafId);
       siteContent.classList.add('revealed');
       finish();
     }
@@ -656,130 +797,7 @@
     var skipBtn = document.getElementById('intro-skip-btn');
     if (skipBtn) skipBtn.addEventListener('click', skipNow);
 
-    var logoImg = document.getElementById('intro-logo-img');
-    var canvas  = document.getElementById('intro-canvas');
-
-    /* Draw black background immediately so no flash before rAF */
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-    var ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    /* Phase 1: trigger CSS logo animation */
-    if (logoImg) logoImg.classList.add('run');
-
-    /* Phase 2: explosion fires at 1.4 s */
-    timers.push(setTimeout(function () {
-      if (logoImg) { logoImg.style.opacity = '0'; logoImg.style.transition = 'none'; }
-      siteContent.classList.add('revealed');
-
-      var W  = canvas.width  = window.innerWidth;
-      var H  = canvas.height = window.innerHeight;
-      var CX = W / 2;
-      var CY = H / 2;
-
-      var scale = Math.sqrt((W * H) / (1280 * 720));
-      var N = Math.round(260 * Math.min(1.4, Math.max(0.6, scale)));
-      var particles = [];
-
-      for (var i = 0; i < N; i++) {
-        var angle    = Math.random() * 6.283185;
-        var spd      = (1.5 + Math.random() * 10) * Math.max(0.5, scale);
-        var isBlue   = Math.random() < 0.80;
-        var isStreak = Math.random() < 0.40;
-        particles.push({
-          x:      CX + (Math.random() - 0.5) * 80,
-          y:      CY + (Math.random() - 0.5) * 40,
-          vx:     Math.cos(angle) * spd,
-          vy:     Math.sin(angle) * spd,
-          drag:   0.962 + Math.random() * 0.020,
-          life:   1,
-          decay:  0.011 + Math.random() * 0.022,
-          size:   isStreak ? (0.5 + Math.random() * 1.4) : (1.4 + Math.random() * 4),
-          trail:  5 + Math.random() * 9,
-          type:   isStreak ? 1 : 0,
-          bright: 0.5 + Math.random() * 0.5,
-          r:      isBlue ? 0   : 210,
-          g:      isBlue ? Math.round(175 + Math.random() * 80) : 235,
-          b:      255
-        });
-      }
-
-      var startT   = null;
-      var DURATION = 1100;
-
-      function explFrame(ts) {
-        if (!startT) startT = ts;
-        var t = Math.min((ts - startT) / DURATION, 1);
-
-        ctx.clearRect(0, 0, W, H);
-
-        /* Fading black veil reveals homepage beneath */
-        var bgA = Math.max(0, 1 - t * 1.6);
-        if (bgA > 0) {
-          ctx.fillStyle = 'rgba(0,0,0,' + bgA + ')';
-          ctx.fillRect(0, 0, W, H);
-        }
-
-        /* Brief blue flash at detonation */
-        if (t < 0.09) {
-          var fA = (0.09 - t) / 0.09 * 0.6;
-          ctx.fillStyle = 'rgba(0,195,255,' + fA + ')';
-          ctx.fillRect(0, 0, W, H);
-        }
-
-        for (var i = 0; i < particles.length; i++) {
-          var p = particles[i];
-          if (p.life <= 0) continue;
-          p.x  += p.vx;
-          p.y  += p.vy;
-          p.vx *= p.drag;
-          p.vy *= p.drag;
-          p.life -= p.decay;
-          if (p.life <= 0) { p.life = 0; continue; }
-
-          var a  = p.life * p.bright;
-          if (a < 0.01) continue;
-          var rc = 'rgba(' + p.r + ',' + p.g + ',' + p.b + ',';
-
-          if (p.type === 0) {
-            /* Glow dot: large translucent halo + bright core */
-            ctx.globalAlpha = Math.min(1, a * 0.32);
-            ctx.fillStyle   = rc + '1)';
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size * 3.2, 0, 6.28318);
-            ctx.fill();
-            ctx.globalAlpha = Math.min(1, a);
-            ctx.fillStyle   = p.r === 0 ? 'rgba(120,235,255,1)' : 'rgba(255,255,255,1)';
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size * 0.65, 0, 6.28318);
-            ctx.fill();
-          } else {
-            /* Streak: trailing line in particle direction */
-            ctx.globalAlpha = Math.min(1, a * 0.85);
-            ctx.strokeStyle = rc + '1)';
-            ctx.lineWidth   = p.size;
-            ctx.lineCap     = 'round';
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p.x - p.vx * p.trail, p.y - p.vy * p.trail);
-            ctx.stroke();
-          }
-        }
-
-        ctx.globalAlpha = 1;
-
-        if (t < 1) {
-          requestAnimationFrame(explFrame);
-        } else {
-          finish();
-        }
-      }
-
-      requestAnimationFrame(explFrame);
-
-    }, 1400));
+    rafId = requestAnimationFrame(frame);
   })();
 
   /* ── Booking Modal ────────────────────────────────────── */

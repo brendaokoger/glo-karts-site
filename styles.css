@@ -297,31 +297,6 @@ a   { color: inherit; text-decoration: none; }
 
 .hero-text { flex: 0 0 auto; width: 100%; max-width: 540px; }
 
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.52rem;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 100px;
-  padding: 0.34rem 0.95rem;
-  font-size: 0.66rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.60);
-  margin-bottom: 1.6rem;
-}
-.eyebrow-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--red);
-  box-shadow: 0 0 8px rgba(232,35,58,0.7);
-  -webkit-animation: eDot 2.2s ease-in-out infinite;
-  animation: eDot 2.2s ease-in-out infinite;
-}
-@-webkit-keyframes eDot { 0%,100% { opacity:1; } 50% { opacity:0.28; } }
-@keyframes eDot           { 0%,100% { opacity:1; } 50% { opacity:0.28; } }
 
 .hero-headline {
   font-family: 'Bebas Neue', sans-serif;
