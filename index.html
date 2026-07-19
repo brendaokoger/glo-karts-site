@@ -534,11 +534,6 @@
       return;
     }
 
-    /* Homepage fully visible immediately behind the closed doors */
-    siteContent.style.transition = 'none';
-    siteContent.classList.add('revealed');
-    requestAnimationFrame(function () { siteContent.style.transition = ''; });
-
     var doorL = document.getElementById('door-left');
     var doorR = document.getElementById('door-right');
 

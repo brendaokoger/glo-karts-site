@@ -947,12 +947,9 @@ footer {
   transform: translateY(0);
 }
 
-/* ── Site content reveal ──────────────────────────────── */
-#site-content {
-  opacity: 0;
-  -webkit-transition: opacity 0.85s ease;
-  transition: opacity 0.85s ease;
-}
+/* ── Site content ─────────────────────────────────────── */
+/* Always visible — the two black door panels cover it during the intro */
+#site-content { opacity: 1; }
 #site-content.revealed { opacity: 1; }
 
 /* ── Modals ───────────────────────────────────────────── */
