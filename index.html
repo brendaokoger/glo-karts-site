@@ -32,82 +32,31 @@
   <style>
     /* ── Glo Karts Cinematic Intro ──────────────────────────── */
     #cinematic-intro {
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       z-index: 999999;
       background: #000;
       overflow: hidden;
     }
 
-    @keyframes intro-drift {
-      from { transform: scale(1.06); }
-      to   { transform: scale(1.00); }
-    }
-
-    #intro-bg {
-      position: absolute; inset: 0;
-      background-image: url('./glo-karts-intro.png');
-      background-color: #000;
-      background-size: cover;
-      background-position: center 38%;
-      opacity: 0;
-      will-change: transform, opacity;
-      animation: intro-drift 4s cubic-bezier(0.15,0,0.35,1) forwards;
-      transition: opacity 0.5s ease;
-    }
-
-    #intro-vignette {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at 50% 44%, transparent 26%, rgba(0,0,0,0.38) 76%),
-        linear-gradient(to bottom,
-          rgba(0,0,0,0.38) 0%, transparent 20%,
-          transparent 70%, rgba(0,0,0,0.55) 100%);
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    #logo-scene {
-      position: absolute; inset: 0;
-      opacity: 0;
-      z-index: 3;
-      pointer-events: none;
-    }
-
-    #logo-door-L,
-    #logo-door-R {
+    #door-left,
+    #door-right {
       position: absolute;
-      overflow: hidden;
+      top: 0; bottom: 0;
+      width: 50%;
+      background: #000;
       will-change: transform;
+      transition: transform 1.3s cubic-bezier(0.77, 0, 0.175, 1);
     }
 
-    #logo-img-L,
-    #logo-img-R {
-      position: absolute;
-      display: block;
-      max-width: none;
-      pointer-events: none;
-      user-select: none;
+    #door-left  {
+      left: 0;
+      border-right: 1px solid rgba(255,255,255,0.07);
     }
+    #door-right { right: 0; }
 
-    .cinematic-skip {
-      position: absolute; bottom: 2rem; right: 2rem;
-      z-index: 10;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.14);
-      color: rgba(255,255,255,0.32);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.63rem; font-weight: 600;
-      letter-spacing: 0.16em; text-transform: uppercase;
-      padding: 0.5rem 1rem; border-radius: 3px;
-      cursor: pointer; min-height: 44px;
-      transition: color 0.2s, border-color 0.2s;
-      animation: cSkipIn 0.4s 1s ease both;
-    }
-    .cinematic-skip:hover {
-      color: rgba(255,255,255,0.7);
-      border-color: rgba(255,255,255,0.32);
-    }
-    @keyframes cSkipIn { from { opacity: 0; } to { opacity: 1; } }
+    #door-left.open  { transform: translateX(-100%); }
+    #door-right.open { transform: translateX(100%); }
   </style>
 
 </head>
@@ -116,18 +65,8 @@
 
 <!-- ── Glo Karts Cinematic Intro ──────────────────────────── -->
 <div id="cinematic-intro" role="presentation" aria-hidden="true">
-
-  <!-- Real Chicago nighttime photo, subtle descent zoom -->
-  <div id="intro-bg"></div>
-  <div id="intro-vignette"></div>
-
-  <!-- Logo split into two door halves -->
-  <div id="logo-scene">
-    <div id="logo-door-L"><img src="./glo-karts-logo-full.png" id="logo-img-L" alt=""></div>
-    <div id="logo-door-R"><img src="./glo-karts-logo-full.png" id="logo-img-R" alt=""></div>
-  </div>
-
-  <button class="cinematic-skip" id="intro-skip-btn" type="button">Skip</button>
+  <div id="door-left"></div>
+  <div id="door-right"></div>
 </div>
 
 <div id="site-content">
@@ -561,11 +500,9 @@
 <script src="./main.js"></script>
 
 <script>
-  /* ── Glo Karts Cinematic Intro ──────────────────────────────
-     Scene 1 : Chicago nighttime skyline fades in, subtle descent (0–2.0s)
-     Scene 2 : GLO KARTS logo materialises over the city (0.8–1.6s)
-     Scene 3 : Logo halves slide apart like premium doors (2.0–2.9s)
-     Scene 4 : Homepage hero revealed underneath (2.8–3.3s)
+  /* ── Glo Karts Cinematic Intro ─────────────────────────────
+     Two matte-black doors open to reveal the homepage.
+     Hold: 0.5s  ·  Doors open: 1.3s  ·  Total: ~2s
      Force replay: ?intro=1
   ─────────────────────────────────────────────────────────── */
   (function () {
@@ -581,147 +518,31 @@
     }
 
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      overlay.style.display = 'none';
+      if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
       siteContent.classList.add('revealed');
       sessionStorage.setItem('gloKartsIntroPlayed', '1');
       return;
     }
 
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow            = 'hidden';
+    /* Homepage fully visible immediately behind the closed doors */
+    siteContent.style.transition = 'none';
+    siteContent.classList.add('revealed');
+    requestAnimationFrame(function () { siteContent.style.transition = ''; });
 
-    var W = window.innerWidth;
-    var H = window.innerHeight;
+    var doorL = document.getElementById('door-left');
+    var doorR = document.getElementById('door-right');
 
-    /* ── Fade in background photo ─────────────────────────── */
-    var introBg = document.getElementById('intro-bg');
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { introBg.style.opacity = '1'; });
-    });
+    /* Hold black screen 0.5s, then open doors */
+    setTimeout(function () {
+      doorL.classList.add('open');
+      doorR.classList.add('open');
 
-    /* ── Logo layout ─────────────────────────────────────────
-       Portrait logo: 921 × 2047 (AR ≈ 0.45)
-       Mobile: sized by screen width; desktop: sized by height   */
-    var LOGO_AR = 921 / 2047;
-    var isMobile = W < 700;
-    var LH, LW;
-    if (isMobile) {
-      LW = Math.min(W * 0.76, 340);
-      LH = LW / LOGO_AR;
-      /* If taller than 80% of screen, constrain by height */
-      if (LH > H * 0.80) { LH = H * 0.80; LW = LH * LOGO_AR; }
-    } else {
-      LH = Math.min(H * 0.70, 560);
-      LW = LH * LOGO_AR;
-    }
-    var LX = (W - LW) / 2;
-    var LY = (H - LH) / 2;
-
-    var dL = document.getElementById('logo-door-L');
-    var dR = document.getElementById('logo-door-R');
-    var iL = document.getElementById('logo-img-L');
-    var iR = document.getElementById('logo-img-R');
-
-    /* Left door: overflow-hidden, shows left half of logo */
-    dL.style.cssText += [
-      ';left:'+Math.round(LX)+'px',
-      'top:'+Math.round(LY)+'px',
-      'width:'+Math.ceil(LW/2)+'px',
-      'height:'+Math.round(LH)+'px',
-    ].join(';');
-    iL.style.cssText += [
-      ';width:'+Math.round(LW)+'px',
-      'height:'+Math.round(LH)+'px',
-      'left:0',
-      'top:0',
-    ].join(';');
-
-    /* Right door: overflow-hidden, shows right half of logo */
-    dR.style.cssText += [
-      ';left:'+Math.round(LX+LW/2)+'px',
-      'top:'+Math.round(LY)+'px',
-      'width:'+Math.ceil(LW/2)+'px',
-      'height:'+Math.round(LH)+'px',
-    ].join(';');
-    iR.style.cssText += [
-      ';width:'+Math.round(LW)+'px',
-      'height:'+Math.round(LH)+'px',
-      'left:'+(-Math.ceil(LW/2))+'px',
-      'top:0',
-    ].join(';');
-
-    /* ── State & timeline ─────────────────────────────────── */
-    var startMs  = null;
-    var phase    = 0;
-    var rafId    = null;
-    var finished = false;
-
-    var T_LOGO_IN = 800;     /* logo fades in              */
-    var T_SPLIT   = 2000;    /* doors begin sliding        */
-    var T_REVEAL  = 2800;    /* overlay fades, page active */
-    var T_DONE    = 3300;    /* overlay removed            */
-
-    /* ── Phases ──────────────────────────────────────────── */
-    function showLogo() {
-      var ls = document.getElementById('logo-scene');
-      ls.style.transition = 'opacity 0.65s ease';
-      ls.style.opacity    = '1';
-    }
-
-    function splitLogo() {
-      /* Slide each half far enough to clear the viewport */
-      var dist = Math.round(W * 0.58 + LW * 0.60);
-      /* Reveal homepage beneath as doors open */
-      siteContent.classList.add('revealed');
-      if (window.gsap) {
-        gsap.to(dL, { x: -dist, duration: 0.88, ease: 'power2.inOut' });
-        gsap.to(dR, { x:  dist, duration: 0.88, ease: 'power2.inOut' });
-      } else {
-        var tr = ';transition:transform .88s cubic-bezier(.76,0,.24,1);';
-        dL.style.cssText += tr + 'transform:translateX(-'+dist+'px)';
-        dR.style.cssText += tr + 'transform:translateX('+dist+'px)';
-      }
-    }
-
-    function dismissOverlay() {
-      overlay.style.transition = 'opacity 0.40s ease';
-      overlay.style.opacity    = '0';
-    }
-
-    function finish() {
-      if (finished) return;
-      finished = true;
-      sessionStorage.setItem('gloKartsIntroPlayed', '1');
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow            = '';
-      cancelAnimationFrame(rafId);
-      if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
-    }
-
-    function skipNow() {
-      siteContent.classList.add('revealed');
-      finish();
-    }
-
-    /* ── Frame loop ──────────────────────────────────────── */
-    function frame(ts) {
-      if (finished) return;
-      if (!startMs) startMs = ts;
-      var ms = ts - startMs;
-
-      if (ms >= T_LOGO_IN && phase < 1) { phase = 1; showLogo(); }
-      if (ms >= T_SPLIT   && phase < 2) { phase = 2; splitLogo(); }
-      if (ms >= T_REVEAL  && phase < 3) { phase = 3; dismissOverlay(); }
-      if (ms >= T_DONE) { finish(); return; }
-
-      rafId = requestAnimationFrame(frame);
-    }
-
-    rafId = requestAnimationFrame(frame);
-
-    var skipBtn = document.getElementById('intro-skip-btn');
-    if (skipBtn) skipBtn.addEventListener('click', skipNow);
-
+      /* Remove overlay once doors have fully cleared the viewport */
+      setTimeout(function () {
+        if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        sessionStorage.setItem('gloKartsIntroPlayed', '1');
+      }, 1400);
+    }, 500);
   })();
 
 
