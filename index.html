@@ -505,9 +505,10 @@
 <script src="./main.js"></script>
 
 <script>
-  /* ── Glo Karts Intro — kart drives through smoke ────────────
-     Smoke covers the screen. The Glo Kart rolls in from the right,
-     pushes smoke away, and the homepage is revealed in its wake.
+  /* ── Glo Karts Cinematic Intro ───────────────────────────────
+     Black screen with thick smoke. The real Glo Kart drives in
+     from the right, crosses in one straight horizontal line, and
+     the smoke clears naturally to reveal the homepage.
      Force replay: ?intro=1
   ─────────────────────────────────────────────────────────── */
   (function () {
@@ -543,16 +544,16 @@
     /* ── Utilities ────────────────────────────────────────── */
     function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
     function lerp(a, b, t)    { return a + (b - a) * t; }
-    function eio3(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
     function eo2(t)  { return 1 - (1-t)*(1-t); }
 
-    /* ── Smoke particles ──────────────────────────────────── */
-    var TOTAL_MS = 9000;
-    var KART_IN  = 700;
-    var KART_OUT = 7200;
-    var PUSH_R   = 180;
+    /* ── Timing ───────────────────────────────────────────── */
+    var TOTAL_MS = 10800;
+    var KART_IN  = 900;   /* cart starts entering from right */
+    var KART_OUT = 8400;  /* cart fully exits left */
+    var PUSH_R   = 200;
 
-    var NP   = clamp(Math.floor((W * H) / 4500), 140, 280);
+    /* ── Dense cinematic smoke ────────────────────────────── */
+    var NP   = clamp(Math.floor((W * H) / 3000), 200, 320);
     var cols = Math.ceil(Math.sqrt(NP * (W / H)));
     var rows = Math.ceil(NP / cols);
     var particles = [];
@@ -562,24 +563,24 @@
       var row = Math.floor(pi / cols);
       var cr  = Math.random();
       var pr, pg, pb;
-      if (cr < 0.68) {
-        var v = 30 + Math.random() * 22; pr = v; pg = v+1; pb = v+5;
-      } else if (cr < 0.90) {
-        pr = 10 + Math.random()*12; pg = 28 + Math.random()*30; pb = 62 + Math.random()*38;
+      if (cr < 0.72) {
+        var sv = 28 + Math.random() * 22; pr = sv; pg = sv+2; pb = sv+7;
+      } else if (cr < 0.88) {
+        pr = 8 + Math.random()*10; pg = 24 + Math.random()*28; pb = 58 + Math.random()*42;
       } else {
-        pr = 62 + Math.random()*22; pg = 10 + Math.random()*8; pb = 14 + Math.random()*8;
+        pr = 58 + Math.random()*22; pg = 8 + Math.random()*8; pb = 12 + Math.random()*8;
       }
-      var br = 58 + Math.random() * 82;
+      var br = 70 + Math.random() * 95;
       particles.push({
-        x:  (col/cols)*W + (Math.random()-0.5)*(W/cols)*1.6,
-        y:  (row/rows)*H + (Math.random()-0.5)*(H/rows)*1.6,
+        x:  (col/cols)*W + (Math.random()-0.5)*(W/cols)*1.7,
+        y:  (row/rows)*H + (Math.random()-0.5)*(H/rows)*1.7,
         vx: (Math.random()-0.5)*0.5,
-        vy: (Math.random()-0.5)*0.45 - 0.1,
+        vy: (Math.random()-0.5)*0.45 - 0.10,
         r: br, br: br,
-        a: 0.22 + Math.random()*0.28,
+        a: 0.24 + Math.random()*0.30,
         pr: pr, pg: pg, pb: pb,
         tp: Math.random()*6.28,
-        ts: 0.22 + Math.random()*0.42,
+        ts: 0.20 + Math.random()*0.42,
         done: false
       });
     }
@@ -591,29 +592,28 @@
     var kartReady = false;
     var skipped   = false;
     var rafId;
-    var wheelAngle  = 0;
-    var lastKartX   = null;
-    var exhaust     = [];
-    var lastPuffMs  = 0;
+    var wheelAngle = 0;
+    var lastKartX  = null;
+    var exhaust    = [];
+    var lastPuffMs = 0;
 
     var kartImg = new Image();
     kartImg.onload = function () {
       var aspect = kartImg.naturalWidth / kartImg.naturalHeight;
-      kartDW = Math.round(clamp(W * 0.28, 220, 520));
+      kartDW = Math.round(clamp(W * 0.50, 240, 820));
       kartDH = Math.round(kartDW / aspect);
-      PUSH_R = Math.round(kartDW * 0.60);
+      PUSH_R = Math.round(kartDW * 0.65);
       kartMask.width  = kartDW;
       kartMask.height = kartDH;
 
       kmctx.drawImage(kartImg, 0, 0, kartDW, kartDH);
 
-      /* PNG has clean alpha from black studio background.
-         One horizontal pass: front sharp, rear fades into smoke. */
+      /* Cart faces LEFT in the photo — left=front (sharp), right=rear (fades into smoke) */
       kmctx.globalCompositeOperation = 'destination-in';
       var mh = kmctx.createLinearGradient(0, 0, kartDW, 0);
       mh.addColorStop(0,    'rgba(0,0,0,1)');
-      mh.addColorStop(0.62, 'rgba(0,0,0,0.97)');
-      mh.addColorStop(0.84, 'rgba(0,0,0,0.38)');
+      mh.addColorStop(0.60, 'rgba(0,0,0,0.98)');
+      mh.addColorStop(0.80, 'rgba(0,0,0,0.42)');
       mh.addColorStop(1,    'rgba(0,0,0,0)');
       kmctx.fillStyle = mh;
       kmctx.fillRect(0, 0, kartDW, kartDH);
@@ -626,14 +626,13 @@
     };
     kartImg.src = './glo-karts-cart.png';
 
-    /* ── Kart position — drives left-to-right ────────────── */
+    /* ── Cart position — drives RIGHT TO LEFT, constant speed ── */
     function getKart(ms) {
       if (ms < KART_IN) return null;
       var p  = clamp((ms - KART_IN) / (KART_OUT - KART_IN), 0, 1);
-      var ep = eio3(p);
       return {
-        imgX: lerp(-(kartDW + 60), W + 60, ep),
-        imgY: H * 0.84 - kartDH,
+        imgX: lerp(W + 80, -(kartDW + 80), p),
+        imgY: H * 0.82 - kartDH,
         p: p
       };
     }
@@ -643,7 +642,6 @@
       ctx.save();
       ctx.translate(cx, cy);
 
-      /* Tire */
       ctx.beginPath();
       ctx.arc(0, 0, r, 0, 6.28318);
       ctx.fillStyle = '#0d0d0d';
@@ -654,13 +652,11 @@
 
       ctx.rotate(angle);
 
-      /* Rim */
       ctx.beginPath();
       ctx.arc(0, 0, r * 0.66, 0, 6.28318);
       ctx.fillStyle = '#9e1520';
       ctx.fill();
 
-      /* 5 spokes */
       ctx.lineCap = 'round';
       for (var s = 0; s < 5; s++) {
         var sa = s * 1.25664;
@@ -672,7 +668,6 @@
         ctx.stroke();
       }
 
-      /* Hub */
       ctx.beginPath();
       ctx.arc(0, 0, r * 0.17, 0, 6.28318);
       ctx.fillStyle = '#5a5a5a';
@@ -684,27 +679,26 @@
 
       ctx.restore();
 
-      /* Ground contact shadow */
       ctx.save();
-      var sy = cy + r * 0.90;
-      var sg = ctx.createRadialGradient(cx, sy, 0, cx, sy, r * 1.0);
-      sg.addColorStop(0, 'rgba(0,0,0,0.50)');
-      sg.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = sg;
+      var sy = cy + r * 0.92;
+      var wsg = ctx.createRadialGradient(cx, sy, 0, cx, sy, r * 1.0);
+      wsg.addColorStop(0, 'rgba(0,0,0,0.50)');
+      wsg.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = wsg;
       ctx.beginPath();
       ctx.ellipse(cx, sy, r * 1.0, r * 0.28, 0, 0, 6.28318);
       ctx.fill();
       ctx.restore();
     }
 
-    /* ── Draw kart — flipped L→R, exhaust, tilt, animated wheels ─ */
+    /* ── Draw kart — no flip (image already faces left), R→L ─ */
     function drawKart(kp, ms) {
       if (!kartReady) return;
       var ix = kp.imgX;
 
-      /* Wheel rotation: rightward = clockwise = positive */
+      /* Wheel rotation: leftward motion → negative (counterclockwise) */
       if (lastKartX !== null) {
-        wheelAngle += (ix - lastKartX) / (kartDW * 0.095);
+        wheelAngle += (ix - lastKartX) / (kartDW * 0.10);
       }
       lastKartX = ix;
 
@@ -712,53 +706,53 @@
       var bounce = Math.sin(ms * 0.017) * 3.5 + Math.sin(ms * 0.031) * 1.5;
       var iy = kp.imgY + bounce;
 
-      /* Emit exhaust puff from rear of cart every 85ms while moving */
+      /* Exhaust puff from rear (right side of image) every 85ms */
       if (kp.p > 0.02 && kp.p < 0.98 && ms - lastPuffMs > 85) {
         exhaust.push({
-          x: ix + kartDW * 0.08,
-          y: iy + kartDH * 0.60 + bounce,
-          maxR: 12 + Math.random() * 10,
+          x: ix + kartDW * 0.90,
+          y: iy + kartDH * 0.62 + bounce,
+          maxR: 14 + Math.random() * 12,
           born: ms
         });
         lastPuffMs = ms;
       }
 
-      /* Draw exhaust puffs (behind cart body, drawn first) */
-      var PUFF_LIFE = 650;
+      /* Exhaust puffs drift rightward into wake (drawn before cart) */
+      var PUFF_LIFE = 720;
       ctx.save();
       for (var ei = exhaust.length - 1; ei >= 0; ei--) {
         var e = exhaust[ei];
         var age = ms - e.born;
         if (age > PUFF_LIFE) { exhaust.splice(ei, 1); continue; }
-        var tf = age / PUFF_LIFE;
-        var er = 4 + (e.maxR - 4) * tf;
-        var ea = (1 - tf) * 0.38;
+        var tf  = age / PUFF_LIFE;
+        var er  = 4 + (e.maxR - 4) * tf;
+        var ea  = (1 - tf) * 0.40;
         ctx.globalAlpha = ea;
         ctx.fillStyle = 'rgb(130,130,135)';
         ctx.beginPath();
-        ctx.arc(e.x - age * 0.12, e.y - age * 0.06, er, 0, 6.28318);
+        ctx.arc(e.x + age * 0.11, e.y - age * 0.04, er, 0, 6.28318);
         ctx.fill();
       }
       ctx.globalAlpha = 1;
       ctx.restore();
 
-      /* Ground shadow ellipse */
+      /* Ground shadow */
       ctx.save();
-      var shadowY = iy + kartDH * 0.98;
+      var shadowY = iy + kartDH * 0.97;
       var sg = ctx.createRadialGradient(
         ix + kartDW * 0.5, shadowY, 0,
-        ix + kartDW * 0.5, shadowY, kartDW * 0.50
+        ix + kartDW * 0.5, shadowY, kartDW * 0.52
       );
-      sg.addColorStop(0, 'rgba(0,0,0,0.40)');
+      sg.addColorStop(0, 'rgba(0,0,0,0.42)');
       sg.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.fillStyle = sg;
       ctx.beginPath();
-      ctx.ellipse(ix + kartDW * 0.5, shadowY, kartDW * 0.50, kartDH * 0.06, 0, 0, 6.28318);
+      ctx.ellipse(ix + kartDW * 0.5, shadowY, kartDW * 0.52, kartDH * 0.07, 0, 0, 6.28318);
       ctx.fill();
       ctx.restore();
 
-      /* Forward lean — peaks 1.4° at midpoint */
-      var tilt = 0.025 * Math.sin(Math.PI * kp.p);
+      /* Subtle forward lean (CCW = front dips left) */
+      var tilt = -0.022 * Math.sin(Math.PI * kp.p);
       var pivX = ix + kartDW * 0.5;
       var pivY = iy + kartDH * 0.5;
       ctx.save();
@@ -766,64 +760,61 @@
       ctx.rotate(tilt);
       ctx.translate(-pivX, -pivY);
 
-      /* Headlight — front is on RIGHT after flip, beam projects rightward */
-      var beamA = 0.34 + 0.18 * Math.sin(ms * 0.047);
-      var hlX   = ix + kartDW * 0.94;
-      var hlY   = iy + kartDH * 0.72;
-      var coneL = kartDW * 0.55;
+      /* Headlight beam — front is left side of image, beam projects LEFT */
+      var beamA = 0.32 + 0.18 * Math.sin(ms * 0.047);
+      var hlX   = ix + kartDW * 0.07;
+      var hlY   = iy + kartDH * 0.68;
+      var coneL = kartDW * 0.58;
       ctx.beginPath();
       ctx.moveTo(hlX, hlY);
-      ctx.lineTo(hlX + coneL, hlY - coneL * 0.32);
-      ctx.lineTo(hlX + coneL, hlY + coneL * 0.32);
+      ctx.lineTo(hlX - coneL, hlY - coneL * 0.28);
+      ctx.lineTo(hlX - coneL, hlY + coneL * 0.28);
       ctx.closePath();
-      var beam = ctx.createLinearGradient(hlX, hlY, hlX + coneL, hlY);
+      var beam = ctx.createLinearGradient(hlX, hlY, hlX - coneL, hlY);
       beam.addColorStop(0,    'rgba(220,240,255,' + beamA + ')');
       beam.addColorStop(0.35, 'rgba(0,195,255,'   + (beamA * 0.35) + ')');
       beam.addColorStop(1,    'rgba(0,195,255,0)');
       ctx.fillStyle = beam;
       ctx.fill();
 
-      /* Kart photo — flipped so front (right side of image) faces right */
-      ctx.save();
-      ctx.translate(ix + kartDW, iy);
-      ctx.scale(-1, 1);
-      ctx.drawImage(kartMask, 0, 0, kartDW, kartDH);
-      ctx.restore();
+      /* Kart photo — no flip, front faces left naturally */
+      ctx.drawImage(kartMask, ix, iy, kartDW, kartDH);
 
-      /* Animated wheels — larger so they're clearly visible over photo wheels
-         front x=0.496 → mirrored: 0.504; rear x=0.710 → mirrored: 0.290 */
-      var rFront = kartDW * 0.095;
-      var rRear  = kartDW * 0.085;
-      drawAnimatedWheel(ix + kartDW * 0.504, iy + kartDH * 0.869, rFront, wheelAngle);
-      drawAnimatedWheel(ix + kartDW * 0.290, iy + kartDH * 0.740, rRear,  wheelAngle);
+      /* Animated wheel overlays
+         Front (left side of image): x≈17%, y≈84%
+         Rear (right side of image): x≈70%, y≈81% */
+      var rFront = kartDW * 0.092;
+      var rRear  = kartDW * 0.082;
+      drawAnimatedWheel(ix + kartDW * 0.17, iy + kartDH * 0.84, rFront, wheelAngle);
+      drawAnimatedWheel(ix + kartDW * 0.70, iy + kartDH * 0.81, rRear,  wheelAngle);
 
-      /* Party lights — cycling color glow over riders area */
+      /* Party lights — cycling glow over riders area */
       var pColors = ['0,220,255','255,60,180','255,200,0','0,255,120','180,0,255','255,80,80'];
       var pIdx   = Math.floor(ms / 200) % 6;
       var pAlpha = 0.09 + 0.05 * Math.abs(Math.sin(ms * 0.041));
-      var pX     = ix + kartDW * (0.62 - 0.04 * Math.sin(ms * 0.007));
-      var pY     = iy + kartDH * 0.33;
-      var pR     = kartDW * 0.32;
-      var pg = ctx.createRadialGradient(pX, pY, 0, pX, pY, pR);
-      pg.addColorStop(0,   'rgba(' + pColors[pIdx] + ',' + pAlpha + ')');
-      pg.addColorStop(0.5, 'rgba(' + pColors[pIdx] + ',' + (pAlpha * 0.35) + ')');
-      pg.addColorStop(1,   'rgba(' + pColors[pIdx] + ',0)');
-      ctx.fillStyle = pg;
+      var pX     = ix + kartDW * (0.44 + 0.04 * Math.sin(ms * 0.007));
+      var pY     = iy + kartDH * 0.38;
+      var pR     = kartDW * 0.35;
+      var plg = ctx.createRadialGradient(pX, pY, 0, pX, pY, pR);
+      plg.addColorStop(0,   'rgba(' + pColors[pIdx] + ',' + pAlpha + ')');
+      plg.addColorStop(0.5, 'rgba(' + pColors[pIdx] + ',' + (pAlpha * 0.35) + ')');
+      plg.addColorStop(1,   'rgba(' + pColors[pIdx] + ',0)');
+      ctx.fillStyle = plg;
       ctx.fillRect(pX - pR, pY - pR, pR * 2, pR * 2);
 
       ctx.restore(); /* end tilt */
 
-      /* LED underglow — on ground plane, not tilted */
-      var ugP = 0.52 + 0.13 * Math.sin(ms * 0.008);
+      /* LED underglow — ground plane glow */
+      var ugP = 0.50 + 0.14 * Math.sin(ms * 0.008);
       var ugX = ix + kartDW * 0.50;
       var ugY = iy + kartDH * 0.95;
-      var ugR = kartDW * 0.60;
+      var ugR = kartDW * 0.62;
       var ug  = ctx.createRadialGradient(ugX, ugY, 0, ugX, ugY, ugR);
-      ug.addColorStop(0,    'rgba(0,195,255,' + (0.65 * ugP) + ')');
-      ug.addColorStop(0.35, 'rgba(0,195,255,' + (0.25 * ugP) + ')');
+      ug.addColorStop(0,    'rgba(0,195,255,' + (0.68 * ugP) + ')');
+      ug.addColorStop(0.35, 'rgba(0,195,255,' + (0.27 * ugP) + ')');
       ug.addColorStop(1,    'rgba(0,195,255,0)');
       ctx.fillStyle = ug;
-      ctx.fillRect(ugX - ugR, ugY - 10, ugR * 2, 24);
+      ctx.fillRect(ugX - ugR, ugY - 12, ugR * 2, 26);
     }
 
     /* ── Animation loop ───────────────────────────────────── */
@@ -838,39 +829,37 @@
 
       ctx.clearRect(0, 0, W, H);
 
-      /* Black veil — holds while cart crosses, clears after cart exits */
-      var REVEAL_START = KART_OUT - 400;
-      var blackA = ms < REVEAL_START
-        ? 0.97
-        : lerp(0.97, 0, eo2(clamp((ms - REVEAL_START) / 1200, 0, 1)));
-      if (blackA > 0.004) {
-        ctx.fillStyle = 'rgba(0,0,0,' + blackA + ')';
+      /* Dark cinematic atmosphere — holds during crossing, fades after cart exits */
+      var atmA = ms < KART_OUT
+        ? 0.92
+        : lerp(0.92, 0, eo2(clamp((ms - KART_OUT) / 1500, 0, 1)));
+      if (atmA > 0.004) {
+        ctx.fillStyle = 'rgba(0,0,0,' + atmA + ')';
         ctx.fillRect(0, 0, W, H);
       }
 
       var kp     = getKart(ms);
       var offCnt = 0;
 
-      /* Kart bounding box for surface push */
+      /* Cart bounding box for smoke push */
       var kL, kR, kT, kB;
       if (kp && kartDW > 0) {
         kL = kp.imgX;
         kR = kp.imgX + kartDW;
-        kT = kp.imgY + kartDH * 0.18;
+        kT = kp.imgY + kartDH * 0.15;
         kB = kp.imgY + kartDH * 0.96;
       }
 
-      /* Update + draw smoke */
+      /* Update and draw smoke */
       for (var i = 0; i < particles.length; i++) {
         var p = particles[i];
         if (p.done) { offCnt++; continue; }
 
-        /* Turbulence */
         p.tp += p.ts * 0.018;
         p.vx += Math.cos(p.tp) * 0.016;
         p.vy += Math.sin(p.tp) * 0.010 - 0.006;
 
-        /* Kart body push — force from nearest surface point */
+        /* Push particles away from cart body */
         if (kp && kartDW > 0) {
           var nearX = clamp(p.x, kL, kR);
           var nearY = clamp(p.y, kT, kB);
@@ -879,15 +868,15 @@
           var dd2   = ddx*ddx + ddy*ddy;
           if (dd2 < PUSH_R*PUSH_R) {
             var dd = Math.sqrt(dd2);
-            var ff = Math.pow(1 - (dd > 0 ? dd : 0)/PUSH_R, 1.6) * 17;
-            p.vx += (dd > 0.5 ? ddx/dd : -1) * ff;
-            p.vy += (dd > 0.5 ? ddy/dd :  0) * ff;
+            var ff = Math.pow(1 - (dd > 0 ? dd : 0)/PUSH_R, 1.6) * 18;
+            p.vx += (dd > 0.5 ? ddx/dd : 0) * ff;
+            p.vy += (dd > 0.5 ? ddy/dd : 0) * ff;
           }
         }
 
-        /* Rightward drift builds after kart enters */
+        /* Leftward drift builds after cart enters */
         if (ms > KART_IN + 150) {
-          p.vx += clamp((ms - KART_IN - 150) / 1900, 0, 1) * 0.13;
+          p.vx -= clamp((ms - KART_IN - 150) / 2000, 0, 1) * 0.12;
         }
 
         p.vx *= 0.975; p.vy *= 0.980;
@@ -899,7 +888,7 @@
           p.done = true; offCnt++; continue;
         }
 
-        var asc = clamp(1 - ms/4500, 0.04, 1);
+        var asc = clamp(1 - ms/4800, 0.04, 1);
         var da  = p.a * asc;
         if (da < 0.015) continue;
         var col = p.pr+','+p.pg+','+p.pb;
@@ -914,8 +903,8 @@
       /* Draw kart on top of smoke */
       if (kp) drawKart(kp, ms);
 
-      /* Reveal homepage */
-      if (!revStarted && ms > KART_OUT - 600) {
+      /* Reveal homepage before cart fully exits so CSS transition overlaps veil fade */
+      if (!revStarted && ms > KART_OUT - 900) {
         revStarted = true;
         siteContent.classList.add('revealed');
       }
@@ -941,7 +930,6 @@
     var skipBtn = document.getElementById('intro-skip-btn');
     if (skipBtn) skipBtn.addEventListener('click', skipNow);
 
-    /* Animation starts in kartImg.onload once image is ready */
   })();
 
   /* ── Booking Modal ────────────────────────────────────── */
