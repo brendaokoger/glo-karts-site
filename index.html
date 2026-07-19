@@ -109,10 +109,10 @@
     <div class="hero-inner">
       <div class="hero-text">
         <h1 class="hero-headline" id="hero-headline">
-          RIDE<br>THE <span class="glo-blue">GLO</span>
+          EXPERIENCE<br>CHICAGO<br>IN <span class="glo-blue">LUXURY</span>
         </h1>
 
-        <p class="hero-sub">Chicago's Luxury Sightseeing Experience</p>
+        <p class="hero-sub">Discover Chicago aboard our premium electric golf carts with licensed chauffeurs, curated sightseeing routes, and an unforgettable open-air experience.</p>
 
         <div class="hero-trust">
           <span class="trust-item">
@@ -143,8 +143,8 @@
         <div class="hero-cta">
           <button class="btn btn-primary" id="btn-book-tour" type="button">JOIN THE VIP WAITLIST &nbsp;&#8594;</button>
           <button class="btn btn-ghost"   id="btn-watch"     type="button">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-            WATCH EXPERIENCE
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            EXPLORE THE FLEET
           </button>
         </div>
       </div>
@@ -496,6 +496,17 @@
 </div>
 
 
+<!-- ── Video Lightbox ─────────────────────────────────────── -->
+<div id="video-lightbox" role="dialog" aria-modal="true" aria-label="Glo Karts Experience Video">
+  <div class="vl-backdrop"></div>
+  <div class="vl-content">
+    <button class="vl-close" id="vl-close" aria-label="Close video">&#10005;</button>
+    <video id="vl-video" playsinline muted preload="none">
+      <source src="./public/videos/glo-karts-experience.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
+
 <script src="./main.js"></script>
 
 <script>
@@ -581,7 +592,7 @@
     [
       'btn-book-header','btn-book-mobile','btn-book-tour',
       'btn-book-sticky','btn-reserve','btn-check-avail',
-      'btn-view-tours','btn-watch',
+      'btn-view-tours',
       'btn-tour-1','btn-tour-2','btn-tour-3','btn-tour-4'
     ].forEach(function (id) {
       var el = document.getElementById(id);
@@ -623,6 +634,55 @@
         });
       });
     }
+  })();
+
+
+  /* ── Video Lightbox ───────────────────────────────────── */
+  (function () {
+    var lightbox = document.getElementById('video-lightbox');
+    var video    = document.getElementById('vl-video');
+    var closeBtn = document.getElementById('vl-close');
+    var backdrop = lightbox && lightbox.querySelector('.vl-backdrop');
+    if (!lightbox || !video) return;
+
+    var CUT_TIME = 35.85;
+
+    function openLightbox() {
+      lightbox.classList.add('open');
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { lightbox.classList.add('visible'); });
+      });
+      video.currentTime = 0;
+      video.play().catch(function () {});
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('visible');
+      video.pause();
+      setTimeout(function () {
+        lightbox.classList.remove('open');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+        video.currentTime = 0;
+      }, 450);
+    }
+
+    video.addEventListener('timeupdate', function () {
+      if (video.currentTime >= CUT_TIME) {
+        video.pause();
+        closeLightbox();
+      }
+    });
+
+    var watchBtn = document.getElementById('btn-watch');
+    if (watchBtn) watchBtn.addEventListener('click', openLightbox);
+    if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+    if (backdrop) backdrop.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+    });
   })();
 </script>
 
