@@ -38,26 +38,55 @@
       overflow: hidden;
     }
 
-    #cloud-canvas {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      z-index: 1;
+    @keyframes intro-drift {
+      from { transform: scale(1.06); }
+      to   { transform: scale(1.00); }
     }
 
-    #skyline-canvas {
+    #intro-bg {
       position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      z-index: 2;
+      background-image: url('./glo-karts-intro.png');
+      background-color: #000;
+      background-size: cover;
+      background-position: center 38%;
       opacity: 0;
       will-change: transform, opacity;
-      transform-origin: center 65%;
+      animation: intro-drift 4s cubic-bezier(0.15,0,0.35,1) forwards;
+      transition: opacity 0.5s ease;
     }
 
-    #logo-shard-layer {
+    #intro-vignette {
       position: absolute; inset: 0;
-      z-index: 4;
+      background:
+        radial-gradient(ellipse at 50% 44%, transparent 26%, rgba(0,0,0,0.38) 76%),
+        linear-gradient(to bottom,
+          rgba(0,0,0,0.38) 0%, transparent 20%,
+          transparent 70%, rgba(0,0,0,0.55) 100%);
+      z-index: 2;
       pointer-events: none;
+    }
+
+    #logo-scene {
+      position: absolute; inset: 0;
       opacity: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    #logo-door-L,
+    #logo-door-R {
+      position: absolute;
+      overflow: hidden;
+      will-change: transform;
+    }
+
+    #logo-img-L,
+    #logo-img-R {
+      position: absolute;
+      display: block;
+      max-width: none;
+      pointer-events: none;
+      user-select: none;
     }
 
     .cinematic-skip {
@@ -88,16 +117,17 @@
 <!-- ── Glo Karts Cinematic Intro ──────────────────────────── -->
 <div id="cinematic-intro" role="presentation" aria-hidden="true">
 
-  <!-- Scene 1: WebGL cloud flight through Chicago sky -->
-  <canvas id="cloud-canvas"></canvas>
+  <!-- Real Chicago nighttime photo, subtle descent zoom -->
+  <div id="intro-bg"></div>
+  <div id="intro-vignette"></div>
 
-  <!-- Scenes 2-3: Chicago skyline rises and camera descends -->
-  <canvas id="skyline-canvas"></canvas>
+  <!-- Logo split into two door halves -->
+  <div id="logo-scene">
+    <div id="logo-door-L"><img src="./glo-karts-logo-full.png" id="logo-img-L" alt=""></div>
+    <div id="logo-door-R"><img src="./glo-karts-logo-full.png" id="logo-img-R" alt=""></div>
+  </div>
 
-  <!-- Scenes 4-5: Logo materializes then shatters -->
-  <div id="logo-shard-layer"></div>
-
-  <button class="cinematic-skip" id="intro-skip-btn" type="button">Skip Intro</button>
+  <button class="cinematic-skip" id="intro-skip-btn" type="button">Skip</button>
 </div>
 
 <div id="site-content">
@@ -532,11 +562,10 @@
 
 <script>
   /* ── Glo Karts Cinematic Intro ──────────────────────────────
-     Scene 1 : WebGL cloud flight through Chicago sky (0–3.5s)
-     Scene 2 : Chicago skyline rises through breaking clouds (2.5–4.5s)
-     Scene 3 : Camera descends toward the city (3.5–5.2s)
-     Scene 4 : GLO KARTS logo materializes (5.0–5.8s)
-     Scene 5 : Logo shatters — pieces fly outward (5.8–7.5s)
+     Scene 1 : Chicago nighttime skyline fades in, subtle descent (0–2.0s)
+     Scene 2 : GLO KARTS logo materialises over the city (0.8–1.6s)
+     Scene 3 : Logo halves slide apart like premium doors (2.0–2.9s)
+     Scene 4 : Homepage hero revealed underneath (2.8–3.3s)
      Force replay: ?intro=1
   ─────────────────────────────────────────────────────────── */
   (function () {
@@ -564,366 +593,98 @@
     var W = window.innerWidth;
     var H = window.innerHeight;
 
-    /* ── Scene 1: WebGL Cloud Flight ──────────────────── */
-    var cloudCanvas = document.getElementById('cloud-canvas');
-    cloudCanvas.width  = W;
-    cloudCanvas.height = H;
-    var gl = cloudCanvas.getContext('webgl') || cloudCanvas.getContext('experimental-webgl');
-    var prog = null, uT, uRes, uFade;
+    /* ── Fade in background photo ─────────────────────────── */
+    var introBg = document.getElementById('intro-bg');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { introBg.style.opacity = '1'; });
+    });
 
-    if (gl) {
-      var VS = [
-        'attribute vec2 aPos;',
-        'void main(){gl_Position=vec4(aPos,0.0,1.0);}'
-      ].join('\n');
-
-      var FS = [
-        'precision mediump float;',
-        'uniform float uT; uniform vec2 uRes; uniform float uFade;',
-        'float h(vec2 p){p=fract(p*vec2(234.34,435.35));p+=dot(p,p+34.2);return fract(p.x*p.y);}',
-        'float n(vec2 p){',
-        '  vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);',
-        '  return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}',
-        'float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<6;i++){v+=a*n(p);p=p*2.07+vec2(5.2,1.3);a*=.5;}return v;}',
-        'void main(){',
-        '  vec2 uv=(gl_FragCoord.xy-uRes*.5)/uRes.y;',
-        '  float t=uT*.60;',
-        '  float clouds=0.;',
-        '  for(int l=0;l<7;l++){',
-        '    float fl=float(l);',
-        '    float dz=max((0.5+fl*.55)-mod(t+fl*.40,3.5+fl*.28),0.07);',
-        '    vec2 p=uv/dz; p.y-=uT*.045;',
-        '    p+=vec2(fl*2.2+.3,fl*1.8+.5);',
-        '    float c=smoothstep(.43,.73,fbm(p*2.6));',
-        '    float a=c/(dz*dz*1.3+.18);',
-        '    clouds+=a*(1.-clouds*.72);',
-        '  }',
-        '  clouds=clamp(clouds,0.,1.);',
-        '  float ang=atan(uv.y,uv.x),dst=length(uv);',
-        '  float streak=pow(clamp(n(vec2(ang*9.+.3,.5)),0.,1.),3.5)',
-        '    *smoothstep(.06,.28,dst)*smoothstep(1.1,.15,dst)*.30;',
-        '  float yf=uv.y*.5+.5;',
-        '  vec3 sky=mix(vec3(.06,.16,.36),vec3(.01,.04,.14),yf*yf);',
-        '  vec2 sp=vec2(0.,-.08); float sd=length(uv-sp);',
-        '  vec3 sunGlow=vec3(.92,.68,.28)*exp(-sd*5.)*.9;',
-        '  vec3 sunHalo=vec3(.4,.55,.9)*exp(-sd*1.6)*.25;',
-        '  float bl=fbm(uv*1.9+vec2(0.,t*.04));',
-        '  vec3 cc=mix(vec3(.48,.52,.62),vec3(.93,.96,1.),bl)+sunGlow*.55;',
-        '  vec3 color=mix(sky+sunHalo,cc,clouds)+sunGlow*(1.-clouds*.45)',
-        '    +streak*vec3(.45,.60,.95)',
-        '    +exp(-dot(uv-sp,uv-sp)*4.5)*vec3(.25,.42,.9)*.45;',
-        '  float vig=1.-smoothstep(.28,.95,length(uv*vec2(.88,.70)));',
-        '  color*=vig*.72+.28;',
-        '  gl_FragColor=vec4(color*min(1.,uT*2.5)*uFade,1.);',
-        '}'
-      ].join('\n');
-
-      function mkSh(type, src) {
-        var s = gl.createShader(type);
-        gl.shaderSource(s, src); gl.compileShader(s);
-        return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
-      }
-
-      var vs = mkSh(gl.VERTEX_SHADER, VS);
-      var fs = mkSh(gl.FRAGMENT_SHADER, FS);
-      if (vs && fs) {
-        prog = gl.createProgram();
-        gl.attachShader(prog, vs); gl.attachShader(prog, fs);
-        gl.linkProgram(prog);
-        if (gl.getProgramParameter(prog, gl.LINK_STATUS)) {
-          var buf = gl.createBuffer();
-          gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
-          var ap = gl.getAttribLocation(prog, 'aPos');
-          gl.enableVertexAttribArray(ap);
-          gl.vertexAttribPointer(ap, 2, gl.FLOAT, false, 0, 0);
-          gl.useProgram(prog);
-          uT    = gl.getUniformLocation(prog, 'uT');
-          uRes  = gl.getUniformLocation(prog, 'uRes');
-          uFade = gl.getUniformLocation(prog, 'uFade');
-        } else { prog = null; }
-      }
-    }
-
-    /* ── Scenes 2-3: Chicago Skyline ─────────────────── */
-    var skylineCanvas = document.getElementById('skyline-canvas');
-    skylineCanvas.width  = W;
-    skylineCanvas.height = H;
-
-    (function () {
-      var ctx = skylineCanvas.getContext('2d');
-      if (!ctx) return;
-
-      var skyGrad = ctx.createLinearGradient(0, 0, 0, H * 0.88);
-      skyGrad.addColorStop(0,    '#000408');
-      skyGrad.addColorStop(0.40, '#010b18');
-      skyGrad.addColorStop(0.72, '#020f20');
-      skyGrad.addColorStop(1,    '#051628');
-      ctx.fillStyle = skyGrad;
-      ctx.fillRect(0, 0, W, H);
-
-      var starPts = [
-        [0.04,0.06],[0.11,0.13],[0.18,0.05],[0.27,0.10],[0.34,0.03],
-        [0.40,0.16],[0.47,0.08],[0.54,0.02],[0.61,0.12],[0.68,0.07],
-        [0.75,0.10],[0.82,0.04],[0.89,0.15],[0.96,0.07],[0.07,0.22],
-        [0.15,0.19],[0.23,0.27],[0.31,0.24],[0.43,0.21],[0.52,0.29],
-        [0.60,0.18],[0.71,0.25],[0.79,0.20],[0.88,0.28],[0.95,0.23],
-        [0.02,0.35],[0.13,0.32],[0.25,0.38],[0.37,0.31],[0.49,0.36],
-        [0.58,0.33],[0.67,0.39],[0.77,0.34],[0.85,0.30],[0.93,0.37],
-      ];
-      starPts.forEach(function(s, i) {
-        var r = (i % 3 === 0) ? 1.1 : (i % 3 === 1) ? 0.7 : 0.9;
-        var a = 0.35 + (i % 5) * 0.12;
-        ctx.beginPath();
-        ctx.arc(s[0]*W, s[1]*H, r, 0, Math.PI*2);
-        ctx.fillStyle = 'rgba(255,255,255,' + a + ')';
-        ctx.fill();
-      });
-
-      var GY = H * 0.70;
-      var seed = 7;
-      function sr() {
-        seed = (seed * 1103515245 + 12345) & 0x7fffffff;
-        return seed / 0x7fffffff;
-      }
-
-      var bgB = [
-        [0.00,0.04,0.14],[0.05,0.03,0.11],[0.09,0.05,0.17],
-        [0.15,0.04,0.13],[0.20,0.06,0.15],[0.27,0.03,0.12],
-        [0.31,0.04,0.16],[0.63,0.03,0.13],[0.67,0.04,0.15],
-        [0.72,0.05,0.12],[0.78,0.04,0.17],[0.83,0.03,0.14],
-        [0.87,0.05,0.11],[0.93,0.04,0.15],[0.97,0.03,0.13],
-      ];
-      bgB.forEach(function(b) {
-        ctx.fillStyle = 'rgba(4,9,20,0.78)';
-        ctx.fillRect(b[0]*W, GY-b[2]*H, b[1]*W, b[2]*H);
-      });
-
-      var fgB = [
-        [0.01,0.055,0.30],[0.07,0.040,0.25],[0.12,0.045,0.34],
-        [0.18,0.035,0.28],[0.23,0.050,0.22],[0.28,0.040,0.31],
-        [0.33,0.035,0.26],[0.37,0.045,0.36],
-        [0.47,0.038,0.29],[0.51,0.040,0.27],[0.56,0.038,0.31],
-        [0.60,0.040,0.24],[0.64,0.035,0.29],
-        [0.68,0.040,0.22],[0.72,0.035,0.26],
-        [0.83,0.038,0.28],[0.87,0.040,0.24],
-        [0.91,0.055,0.31],[0.96,0.040,0.22],
-      ];
-      fgB.forEach(function(b) {
-        var x=b[0]*W, w=b[1]*W, h=b[2]*H;
-        var g = ctx.createLinearGradient(0, GY-h, 0, GY);
-        g.addColorStop(0, '#060c1e');
-        g.addColorStop(1, '#090f22');
-        ctx.fillStyle = g;
-        ctx.fillRect(x, GY-h, w, h);
-      });
-
-      /* Willis Tower (Sears Tower) — tallest, stepped */
-      var WX=W*0.41, WW=W*0.062, WH=H*0.60;
-      ctx.fillStyle = '#050b18';
-      ctx.fillRect(WX, GY-WH, WW, WH);
-      ctx.fillStyle = '#040a16';
-      ctx.fillRect(WX+WW*0.15, GY-WH, WW*0.70, WH*0.40);
-      ctx.fillStyle = '#030912';
-      ctx.fillRect(WX+WW*0.35, GY-WH, WW*0.30, WH*0.22);
-      ctx.fillStyle = 'rgba(180,200,255,0.65)';
-      ctx.fillRect(WX+WW*0.38, GY-WH-H*0.058, 2, H*0.058);
-      ctx.fillRect(WX+WW*0.58, GY-WH-H*0.042, 2, H*0.042);
-      ctx.beginPath();
-      ctx.arc(WX+WW*0.38+1, GY-WH-H*0.058, 3, 0, Math.PI*2);
-      ctx.fillStyle = 'rgba(255,80,80,0.75)';
-      ctx.fill();
-
-      /* John Hancock — tapered with X bracing */
-      var HX=W*0.76, HW=W*0.054, HH=H*0.52;
-      ctx.beginPath();
-      ctx.moveTo(HX, GY); ctx.lineTo(HX+HW, GY);
-      ctx.lineTo(HX+HW*0.76, GY-HH); ctx.lineTo(HX+HW*0.24, GY-HH);
-      ctx.closePath(); ctx.fillStyle = '#050b19'; ctx.fill();
-      ctx.strokeStyle = 'rgba(15,35,70,0.9)'; ctx.lineWidth = 1.5;
-      [[0.05,0.15,0.48,0.65],[0.48,0.15,0.05,0.65],
-       [0.52,0.35,0.94,0.75],[0.94,0.35,0.52,0.75]].forEach(function(l) {
-        ctx.beginPath();
-        ctx.moveTo(HX+HW*l[0], GY-HH*l[1]);
-        ctx.lineTo(HX+HW*l[2], GY-HH*l[3]);
-        ctx.stroke();
-      });
-      ctx.fillStyle = 'rgba(180,200,255,0.70)';
-      ctx.fillRect(HX+HW*0.36, GY-HH-H*0.062, 1.5, H*0.062);
-      ctx.fillRect(HX+HW*0.60, GY-HH-H*0.048, 1.5, H*0.048);
-      ctx.beginPath();
-      ctx.arc(HX+HW*0.36+0.75, GY-HH-H*0.062, 2.5, 0, Math.PI*2);
-      ctx.fillStyle = 'rgba(255,80,80,0.75)'; ctx.fill();
-
-      /* Window lights */
-      var wg = [
-        [0.01*W,GY-0.30*H,0.055*W,0.30*H,28],
-        [0.07*W,GY-0.25*H,0.040*W,0.25*H,18],
-        [0.12*W,GY-0.34*H,0.045*W,0.34*H,24],
-        [0.18*W,GY-0.28*H,0.035*W,0.28*H,16],
-        [0.28*W,GY-0.31*H,0.040*W,0.31*H,20],
-        [WX,GY-WH,WW,WH,70],
-        [0.47*W,GY-0.29*H,0.038*W,0.29*H,18],
-        [0.51*W,GY-0.27*H,0.040*W,0.27*H,16],
-        [HX,GY-HH,HW,HH,52],
-        [0.83*W,GY-0.28*H,0.038*W,0.28*H,18],
-        [0.87*W,GY-0.24*H,0.040*W,0.24*H,15],
-        [0.91*W,GY-0.31*H,0.055*W,0.31*H,24],
-      ];
-      var wc = ['rgba(255,210,130,0.75)','rgba(180,200,255,0.55)',
-                'rgba(255,230,160,0.65)','rgba(120,160,255,0.45)'];
-      wg.forEach(function(g) {
-        for (var i=0; i<g[4]; i++) {
-          var wx=g[0]+sr()*g[2], wy=g[1]+sr()*g[3];
-          if (sr() > 0.32) {
-            ctx.fillStyle = wc[Math.floor(sr()*wc.length)];
-            ctx.fillRect(wx, wy, 2+sr()*2, 1.5+sr()*1.5);
-          }
-        }
-      });
-
-      /* Horizon glow */
-      var hg = ctx.createLinearGradient(0, GY-H*0.18, 0, GY);
-      hg.addColorStop(0,   'rgba(0,25,90,0)');
-      hg.addColorStop(0.6, 'rgba(5,40,120,0.14)');
-      hg.addColorStop(1,   'rgba(10,60,160,0.08)');
-      ctx.fillStyle = hg;
-      ctx.fillRect(0, GY-H*0.18, W, H*0.18);
-
-      /* Ground / Lake Michigan */
-      var gg = ctx.createLinearGradient(0, GY, 0, H);
-      gg.addColorStop(0,   '#060f1e');
-      gg.addColorStop(0.4, '#040c18');
-      gg.addColorStop(1,   '#020610');
-      ctx.fillStyle = gg;
-      ctx.fillRect(0, GY, W, H-GY);
-
-      /* Water reflections */
-      ctx.save(); ctx.globalAlpha = 0.20;
-      fgB.forEach(function(b) {
-        for (var r=0; r<5; r++) {
-          ctx.fillStyle = 'rgba(20,60,160,0.55)';
-          ctx.fillRect(b[0]*W+b[1]*W*0.25, GY+r*11+5, b[1]*W*0.50, Math.max(1,(5-r)*0.55));
-        }
-      });
-      for (var r=0; r<6; r++) {
-        ctx.fillStyle = 'rgba(30,80,200,0.50)';
-        ctx.fillRect(WX+WW*0.1, GY+r*10+5, WW*0.8, Math.max(1,(6-r)*0.5));
-      }
-      ctx.restore();
-    })();
-
-    /* ── Scenes 4-5: Logo Shard System ───────────────── */
-    var N_COLS = 6, N_ROWS = 9;
+    /* ── Logo layout ─────────────────────────────────────────
+       Portrait logo: 921 × 2047 (AR ≈ 0.45)
+       Mobile: sized by screen width; desktop: sized by height   */
     var LOGO_AR = 921 / 2047;
-    var LH = Math.min(H * 0.68, 560);
-    var LW = LH * LOGO_AR;
+    var isMobile = W < 700;
+    var LH, LW;
+    if (isMobile) {
+      LW = Math.min(W * 0.76, 340);
+      LH = LW / LOGO_AR;
+      /* If taller than 80% of screen, constrain by height */
+      if (LH > H * 0.80) { LH = H * 0.80; LW = LH * LOGO_AR; }
+    } else {
+      LH = Math.min(H * 0.70, 560);
+      LW = LH * LOGO_AR;
+    }
     var LX = (W - LW) / 2;
     var LY = (H - LH) / 2;
 
-    var shardLayer = document.getElementById('logo-shard-layer');
-    var shards = [];
-    var shardW = LW / N_COLS;
-    var shardH = LH / N_ROWS;
+    var dL = document.getElementById('logo-door-L');
+    var dR = document.getElementById('logo-door-R');
+    var iL = document.getElementById('logo-img-L');
+    var iR = document.getElementById('logo-img-R');
 
-    (function () {
-      for (var row = 0; row < N_ROWS; row++) {
-        for (var col = 0; col < N_COLS; col++) {
-          var wrapper = document.createElement('div');
-          var c = col, rw = row;
-          wrapper.style.cssText = [
-            'position:absolute',
-            'overflow:hidden',
-            'left:'+(LX+c*shardW)+'px',
-            'top:'+(LY+rw*shardH)+'px',
-            'width:'+shardW+'px',
-            'height:'+shardH+'px',
-            'will-change:transform,opacity',
-            'pointer-events:none',
-          ].join(';');
-          var img = document.createElement('img');
-          img.src = './glo-karts-logo-full.png';
-          img.alt = '';
-          img.style.cssText = [
-            'position:absolute',
-            'display:block',
-            'width:'+LW+'px',
-            'height:'+LH+'px',
-            'left:'+(-c*shardW)+'px',
-            'top:'+(-rw*shardH)+'px',
-            'max-width:none',
-            'pointer-events:none',
-            'user-select:none',
-          ].join(';');
-          wrapper.appendChild(img);
-          shardLayer.appendChild(wrapper);
-          shards.push({ el: wrapper, col: c, row: rw });
-        }
-      }
-    })();
+    /* Left door: overflow-hidden, shows left half of logo */
+    dL.style.cssText += [
+      ';left:'+Math.round(LX)+'px',
+      'top:'+Math.round(LY)+'px',
+      'width:'+Math.ceil(LW/2)+'px',
+      'height:'+Math.round(LH)+'px',
+    ].join(';');
+    iL.style.cssText += [
+      ';width:'+Math.round(LW)+'px',
+      'height:'+Math.round(LH)+'px',
+      'left:0',
+      'top:0',
+    ].join(';');
 
-    /* ── State & Timeline ───────────────────────────── */
+    /* Right door: overflow-hidden, shows right half of logo */
+    dR.style.cssText += [
+      ';left:'+Math.round(LX+LW/2)+'px',
+      'top:'+Math.round(LY)+'px',
+      'width:'+Math.ceil(LW/2)+'px',
+      'height:'+Math.round(LH)+'px',
+    ].join(';');
+    iR.style.cssText += [
+      ';width:'+Math.round(LW)+'px',
+      'height:'+Math.round(LH)+'px',
+      'left:'+(-Math.ceil(LW/2))+'px',
+      'top:0',
+    ].join(';');
+
+    /* ── State & timeline ─────────────────────────────────── */
     var startMs  = null;
     var phase    = 0;
     var rafId    = null;
     var finished = false;
 
-    var T_SKYLINE_IN  = 2200;
-    var T_DESCENT     = 3600;
-    var T_LOGO_APPEAR = 5000;
-    var T_SHATTER     = 5900;
-    var T_REVEAL      = 6400;
-    var T_DONE        = 7600;
+    var T_LOGO_IN = 800;     /* logo fades in              */
+    var T_SPLIT   = 2000;    /* doors begin sliding        */
+    var T_REVEAL  = 2800;    /* overlay fades, page active */
+    var T_DONE    = 3300;    /* overlay removed            */
 
-    /* ── Phase Functions ─────────────────────────────── */
-    function revealSkyline() {
-      skylineCanvas.style.transition = 'opacity 1.2s ease';
-      skylineCanvas.style.opacity    = '1';
-    }
-
-    function descentAnimation() {
-      if (window.gsap) {
-        gsap.to(skylineCanvas, { scale: 2.0, duration: 2.0, ease: 'power1.inOut',
-          transformOrigin: 'center 65%' });
-        gsap.to(skylineCanvas, { opacity: 0, duration: 0.9, delay: 1.2, ease: 'power1.in' });
-      } else {
-        skylineCanvas.style.transition = 'transform 2.0s ease-in-out, opacity 0.9s 1.2s ease';
-        skylineCanvas.style.transform  = 'scale(2.0)';
-        setTimeout(function () { skylineCanvas.style.opacity = '0'; }, 1200);
-      }
-    }
-
+    /* ── Phases ──────────────────────────────────────────── */
     function showLogo() {
-      shardLayer.style.transition = 'opacity 0.55s ease';
-      shardLayer.style.opacity    = '1';
+      var ls = document.getElementById('logo-scene');
+      ls.style.transition = 'opacity 0.65s ease';
+      ls.style.opacity    = '1';
     }
 
-    function shatterLogo() {
-      var spread = Math.sqrt(W*W + H*H) * 0.50;
+    function splitLogo() {
+      /* Slide each half far enough to clear the viewport */
+      var dist = Math.round(W * 0.58 + LW * 0.60);
+      /* Reveal homepage beneath as doors open */
+      siteContent.classList.add('revealed');
       if (window.gsap) {
-        shards.forEach(function (s) {
-          var cx = (s.col + 0.5 - N_COLS * 0.5) / (N_COLS * 0.5);
-          var cy = (s.row + 0.5 - N_ROWS * 0.5) / (N_ROWS * 0.5);
-          var spd = 0.60 + Math.random() * 0.80;
-          gsap.to(s.el, {
-            x: cx * spread * spd,
-            y: cy * spread * spd + (Math.random() - 0.35) * 200,
-            rotation: (Math.random() - 0.5) * 600,
-            opacity: 0,
-            duration: 0.65 + Math.random() * 0.50,
-            ease: 'power2.in',
-            delay: Math.random() * 0.20,
-          });
-        });
+        gsap.to(dL, { x: -dist, duration: 0.88, ease: 'power2.inOut' });
+        gsap.to(dR, { x:  dist, duration: 0.88, ease: 'power2.inOut' });
       } else {
-        shardLayer.style.transition = 'opacity 0.6s ease';
-        shardLayer.style.opacity    = '0';
+        var tr = ';transition:transform .88s cubic-bezier(.76,0,.24,1);';
+        dL.style.cssText += tr + 'transform:translateX(-'+dist+'px)';
+        dR.style.cssText += tr + 'transform:translateX('+dist+'px)';
       }
     }
 
-    function revealHomepage() {
-      siteContent.classList.add('revealed');
-      overlay.style.transition = 'opacity 0.55s ease';
+    function dismissOverlay() {
+      overlay.style.transition = 'opacity 0.40s ease';
       overlay.style.opacity    = '0';
     }
 
@@ -942,29 +703,15 @@
       finish();
     }
 
-    /* ── Render Loop ──────────────────────────────────── */
+    /* ── Frame loop ──────────────────────────────────────── */
     function frame(ts) {
       if (finished) return;
       if (!startMs) startMs = ts;
       var ms = ts - startMs;
 
-      if (prog) {
-        var tSec = ms / 1000.0;
-        var cf = ms < T_SKYLINE_IN
-          ? 1.0
-          : Math.max(0.0, 1.0 - (ms - T_SKYLINE_IN) / 1400.0);
-        gl.viewport(0, 0, W, H);
-        gl.uniform1f(uT,    tSec);
-        gl.uniform2f(uRes,  W, H);
-        gl.uniform1f(uFade, cf);
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      }
-
-      if (ms >= T_SKYLINE_IN  && phase < 1) { phase = 1; revealSkyline(); }
-      if (ms >= T_DESCENT     && phase < 2) { phase = 2; descentAnimation(); }
-      if (ms >= T_LOGO_APPEAR && phase < 3) { phase = 3; showLogo(); }
-      if (ms >= T_SHATTER     && phase < 4) { phase = 4; shatterLogo(); }
-      if (ms >= T_REVEAL      && phase < 5) { phase = 5; revealHomepage(); }
+      if (ms >= T_LOGO_IN && phase < 1) { phase = 1; showLogo(); }
+      if (ms >= T_SPLIT   && phase < 2) { phase = 2; splitLogo(); }
+      if (ms >= T_REVEAL  && phase < 3) { phase = 3; dismissOverlay(); }
       if (ms >= T_DONE) { finish(); return; }
 
       rafId = requestAnimationFrame(frame);
