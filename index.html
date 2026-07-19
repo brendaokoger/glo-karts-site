@@ -825,9 +825,9 @@
           }
         }
 
-        /* Leftward drift builds after kart enters */
+        /* Rightward drift builds after kart enters */
         if (ms > KART_IN + 150) {
-          p.vx -= clamp((ms - KART_IN - 150) / 1900, 0, 1) * 0.13;
+          p.vx += clamp((ms - KART_IN - 150) / 1900, 0, 1) * 0.13;
         }
 
         p.vx *= 0.975; p.vy *= 0.980;
