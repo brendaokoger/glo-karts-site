@@ -319,7 +319,7 @@ a   { color: inherit; text-decoration: none; }
   margin-bottom: 2.6rem;
 }
 
-/* GLO — clean neon glow, no box, no panel */
+/* GLO — clean neon glow only, no box or panel */
 .hero-headline .glo-blue {
   color: var(--blue);
   text-shadow:
