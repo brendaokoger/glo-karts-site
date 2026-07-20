@@ -246,8 +246,8 @@ a   { color: inherit; text-decoration: none; }
   overflow: hidden;
   background-color: #000;
   background-image: url('./glo-karts-hero.png');
-  background-size: 70vw auto;
-  background-position: 100% 22%;
+  background-size: auto 100vh;
+  background-position: 100% 0%;
   padding-top: 0;
 }
 
@@ -1106,8 +1106,8 @@ footer {
   .mobile-nav { top: 64px; }
 
   #hero {
-    background-size: 82vw auto;
-    background-position: 100% 20%;
+    background-size: auto 100vh;
+    background-position: 75% 0%;
   }
   .hero-inner {
     padding: 100px 5% 12vh;
@@ -1130,8 +1130,8 @@ footer {
   #site-header { height: 60px; }
   .mobile-nav  { top: 60px; }
   #hero {
-    background-size: cover;
-    background-position: 65% 18%;
+    background-size: auto 100vh;
+    background-position: 22% 0%;
   }
   .hero-inner {
     padding: 90px 5% 10vh;
