@@ -1,5 +1,7 @@
 {
   "framework": null,
+  "outputDirectory": ".",
+  "buildCommand": null,
   "cleanUrls": true,
   "headers": [
     {
