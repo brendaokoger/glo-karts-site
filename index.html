@@ -111,7 +111,7 @@
       <a href="#faq">FAQ</a>
     </nav>
 
-    <button class="btn-book-header hd-only" id="btn-book-header" type="button">JOIN WAITLIST</button>
+    <button class="btn-book-header hd-only" id="btn-book-header" type="button">RESERVE NOW</button>
 
     <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -123,7 +123,7 @@
     <a href="#tours"   class="mobile-link">Tours</a>
     <a href="#private" class="mobile-link">Private Events</a>
     <a href="#faq"     class="mobile-link">FAQ</a>
-    <button class="btn btn-primary mobile-link" id="btn-book-mobile" type="button" style="align-self:flex-start;margin-top:0.5rem;">JOIN WAITLIST</button>
+    <button class="btn btn-primary mobile-link" id="btn-book-mobile" type="button" style="align-self:flex-start;margin-top:0.5rem;">RESERVE NOW</button>
   </nav>
 
 
@@ -169,7 +169,7 @@
         </div>
 
         <div class="hero-cta">
-          <button class="btn btn-primary" id="btn-book-tour" type="button">JOIN THE VIP WAITLIST &nbsp;&#8594;</button>
+          <button class="btn btn-primary" id="btn-book-tour" type="button">RESERVE YOUR EXPERIENCE &nbsp;&#8594;</button>
           <button class="btn btn-ghost"   id="btn-watch"     type="button">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             EXPLORE THE FLEET
@@ -180,39 +180,14 @@
   </section>
 
 
-  <!-- ── Waitlist Bar ────────────────────────────────────── -->
-  <div id="booking-bar" role="form" aria-label="Join the VIP waitlist">
-    <div class="booking-inner">
-      <div class="booking-field">
-        <label for="book-name">Your Name</label>
-        <input id="book-name" type="text" placeholder="Full name" autocomplete="name" />
-      </div>
-      <div class="booking-field">
-        <label for="book-email">Email Address</label>
-        <input id="book-email" type="email" placeholder="you@example.com" autocomplete="email" />
-      </div>
-      <div class="booking-field">
-        <label for="book-tour-sel">Experience</label>
-        <select id="book-tour-sel">
-          <option value="">Any Experience</option>
-          <option>Chicago After Dark</option>
-          <option>Riverwalk Glow Tour</option>
-          <option>Navy Pier Lights</option>
-          <option>Private Glo Experience</option>
-        </select>
-      </div>
-      <div class="booking-field">
-        <label for="book-guests">Group Size</label>
-        <select id="book-guests">
-          <option value="">Select Size</option>
-          <option value="2">1–2 Guests</option>
-          <option value="4">3–5 Guests</option>
-          <option value="6">6–10 Guests</option>
-          <option value="10">11+ Guests</option>
-        </select>
-      </div>
-      <div class="booking-submit">
-        <button type="button" id="btn-check-avail">GET EARLY ACCESS</button>
+  <!-- ── Reservation Section ───────────────────────────── -->
+  <div id="booking-bar" role="region" aria-label="Reserve Your Glo Karts Experience">
+    <div class="booking-inner" style="flex-direction:column;align-items:center;text-align:center;padding:2.8rem 2rem;gap:0.9rem;">
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:0.06em;color:#fff;margin:0;">Reserve Your Glo Karts Experience</h2>
+      <p style="max-width:660px;color:#aaa;font-size:0.9rem;line-height:1.75;margin:0;">Choose your preferred date, time, and party size to request a one-hour Glo Karts tour through Downtown Chicago. Reservations require a minimum of 2 guests and allow up to 5 guests.</p>
+      <p style="max-width:660px;color:#aaa;font-size:0.9rem;line-height:1.75;margin:0;">All requests are reviewed for availability. A Glo Karts representative will contact the customer within 24 hours to confirm the reservation.</p>
+      <div class="booking-submit" style="padding:0;border:none;margin-top:0.6rem;">
+        <button type="button" id="btn-check-avail">RESERVE NOW &nbsp;&#8594;</button>
       </div>
     </div>
   </div>
@@ -262,8 +237,8 @@
               <polyline points="9 12 11 14 15 10"/>
             </svg>
           </div>
-          <h3>VIP Access</h3>
-          <p>Join our waitlist and be first to secure your spot when we launch in Chicago.</p>
+          <h3>Easy Reservations</h3>
+          <p>Request your tour online and a Glo Karts representative will confirm within 24 hours.</p>
         </div>
 
       </div>
@@ -290,7 +265,7 @@
               <span>2 Hours</span>
             </div>
             <button class="tc-arrow" type="button" id="btn-tour-1">
-              Get Early Access
+              Book Now
               <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
           </div>
@@ -307,7 +282,7 @@
               <span>90 Minutes</span>
             </div>
             <button class="tc-arrow" type="button" id="btn-tour-2">
-              Get Early Access
+              Book Now
               <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
           </div>
@@ -324,7 +299,7 @@
               <span>2 Hours</span>
             </div>
             <button class="tc-arrow" type="button" id="btn-tour-3">
-              Get Early Access
+              Book Now
               <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
           </div>
@@ -396,7 +371,7 @@
     <div class="cta-inner">
       <h2 class="cta-headline reveal">CHICAGO<br>IS WAITING</h2>
       <p class="cta-sub reveal">Be the first to experience the glo.</p>
-      <button class="btn btn-primary reveal" id="btn-reserve" type="button">JOIN THE VIP WAITLIST &nbsp;&#8594;</button>
+      <button class="btn btn-primary reveal" id="btn-reserve" type="button">RESERVE YOUR EXPERIENCE &nbsp;&#8594;</button>
     </div>
   </section>
 
@@ -452,7 +427,7 @@
 
   <!-- Mobile sticky CTA -->
   <div class="mobile-sticky-cta" id="mobile-sticky-cta">
-    <button type="button" id="btn-book-sticky">JOIN THE VIP WAITLIST</button>
+    <button type="button" id="btn-book-sticky">RESERVE YOUR EXPERIENCE</button>
   </div>
 
 </div><!-- /#site-content -->
@@ -463,18 +438,18 @@
   <div class="glo-modal-backdrop"></div>
   <div class="glo-modal-card">
     <button class="glo-modal-close" type="button" aria-label="Close">&#x2715;</button>
-    <p class="glo-modal-eyebrow">Early Access</p>
-    <h2 class="glo-modal-heading">Join the VIP Waitlist</h2>
-    <p class="glo-modal-sub">Be the first to experience Chicago's most exclusive electric night tour. We'll notify you the moment bookings open.</p>
+    <p class="glo-modal-eyebrow">Reservation Request</p>
+    <h2 class="glo-modal-heading">Reserve Your Glo Karts Experience</h2>
+    <p class="glo-modal-sub">Choose your preferred date, time, and party size to request a one-hour Glo Karts tour through Downtown Chicago. Reservations require a minimum of 2 guests and allow up to 5 guests.</p>
 
     <div id="booking-success" class="glo-modal-success" role="alert">
       <div class="check">&#10003;</div>
-      <h3>You're on the list!</h3>
-      <p>We'll notify you the moment bookings open. Get ready — Chicago's most exclusive experience is coming soon.</p>
+      <h3>Request Received!</h3>
+      <p>A Glo Karts representative will contact you within 24 hours to confirm your reservation.</p>
     </div>
 
     <form id="booking-form" class="glo-form" method="POST" action="https://formspree.io/f/mjglqega" novalidate>
-      <input type="hidden" name="form-name" value="VIP Waitlist" />
+      <input type="hidden" name="form-name" value="Reservation Request" />
       <div class="glo-form-row">
         <div class="form-group">
           <label for="bk-name">Full Name <span style="color:#444">*</span></label>
@@ -487,38 +462,43 @@
       </div>
       <div class="glo-form-row">
         <div class="form-group">
-          <label for="bk-phone">Phone</label>
-          <input id="bk-phone" name="phone" type="tel" placeholder="(000) 000-0000" autocomplete="tel" />
+          <label for="bk-phone">Phone <span style="color:#444">*</span></label>
+          <input id="bk-phone" name="phone" type="tel" placeholder="(000) 000-0000" required autocomplete="tel" />
         </div>
         <div class="form-group">
-          <label for="bk-guests-m">Group Size</label>
-          <select id="bk-guests-m" name="group_size">
+          <label for="bk-guests-m">Party Size <span style="color:#444">*</span></label>
+          <select id="bk-guests-m" name="group_size" required>
             <option value="" disabled selected>Select</option>
-            <option>1–2</option><option>3–5</option>
-            <option>6–10</option><option>11–20</option><option>20+</option>
+            <option value="2">2 Guests</option>
+            <option value="3">3 Guests</option>
+            <option value="4">4 Guests</option>
+            <option value="5">5 Guests</option>
+          </select>
+        </div>
+      </div>
+      <div class="glo-form-row">
+        <div class="form-group">
+          <label for="bk-date-m">Preferred Date <span style="color:#444">*</span></label>
+          <input id="bk-date-m" name="preferred_date" type="date" required />
+        </div>
+        <div class="form-group">
+          <label for="bk-time-m">Preferred Time <span style="color:#444">*</span></label>
+          <select id="bk-time-m" name="preferred_time" required>
+            <option value="" disabled selected>Select a time</option>
+            <option>10:00 AM</option>
+            <option>12:00 PM</option>
+            <option>2:00 PM</option>
+            <option>4:00 PM</option>
+            <option>6:00 PM</option>
+            <option>8:00 PM</option>
           </select>
         </div>
       </div>
       <div class="form-group">
-        <label for="bk-tour-m">Experience Interest</label>
-        <select id="bk-tour-m" name="experience_interest">
-          <option value="" disabled selected>Select an experience</option>
-          <option>Chicago After Dark</option>
-          <option>Riverwalk Glow Tour</option>
-          <option>Navy Pier Lights</option>
-          <option>Private Glo Experience</option>
-          <option>Surprise me!</option>
-        </select>
+        <label for="bk-notes">Additional Notes</label>
+        <textarea id="bk-notes" name="message" placeholder="Special occasion, questions, anything else…" style="min-height:80px;"></textarea>
       </div>
-      <div class="form-group">
-        <label for="bk-date-m">When are you visiting Chicago?</label>
-        <input id="bk-date-m" name="visit_timeframe" type="text" placeholder="e.g. Summer 2025, TBD…" />
-      </div>
-      <div class="form-group">
-        <label for="bk-notes">Anything to share?</label>
-        <textarea id="bk-notes" name="message" placeholder="Special occasion, group details, questions…" style="min-height:80px;"></textarea>
-      </div>
-      <button type="submit" id="bk-submit" class="glo-form-submit">SECURE MY SPOT &nbsp;&#8594;</button>
+      <button type="submit" id="bk-submit" class="glo-form-submit">SUBMIT RESERVATION REQUEST &nbsp;&#8594;</button>
     </form>
   </div>
 </div>
