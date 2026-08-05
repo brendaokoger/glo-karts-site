@@ -481,8 +481,10 @@
       </a>
     </div>
 
-    <form id="booking-form" class="glo-form" method="POST" action="https://formspree.io/f/mjglqega" novalidate>
-      <input type="hidden" name="form-name" value="Reservation Request" />
+    <form id="booking-form" class="glo-form" method="POST" action="https://formspree.io/f/xzepbjeb" novalidate>
+      <input type="hidden" name="_subject"        value="New Glo Karts Booking Request" />
+      <input type="hidden" id="hf-price"          name="price_per_guest"  value="$49.99" />
+      <input type="hidden" id="hf-total"          name="estimated_total"  value="" />
 
       <!-- Name -->
       <div class="glo-form-row">
@@ -527,7 +529,7 @@
         </div>
         <div class="form-group">
           <label for="bk-guests-m">Number of Guests <span class="req">*</span></label>
-          <select id="bk-guests-m" name="group_size" required>
+          <select id="bk-guests-m" name="guest_count" required>
             <option value="" disabled selected>Select guests</option>
             <option value="2">2 Guests</option>
             <option value="3">3 Guests</option>
@@ -541,11 +543,11 @@
       <div class="glo-form-row">
         <div class="form-group">
           <label for="bk-date-m">Preferred Booking Date <span class="req">*</span></label>
-          <input id="bk-date-m" name="preferred_date" type="date" required />
+          <input id="bk-date-m" name="booking_date" type="date" required />
         </div>
         <div class="form-group">
           <label for="bk-time-m">Preferred Tour Time <span class="req">*</span></label>
-          <select id="bk-time-m" name="preferred_time" required>
+          <select id="bk-time-m" name="booking_time" required>
             <option value="" disabled selected>Select a time</option>
             <option>6:00 PM</option>
             <option>7:30 PM</option>
@@ -563,7 +565,7 @@
       <!-- Additional Details -->
       <div class="form-group">
         <label for="bk-notes">Additional Details</label>
-        <textarea id="bk-notes" name="message" placeholder="Questions, special requests, or anything else we should know…"></textarea>
+        <textarea id="bk-notes" name="additional_details" placeholder="Questions, special requests, or anything else we should know…"></textarea>
       </div>
 
       <!-- Live Booking Summary -->
@@ -650,6 +652,9 @@
 
       <!-- Submit -->
       <div class="glo-submit-wrap">
+        <p id="bk-form-error" class="bk-form-error" style="display:none;" role="alert">
+          We couldn't submit your request. Please try again or text Glo Karts at 630-329-0885.
+        </p>
         <button type="submit" id="bk-submit" class="glo-form-submit">Submit Booking Request &nbsp;&#8594;</button>
         <p class="glo-submit-note">Glo Karts will contact you within 24 hours to confirm availability.</p>
       </div>
@@ -833,6 +838,11 @@
         if (firstName && !firstName.value.trim()) { firstName.focus(); return; }
         if (email     && !email.value.trim())     { email.focus();     return; }
 
+        /* Populate hidden pricing fields before sending */
+        var hfTotal = document.getElementById('hf-total');
+        var totalEl = document.getElementById('bs-total-val');
+        if (hfTotal && totalEl) hfTotal.value = totalEl.textContent.trim();
+
         submitBtn.disabled    = true;
         submitBtn.textContent = 'Sending…';
 
@@ -860,13 +870,15 @@
           } else {
             submitBtn.disabled    = false;
             submitBtn.textContent = 'Submit Booking Request';
-            alert('Something went wrong. Please text us at 630-329-0885.');
+            var errEl = document.getElementById('bk-form-error');
+            if (errEl) errEl.style.display = 'block';
           }
         })
         .catch(function () {
           submitBtn.disabled    = false;
           submitBtn.textContent = 'Submit Booking Request';
-          alert('Network error. Please check your connection and try again.');
+          var errEl = document.getElementById('bk-form-error');
+          if (errEl) errEl.style.display = 'block';
         });
       });
     }
