@@ -574,7 +574,52 @@
         <p class="bs-payment-note">No payment is collected through this form. Payment instructions will be provided after availability is confirmed.</p>
       </div>
 
-      <button type="submit" id="bk-submit" class="glo-form-submit">SUBMIT RESERVATION REQUEST &nbsp;&#8594;</button>
+      <!-- Required Checkboxes -->
+      <div class="glo-check-group">
+        <label class="glo-check-label">
+          <input type="checkbox" id="bk-waiver" name="waiver_acknowledged" value="yes" required />
+          <span class="glo-check-box" aria-hidden="true"></span>
+          <span class="glo-check-text">
+            I understand that every guest must complete a Glo Karts liability waiver before participating in the tour. <span class="req">*</span>
+            <span class="glo-check-helper">Waiver instructions will be sent after the booking is confirmed. Each adult must complete an individual waiver. A parent or legal guardian must complete the waiver for a minor.</span>
+          </span>
+        </label>
+      </div>
+
+      <div class="glo-check-group">
+        <label class="glo-check-label">
+          <input type="checkbox" id="bk-consent" name="contact_consent" value="yes" required />
+          <span class="glo-check-box" aria-hidden="true"></span>
+          <span class="glo-check-text">
+            I agree that Glo Karts may contact me by phone, text, or email regarding this booking request. <span class="req">*</span>
+          </span>
+        </label>
+      </div>
+
+      <!-- Contact Box -->
+      <div class="glo-contact-box">
+        <div class="gcb-header">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Questions or Need Help?
+        </div>
+        <p class="gcb-text">Text Glo Karts at 630-329-0885 to ask questions, learn more, or discuss your booking request.</p>
+        <div class="gcb-btns">
+          <a href="sms:6303290885" class="gcb-btn gcb-btn-sms">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Text Glo Karts
+          </a>
+          <a href="tel:6303290885" class="gcb-btn gcb-btn-call">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 4.9 2 2 0 0 1 3.59 2.72h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.34a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Call 630-329-0885
+          </a>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="glo-submit-wrap">
+        <button type="submit" id="bk-submit" class="glo-form-submit">Submit Booking Request &nbsp;&#8594;</button>
+        <p class="glo-submit-note">Glo Karts will contact you within 24 hours to confirm availability.</p>
+      </div>
     </form>
   </div>
 </div>

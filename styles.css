@@ -1179,6 +1179,103 @@ footer {
   font-size: 0.74rem; color: #555;
   line-height: 1.6; margin-top: 0.4rem;
 }
+
+/* ── Checkboxes ───────────────────────────────────────── */
+.glo-check-group { display: flex; }
+.glo-check-label {
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: flex-start; align-items: flex-start;
+  gap: 0.75rem; cursor: pointer;
+}
+.glo-check-label input[type="checkbox"] {
+  position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;
+}
+.glo-check-box {
+  flex-shrink: 0;
+  width: 20px; height: 20px; border-radius: 5px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.04);
+  margin-top: 1px;
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.glo-check-label input:checked ~ .glo-check-box {
+  background: var(--blue);
+  border-color: var(--blue);
+  box-shadow: 0 0 12px rgba(0,195,255,0.38);
+}
+.glo-check-label input:checked ~ .glo-check-box::after {
+  content: '';
+  display: block;
+  width: 5px; height: 9px;
+  border: 2px solid #000;
+  border-top: none; border-left: none;
+  -webkit-transform: rotate(45deg) translateY(-1px);
+  transform: rotate(45deg) translateY(-1px);
+}
+.glo-check-label:hover .glo-check-box { border-color: rgba(0,195,255,0.45); }
+.glo-check-text {
+  font-size: 0.87rem; color: #bbb; line-height: 1.6;
+  -webkit-user-select: none; user-select: none;
+}
+.glo-check-helper {
+  display: block; font-size: 0.76rem; color: #666;
+  line-height: 1.62; margin-top: 0.45rem;
+}
+
+/* ── Contact Box ──────────────────────────────────────── */
+.glo-contact-box {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 14px;
+  padding: 1.25rem 1.4rem 1.35rem;
+}
+.gcb-header {
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  gap: 0.5rem;
+  font-size: 0.87rem; font-weight: 700; color: #ddd;
+  margin-bottom: 0.5rem;
+}
+.gcb-header svg { color: var(--blue); flex-shrink: 0; }
+.gcb-text { font-size: 0.84rem; color: #777; line-height: 1.65; margin-bottom: 1rem; }
+.gcb-btns {
+  display: -webkit-flex; display: flex;
+  gap: 0.6rem; flex-wrap: wrap;
+}
+.gcb-btn {
+  display: -webkit-inline-flex; display: inline-flex;
+  -webkit-align-items: center; align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1.15rem;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none; white-space: nowrap;
+  transition: background 0.18s, box-shadow 0.18s, color 0.18s;
+  -webkit-tap-highlight-color: transparent;
+}
+.gcb-btn-sms {
+  background: var(--blue); color: #000;
+  box-shadow: 0 0 16px rgba(0,195,255,0.22);
+}
+.gcb-btn-sms:hover { background: #2dd4ff; box-shadow: 0 0 26px rgba(0,195,255,0.4); }
+.gcb-btn-call {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.13);
+  color: #ccc;
+}
+.gcb-btn-call:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+/* ── Submit wrap ──────────────────────────────────────── */
+.glo-submit-wrap { display: flex; flex-direction: column; gap: 0.65rem; }
+.glo-submit-note {
+  text-align: center; font-size: 0.78rem;
+  color: #666; line-height: 1.55;
+}
 .form-field-note {
   font-size: 0.72rem; color: #666; line-height: 1.55;
   margin-top: 0.35rem;
