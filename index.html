@@ -533,6 +533,47 @@
         <textarea id="bk-notes" name="message" placeholder="Questions, special requests, or anything else we should know…"></textarea>
       </div>
 
+      <!-- Live Booking Summary -->
+      <div class="booking-summary" id="booking-summary">
+        <div class="bs-header">
+          <span class="bs-dot"></span>
+          Booking Summary
+        </div>
+        <div class="bs-rows">
+          <div class="bs-row">
+            <span class="bs-label">Experience</span>
+            <span class="bs-value" id="bs-exp-val">—</span>
+          </div>
+          <div class="bs-row">
+            <span class="bs-label">Date</span>
+            <span class="bs-value" id="bs-date-val">—</span>
+          </div>
+          <div class="bs-row">
+            <span class="bs-label">Time</span>
+            <span class="bs-value" id="bs-time-val">—</span>
+          </div>
+          <div class="bs-row">
+            <span class="bs-label">Duration</span>
+            <span class="bs-value">1 Hour</span>
+          </div>
+          <div class="bs-row">
+            <span class="bs-label">Guests</span>
+            <span class="bs-value" id="bs-guests-val">—</span>
+          </div>
+          <div class="bs-divider"></div>
+          <div class="bs-row">
+            <span class="bs-label">Price Per Person</span>
+            <span class="bs-value">$49.99</span>
+          </div>
+          <div class="bs-row bs-total-row">
+            <span class="bs-label">Estimated Total</span>
+            <span class="bs-total-val" id="bs-total-val">—</span>
+          </div>
+        </div>
+        <p class="bs-notice">This is a booking request and does not guarantee availability.</p>
+        <p class="bs-payment-note">No payment is collected through this form. Payment instructions will be provided after availability is confirmed.</p>
+      </div>
+
       <button type="submit" id="bk-submit" class="glo-form-submit">SUBMIT RESERVATION REQUEST &nbsp;&#8594;</button>
     </form>
   </div>
@@ -560,6 +601,60 @@
       String(d.getDate()).padStart(2, '0');
     var dateField = document.getElementById('bk-date-m');
     if (dateField) dateField.min = today;
+  })();
+
+  /* Live booking summary + price calculation */
+  (function () {
+    var PRICE_PER_PERSON = 49.99;
+    var MONTHS = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December'];
+
+    var fExp     = document.getElementById('bk-experience');
+    var fDate    = document.getElementById('bk-date-m');
+    var fTime    = document.getElementById('bk-time-m');
+    var fGuests  = document.getElementById('bk-guests-m');
+
+    var dExp    = document.getElementById('bs-exp-val');
+    var dDate   = document.getElementById('bs-date-val');
+    var dTime   = document.getElementById('bs-time-val');
+    var dGuests = document.getElementById('bs-guests-val');
+    var dTotal  = document.getElementById('bs-total-val');
+
+    if (!fExp || !dExp) return;
+
+    function formatDate(val) {
+      if (!val) return '—';
+      var p = val.split('-');
+      return MONTHS[parseInt(p[1], 10) - 1] + ' ' + parseInt(p[2], 10) + ', ' + p[0];
+    }
+
+    function update() {
+      var exp    = fExp.value;
+      var date   = fDate ? fDate.value : '';
+      var time   = fTime ? fTime.value : '';
+      var guests = fGuests ? parseInt(fGuests.value, 10) : NaN;
+
+      dExp.textContent    = exp    || '—';
+      dDate.textContent   = formatDate(date);
+      dTime.textContent   = time   || '—';
+      dGuests.textContent = (!isNaN(guests) && guests > 0) ? guests + ' Guest' + (guests > 1 ? 's' : '') : '—';
+
+      if (!isNaN(guests) && guests > 0) {
+        var total = (guests * PRICE_PER_PERSON).toFixed(2);
+        dTotal.textContent = '$' + total;
+      } else {
+        dTotal.textContent = '—';
+      }
+    }
+
+    [fExp, fDate, fTime, fGuests].forEach(function (el) {
+      if (el) {
+        el.addEventListener('change', update);
+        el.addEventListener('input', update);
+      }
+    });
+
+    update();
   })();
 </script>
 

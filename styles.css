@@ -1117,6 +1117,68 @@ footer {
   box-shadow: 0 0 0 3px rgba(0,195,255,0.1);
 }
 .form-group input[type="date"] { color-scheme: dark; }
+
+/* ── Live Booking Summary ─────────────────────────────── */
+.booking-summary {
+  background: rgba(0,195,255,0.04);
+  border: 1px solid rgba(0,195,255,0.18);
+  border-radius: 14px;
+  padding: 1.4rem 1.5rem 1.2rem;
+  display: flex; flex-direction: column; gap: 0;
+}
+.bs-header {
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  gap: 0.5rem;
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 1rem;
+}
+.bs-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  background: var(--blue);
+  box-shadow: 0 0 8px rgba(0,195,255,0.9);
+}
+.bs-rows { display: flex; flex-direction: column; gap: 0; }
+.bs-row {
+  display: -webkit-flex; display: flex;
+  -webkit-justify-content: space-between; justify-content: space-between;
+  -webkit-align-items: baseline; align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.48rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.bs-row:last-child { border-bottom: none; }
+.bs-label { font-size: 0.8rem; color: #666; white-space: nowrap; }
+.bs-value {
+  font-size: 0.85rem; color: #bbb; font-weight: 500;
+  text-align: right; word-break: break-word;
+  max-width: 58%;
+}
+.bs-divider {
+  height: 1px; background: rgba(0,195,255,0.14);
+  margin: 0.65rem 0;
+}
+.bs-total-row .bs-label {
+  font-size: 0.85rem; font-weight: 700; color: #ccc;
+}
+.bs-total-val {
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--blue);
+  text-shadow: 0 0 20px rgba(0,195,255,0.35);
+  letter-spacing: 0.01em;
+}
+.bs-notice {
+  margin-top: 1rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.75rem; color: #888;
+  line-height: 1.6; font-style: italic;
+}
+.bs-payment-note {
+  font-size: 0.74rem; color: #555;
+  line-height: 1.6; margin-top: 0.4rem;
+}
 .form-field-note {
   font-size: 0.72rem; color: #666; line-height: 1.55;
   margin-top: 0.35rem;
