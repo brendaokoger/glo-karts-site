@@ -450,25 +450,52 @@
 
     <form id="booking-form" class="glo-form" method="POST" action="https://formspree.io/f/mjglqega" novalidate>
       <input type="hidden" name="form-name" value="Reservation Request" />
+
+      <!-- Name -->
       <div class="glo-form-row">
         <div class="form-group">
-          <label for="bk-name">Full Name <span style="color:#444">*</span></label>
-          <input id="bk-name" name="full_name" type="text" placeholder="Your name" required autocomplete="name" />
+          <label for="bk-first-name">First Name <span class="req">*</span></label>
+          <input id="bk-first-name" name="first_name" type="text" placeholder="First name" required autocomplete="given-name" />
         </div>
         <div class="form-group">
-          <label for="bk-email">Email <span style="color:#444">*</span></label>
-          <input id="bk-email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
+          <label for="bk-last-name">Last Name <span class="req">*</span></label>
+          <input id="bk-last-name" name="last_name" type="text" placeholder="Last name" required autocomplete="family-name" />
         </div>
       </div>
+
+      <!-- Contact -->
       <div class="glo-form-row">
         <div class="form-group">
-          <label for="bk-phone">Phone <span style="color:#444">*</span></label>
-          <input id="bk-phone" name="phone" type="tel" placeholder="(000) 000-0000" required autocomplete="tel" />
+          <label for="bk-email">Email Address <span class="req">*</span></label>
+          <input id="bk-email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
         </div>
         <div class="form-group">
-          <label for="bk-guests-m">Party Size <span style="color:#444">*</span></label>
+          <label for="bk-phone">Mobile Phone Number <span class="req">*</span></label>
+          <input id="bk-phone" name="phone" type="tel" placeholder="(000) 000-0000" required autocomplete="tel" />
+          <p class="form-field-note">We'll use this number to contact you regarding availability and booking confirmation.</p>
+        </div>
+      </div>
+
+      <!-- Experience & Guests -->
+      <div class="glo-form-row">
+        <div class="form-group">
+          <label for="bk-experience">Select Your Experience <span class="req">*</span></label>
+          <select id="bk-experience" name="experience" required>
+            <option value="" disabled selected>Choose an experience</option>
+            <option>Chicago Skyline Tour</option>
+            <option>Navy Pier Lights Tour</option>
+            <option>Riverwalk Glow Tour</option>
+            <option>Downtown Chicago Tour</option>
+            <option>Ladies Night Tour</option>
+            <option>Date Night Tour</option>
+            <option>Birthday Tour</option>
+            <option>Private Glo Experience</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="bk-guests-m">Number of Guests <span class="req">*</span></label>
           <select id="bk-guests-m" name="group_size" required>
-            <option value="" disabled selected>Select</option>
+            <option value="" disabled selected>Select guests</option>
             <option value="2">2 Guests</option>
             <option value="3">3 Guests</option>
             <option value="4">4 Guests</option>
@@ -476,28 +503,36 @@
           </select>
         </div>
       </div>
+
+      <!-- Date & Time -->
       <div class="glo-form-row">
         <div class="form-group">
-          <label for="bk-date-m">Preferred Date <span style="color:#444">*</span></label>
+          <label for="bk-date-m">Preferred Booking Date <span class="req">*</span></label>
           <input id="bk-date-m" name="preferred_date" type="date" required />
         </div>
         <div class="form-group">
-          <label for="bk-time-m">Preferred Time <span style="color:#444">*</span></label>
+          <label for="bk-time-m">Preferred Tour Time <span class="req">*</span></label>
           <select id="bk-time-m" name="preferred_time" required>
             <option value="" disabled selected>Select a time</option>
-            <option>10:00 AM</option>
-            <option>12:00 PM</option>
-            <option>2:00 PM</option>
-            <option>4:00 PM</option>
             <option>6:00 PM</option>
-            <option>8:00 PM</option>
+            <option>7:30 PM</option>
+            <option>9:00 PM</option>
           </select>
         </div>
       </div>
+
+      <!-- Special Occasion -->
       <div class="form-group">
-        <label for="bk-notes">Additional Notes</label>
-        <textarea id="bk-notes" name="message" placeholder="Special occasion, questions, anything else…" style="min-height:80px;"></textarea>
+        <label for="bk-occasion">Special Occasion</label>
+        <input id="bk-occasion" name="special_occasion" type="text" placeholder="e.g. Birthday, Anniversary, Date Night…" autocomplete="off" />
       </div>
+
+      <!-- Additional Details -->
+      <div class="form-group">
+        <label for="bk-notes">Additional Details</label>
+        <textarea id="bk-notes" name="message" placeholder="Questions, special requests, or anything else we should know…"></textarea>
+      </div>
+
       <button type="submit" id="bk-submit" class="glo-form-submit">SUBMIT RESERVATION REQUEST &nbsp;&#8594;</button>
     </form>
   </div>
@@ -516,6 +551,17 @@
 </div>
 
 <script src="./main.js"></script>
+<script>
+  /* Set today as the minimum selectable date on the booking date picker */
+  (function () {
+    var d = new Date();
+    var today = d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+    var dateField = document.getElementById('bk-date-m');
+    if (dateField) dateField.min = today;
+  })();
+</script>
 
 <script>
   /* ── Glo Karts Cinematic Intro ─────────────────────────────

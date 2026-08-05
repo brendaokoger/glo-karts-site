@@ -1117,6 +1117,11 @@ footer {
   box-shadow: 0 0 0 3px rgba(0,195,255,0.1);
 }
 .form-group input[type="date"] { color-scheme: dark; }
+.form-field-note {
+  font-size: 0.72rem; color: #666; line-height: 1.55;
+  margin-top: 0.35rem;
+}
+.req { color: rgba(0,195,255,0.6); font-style: normal; }
 .form-group input::placeholder,
 .form-group textarea::placeholder { color: #444; }
 
