@@ -443,9 +443,42 @@
     <p class="glo-modal-sub">Choose your preferred date, time, and party size to request a one-hour Glo Karts tour through Downtown Chicago. Reservations require a minimum of 2 guests and allow up to 5 guests.</p>
 
     <div id="booking-success" class="glo-modal-success" role="alert">
-      <div class="check">&#10003;</div>
-      <h3>Request Received!</h3>
-      <p>A Glo Karts representative will contact you within 24 hours to confirm your reservation.</p>
+      <div class="bks-icon">&#10003;</div>
+      <h2 class="bks-heading">Booking Request Received</h2>
+      <p class="bks-thank">Thank you for choosing Glo Karts.</p>
+      <p class="bks-msg">We received your requested date, time, and party information.</p>
+      <p class="bks-msg">A Glo Karts representative will contact you within 24 hours by text, phone, or email.</p>
+
+      <div class="bks-summary">
+        <div class="bks-row">
+          <span class="bks-label">Experience</span>
+          <span class="bks-value" id="bks-exp">—</span>
+        </div>
+        <div class="bks-row">
+          <span class="bks-label">Date</span>
+          <span class="bks-value" id="bks-date">—</span>
+        </div>
+        <div class="bks-row">
+          <span class="bks-label">Time</span>
+          <span class="bks-value" id="bks-time">—</span>
+        </div>
+        <div class="bks-row">
+          <span class="bks-label">Guests</span>
+          <span class="bks-value" id="bks-guests">—</span>
+        </div>
+        <div class="bks-divider"></div>
+        <div class="bks-row bks-total-row">
+          <span class="bks-label">Estimated Total</span>
+          <span class="bks-value bks-total" id="bks-total">—</span>
+        </div>
+      </div>
+
+      <p class="bks-notice">Your tour is not confirmed until you receive direct confirmation from Glo Karts.</p>
+
+      <a href="sms:6303290885" class="gcb-btn gcb-btn-sms bks-sms-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Text Glo Karts
+      </a>
     </div>
 
     <form id="booking-form" class="glo-form" method="POST" action="https://formspree.io/f/mjglqega" novalidate>
@@ -795,12 +828,14 @@
     if (form && submitBtn) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        var name  = document.getElementById('bk-name').value.trim();
-        var email = document.getElementById('bk-email').value.trim();
-        if (!name)  { document.getElementById('bk-name').focus();  return; }
-        if (!email) { document.getElementById('bk-email').focus(); return; }
+        var firstName = document.getElementById('bk-first-name');
+        var email     = document.getElementById('bk-email');
+        if (firstName && !firstName.value.trim()) { firstName.focus(); return; }
+        if (email     && !email.value.trim())     { email.focus();     return; }
+
         submitBtn.disabled    = true;
         submitBtn.textContent = 'Sending…';
+
         fetch(form.action, {
           method: 'POST',
           body: new FormData(form),
@@ -808,18 +843,30 @@
         })
         .then(function (res) {
           if (res.ok) {
+            /* Populate confirmation screen from live summary values */
+            function copyText(srcId, destId) {
+              var src  = document.getElementById(srcId);
+              var dest = document.getElementById(destId);
+              if (src && dest) dest.textContent = src.textContent;
+            }
+            copyText('bs-exp-val',    'bks-exp');
+            copyText('bs-date-val',   'bks-date');
+            copyText('bs-time-val',   'bks-time');
+            copyText('bs-guests-val', 'bks-guests');
+            copyText('bs-total-val',  'bks-total');
+
             form.style.display = 'none';
             if (success) success.classList.add('visible');
           } else {
             submitBtn.disabled    = false;
-            submitBtn.textContent = 'SECURE MY SPOT →';
-            alert('Something went wrong. Please email us at info@glokarts.com.');
+            submitBtn.textContent = 'Submit Booking Request';
+            alert('Something went wrong. Please text us at 630-329-0885.');
           }
         })
         .catch(function () {
           submitBtn.disabled    = false;
-          submitBtn.textContent = 'CONFIRM RESERVATION';
-          alert('Network error. Please check your connection.');
+          submitBtn.textContent = 'Submit Booking Request';
+          alert('Network error. Please check your connection and try again.');
         });
       });
     }

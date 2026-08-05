@@ -1305,19 +1305,82 @@ footer {
 .glo-form-submit:active { transform: translateY(0); }
 .glo-form-submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
 
-/* Success state */
-.glo-modal-success { display: none; text-align: center; padding: 2.5rem 0 1rem; }
-.glo-modal-success.visible { display: block; }
-.glo-modal-success .check {
-  display: block; font-size: 2.8rem; margin-bottom: 0.9rem;
-  filter: drop-shadow(0 0 12px rgba(0,195,255,0.5));
+/* ── Success / Confirmation screen ───────────────────── */
+.glo-modal-success { display: none; }
+.glo-modal-success.visible { display: flex; flex-direction: column; gap: 0.6rem; }
+
+.bks-icon {
+  display: inline-flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(0,195,255,0.12);
+  border: 2px solid rgba(0,195,255,0.35);
+  font-size: 1.6rem; color: var(--blue);
+  box-shadow: 0 0 28px rgba(0,195,255,0.25);
+  align-self: center; margin-bottom: 0.4rem;
 }
-.glo-modal-success h3 {
+.bks-heading {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.7rem; letter-spacing: 0.05em;
-  color: var(--blue); margin-bottom: 0.55rem;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  letter-spacing: 0.04em; line-height: 1.05;
+  color: #fff; text-align: center;
 }
-.glo-modal-success p { font-size: 0.9rem; color: #aaa; line-height: 1.75; }
+.bks-thank {
+  font-size: 0.95rem; font-weight: 600; color: var(--blue);
+  text-align: center; margin-bottom: 0.1rem;
+}
+.bks-msg {
+  font-size: 0.87rem; color: #999; line-height: 1.68; text-align: center;
+}
+
+/* Mini booking summary on confirmation */
+.bks-summary {
+  background: rgba(0,195,255,0.04);
+  border: 1px solid rgba(0,195,255,0.16);
+  border-radius: 12px;
+  padding: 1.1rem 1.3rem;
+  margin: 0.5rem 0;
+}
+.bks-row {
+  display: -webkit-flex; display: flex;
+  -webkit-justify-content: space-between; justify-content: space-between;
+  -webkit-align-items: baseline; align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.bks-row:last-child { border-bottom: none; }
+.bks-label { font-size: 0.78rem; color: #666; white-space: nowrap; }
+.bks-value {
+  font-size: 0.85rem; color: #bbb; font-weight: 500;
+  text-align: right; word-break: break-word; max-width: 60%;
+}
+.bks-divider {
+  height: 1px; background: rgba(0,195,255,0.14);
+  margin: 0.55rem 0;
+}
+.bks-total-row .bks-label { font-weight: 700; color: #ccc; font-size: 0.82rem; }
+.bks-total {
+  font-size: 1.2rem !important; font-weight: 700 !important;
+  color: var(--blue) !important;
+  text-shadow: 0 0 18px rgba(0,195,255,0.35);
+}
+
+.bks-notice {
+  font-size: 0.78rem; color: #666; line-height: 1.6;
+  text-align: center; font-style: italic;
+  padding: 0.5rem 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin: 0.2rem 0;
+}
+.bks-sms-btn {
+  align-self: center;
+  margin-top: 0.4rem;
+  padding: 0.75rem 1.6rem !important;
+  font-size: 0.85rem !important;
+}
 
 /* ── Responsive ───────────────────────────────────────── */
 @media (max-width: 1060px) {
