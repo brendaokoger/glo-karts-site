@@ -438,7 +438,51 @@
   <div class="glo-modal-backdrop"></div>
   <div class="glo-modal-card">
     <button class="glo-modal-close" type="button" aria-label="Close">&#x2715;</button>
-    <p class="glo-modal-eyebrow">Reservation Request</p>
+
+    <!-- ── Branded intro header ──────────────────────────── -->
+    <div class="glo-brand-intro">
+      <!-- Chicago skyline silhouette (line-art, low opacity) -->
+      <svg class="gbi-skyline" viewBox="0 0 600 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMax meet">
+        <polygon fill="currentColor" points="
+          0,72 0,52 12,52 12,44 22,44 22,58 28,58 28,40 36,40 36,50
+          44,50 44,32 48,32 48,10 49.5,6 51,10 51,32 56,32 56,24
+          64,24 64,32 72,32 72,40 80,40 80,47 88,47 88,30 92,30
+          92,10 93.5,5 95,10 95,30 104,30 104,40 112,40 112,50
+          120,50 120,42 132,42 132,50 144,50 144,37 156,37 156,50
+          168,50 168,43 180,43 180,52 192,52 192,44 206,44 206,54
+          220,54 220,46 235,46 235,54 252,54 252,47 270,47 270,56
+          290,56 290,50 310,50 310,56 332,56 332,50 355,50 355,57
+          380,57 380,52 405,52 405,58 432,58 432,53 460,53 460,59
+          490,59 490,55 520,55 520,61 550,61 550,57 575,57 575,63
+          600,63 600,72
+        "/>
+      </svg>
+      <div class="gbi-content">
+        <p class="gbi-tagline">RIDE THE GLO</p>
+        <p class="gbi-brand-line">Chicago's Premium Electric Cart Experience</p>
+        <p class="gbi-slogan">One hour. Downtown Chicago. Small groups. Big memories.</p>
+      </div>
+      <div class="gbi-strip">
+        <div class="gbi-strip-item">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Downtown Chicago
+        </div>
+        <div class="gbi-strip-item">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          1-Hour Tour
+        </div>
+        <div class="gbi-strip-item">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          2–5 Guests
+        </div>
+        <div class="gbi-strip-item">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          $49.99 Per Guest
+        </div>
+      </div>
+    </div>
+
+    <p class="glo-modal-eyebrow">Ride the Glo</p>
     <h2 class="glo-modal-heading">Reserve Your Glo Karts Experience</h2>
     <p class="glo-modal-sub">Choose your preferred date, time, and party size to request a one-hour Glo Karts tour through Downtown Chicago. Reservations require a minimum of 2 guests and allow up to 5 guests.</p>
 
@@ -571,8 +615,8 @@
       <!-- Live Booking Summary -->
       <div class="booking-summary" id="booking-summary">
         <div class="bs-header">
-          <span class="bs-dot"></span>
-          Booking Summary
+          <svg class="bs-cart-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          Your Ride
         </div>
         <div class="bs-rows">
           <div class="bs-row">
@@ -655,9 +699,10 @@
         <p id="bk-form-error" class="bk-form-error" style="display:none;" role="alert">
           We couldn't submit your request. Please try again or text Glo Karts at 630-329-0885.
         </p>
-        <button type="submit" id="bk-submit" class="glo-form-submit">Submit Booking Request &nbsp;&#8594;</button>
+        <button type="submit" id="bk-submit" class="glo-form-submit">Request My Tour &nbsp;&#8594;</button>
         <p class="glo-submit-note">Glo Karts will contact you within 24 hours to confirm availability.</p>
       </div>
+      <p class="glo-brand-footer">✦ Ride the city differently.</p>
     </form>
   </div>
 </div>
@@ -869,7 +914,7 @@
             if (success) success.classList.add('visible');
           } else {
             submitBtn.disabled    = false;
-            submitBtn.textContent = 'Submit Booking Request';
+            submitBtn.textContent = 'Request My Tour';
             var errEl = document.getElementById('bk-form-error');
             if (errEl) errEl.style.display = 'block';
           }
