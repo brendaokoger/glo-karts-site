@@ -510,6 +510,7 @@
 
     <form id="booking-form" class="glo-form" method="POST" action="https://formspree.io/f/xzepbjeb" novalidate>
       <input type="hidden" name="_subject"        value="New Glo Karts Booking Request" />
+      <input type="hidden" id="hf-replyto"        name="_replyto"         value="" />
       <input type="hidden" id="hf-price"          name="price_per_guest"  value="$49.99" />
       <input type="hidden" id="hf-total"          name="estimated_total"  value="" />
 
@@ -1077,7 +1078,10 @@
           return;
         }
 
-        /* Populate hidden pricing fields before sending */
+        /* Populate hidden fields before sending */
+        var hfReplyto = document.getElementById('hf-replyto');
+        if (hfReplyto && email) hfReplyto.value = email.value.trim();
+
         var hfTotal = document.getElementById('hf-total');
         var totalEl = document.getElementById('bs-total-val');
         if (hfTotal && totalEl) hfTotal.value = totalEl.textContent.trim();
