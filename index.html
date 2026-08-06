@@ -1091,36 +1091,40 @@
           headers: { Accept: 'application/json' }
         })
         .then(function (res) {
-          if (res.ok) {
-            /* Populate confirmation screen from live summary values */
-            function copyText(srcId, destId) {
-              var src  = document.getElementById(srcId);
-              var dest = document.getElementById(destId);
-              if (src && dest) dest.textContent = src.textContent;
-            }
-            copyText('bs-exp-val',    'bks-exp');
-            copyText('bs-date-val',   'bks-date');
-            copyText('bs-time-val',   'bks-time');
-            copyText('bs-guests-val', 'bks-guests');
-            copyText('bs-total-val',  'bks-total');
+          return res.json().then(function (data) {
+            if (res.ok && data.ok !== false) {
+              /* Populate confirmation screen from live summary values */
+              var copyText = function (srcId, destId) {
+                var src  = document.getElementById(srcId);
+                var dest = document.getElementById(destId);
+                if (src && dest) dest.textContent = src.textContent;
+              };
+              copyText('bs-exp-val',    'bks-exp');
+              copyText('bs-date-val',   'bks-date');
+              copyText('bs-time-val',   'bks-time');
+              copyText('bs-guests-val', 'bks-guests');
+              copyText('bs-total-val',  'bks-total');
 
-            form.style.display = 'none';
-            if (success) success.classList.add('visible');
-            /* Scroll card to top so the confirmation screen is visible */
-            var card = modal && modal.querySelector('.glo-modal-card');
-            if (card) card.scrollTop = 0;
-          } else {
-            submitBtn.disabled  = false;
-            submitBtn.innerHTML = 'Request My Tour &nbsp;&#8594;';
-            var errEl = document.getElementById('bk-form-error');
-            if (errEl) errEl.style.display = 'block';
-          }
+              form.style.display = 'none';
+              if (success) success.classList.add('visible');
+              /* Scroll card to top so the confirmation screen is visible */
+              var card = modal && modal.querySelector('.glo-modal-card');
+              if (card) card.scrollTop = 0;
+            } else {
+              submitBtn.disabled  = false;
+              submitBtn.innerHTML = 'Request My Tour &nbsp;&#8594;';
+              var errEl = document.getElementById('bk-form-error');
+              if (errEl) errEl.style.display = 'block';
+              console.error('Formspree error:', data);
+            }
+          });
         })
-        .catch(function () {
+        .catch(function (err) {
           submitBtn.disabled   = false;
           submitBtn.innerHTML  = 'Request My Tour &nbsp;&#8594;';
           var errEl = document.getElementById('bk-form-error');
           if (errEl) errEl.style.display = 'block';
+          console.error('Booking submission error:', err);
         });
       });
     }
