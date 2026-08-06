@@ -1001,8 +1001,10 @@ footer {
 /* Form card */
 .glo-modal-card {
   position: relative; z-index: 1;
-  background: rgba(4,6,16,0.84);
-  border: 1px solid rgba(0,195,255,0.16);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(0,195,255,0.07) 0%, transparent 55%),
+    rgba(3,5,18,0.92);
+  border: 1px solid rgba(0,195,255,0.20);
   border-radius: 20px;
   padding: 3rem 2.75rem 2.5rem;
   width: 100%; max-width: 640px; max-height: 92vh;
@@ -1074,6 +1076,27 @@ footer {
   border-bottom: 1px solid rgba(255,255,255,0.07); padding-bottom: 1.5rem;
 }
 
+/* ── Form section dividers ────────────────────────────── */
+.glo-form-section {
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  gap: 0.85rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.68rem; letter-spacing: 0.26em;
+  color: rgba(0,195,255,0.48);
+  margin-top: 0.3rem;
+}
+.glo-form-section::before {
+  content: '';
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,195,255,0.20));
+}
+.glo-form-section::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, rgba(0,195,255,0.20), transparent);
+}
+
 /* Form layout */
 .glo-form {
   display: -webkit-flex; display: flex;
@@ -1083,8 +1106,9 @@ footer {
 .glo-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.05rem; }
 .form-group { display: flex; flex-direction: column; gap: 0.45rem; }
 .form-group label {
-  font-size: 0.7rem; font-weight: 700;
-  letter-spacing: 0.12em; text-transform: uppercase; color: #999;
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(255,255,255,0.58);
 }
 
 /* Fields */
@@ -1126,19 +1150,23 @@ footer {
 
 /* ── Live Booking Summary ─────────────────────────────── */
 .booking-summary {
-  background: rgba(0,195,255,0.04);
-  border: 1px solid rgba(0,195,255,0.18);
-  border-radius: 14px;
-  padding: 1.4rem 1.5rem 1.2rem;
+  background:
+    linear-gradient(140deg, rgba(0,195,255,0.09) 0%, rgba(0,195,255,0.02) 100%);
+  border: 1px solid rgba(0,195,255,0.26);
+  border-radius: 16px;
+  padding: 1.4rem 1.5rem 1.25rem;
   display: flex; flex-direction: column; gap: 0;
+  box-shadow: 0 0 0 1px rgba(0,195,255,0.04), inset 0 1px 0 rgba(0,195,255,0.12);
 }
 .bs-header {
   display: -webkit-flex; display: flex;
   -webkit-align-items: center; align-items: center;
-  gap: 0.5rem;
-  font-size: 0.68rem; font-weight: 700;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--blue); margin-bottom: 1rem;
+  gap: 0.55rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.95rem; letter-spacing: 0.16em;
+  color: var(--blue); margin-bottom: 0.9rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(0,195,255,0.16);
 }
 .bs-dot {
   width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
@@ -1155,9 +1183,9 @@ footer {
   border-bottom: 1px solid rgba(255,255,255,0.04);
 }
 .bs-row:last-child { border-bottom: none; }
-.bs-label { font-size: 0.8rem; color: #666; white-space: nowrap; }
+.bs-label { font-size: 0.78rem; color: rgba(255,255,255,0.38); white-space: nowrap; }
 .bs-value {
-  font-size: 0.85rem; color: #bbb; font-weight: 500;
+  font-size: 0.85rem; color: rgba(255,255,255,0.80); font-weight: 500;
   text-align: right; word-break: break-word;
   max-width: 58%;
 }
@@ -1166,23 +1194,25 @@ footer {
   margin: 0.65rem 0;
 }
 .bs-total-row .bs-label {
-  font-size: 0.85rem; font-weight: 700; color: #ccc;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.9rem; font-weight: 400;
+  letter-spacing: 0.1em; color: rgba(255,255,255,0.80);
 }
 .bs-total-val {
-  font-size: 1.3rem; font-weight: 700;
+  font-size: 1.4rem; font-weight: 700;
   color: var(--blue);
-  text-shadow: 0 0 20px rgba(0,195,255,0.35);
+  text-shadow: 0 0 28px rgba(0,195,255,0.55);
   letter-spacing: 0.01em;
 }
 .bs-notice {
   margin-top: 1rem;
   padding-top: 0.9rem;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  font-size: 0.75rem; color: #888;
+  border-top: 1px solid rgba(0,195,255,0.10);
+  font-size: 0.74rem; color: rgba(255,255,255,0.40);
   line-height: 1.6; font-style: italic;
 }
 .bs-payment-note {
-  font-size: 0.74rem; color: #555;
+  font-size: 0.72rem; color: rgba(255,255,255,0.28);
   line-height: 1.6; margin-top: 0.4rem;
 }
 
@@ -1223,18 +1253,19 @@ footer {
 }
 .glo-check-label:hover .glo-check-box { border-color: rgba(0,195,255,0.45); }
 .glo-check-text {
-  font-size: 0.87rem; color: #bbb; line-height: 1.6;
+  font-size: 0.86rem; color: rgba(255,255,255,0.72); line-height: 1.65;
   -webkit-user-select: none; user-select: none;
 }
 .glo-check-helper {
-  display: block; font-size: 0.76rem; color: #666;
-  line-height: 1.62; margin-top: 0.45rem;
+  display: block; font-size: 0.74rem; color: rgba(255,255,255,0.32);
+  line-height: 1.65; margin-top: 0.45rem;
 }
 
 /* ── Contact Box ──────────────────────────────────────── */
 .glo-contact-box {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.09);
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-left: 2px solid rgba(0,195,255,0.42);
   border-radius: 14px;
   padding: 1.25rem 1.4rem 1.35rem;
 }
@@ -1246,7 +1277,7 @@ footer {
   margin-bottom: 0.5rem;
 }
 .gcb-header svg { color: var(--blue); flex-shrink: 0; }
-.gcb-text { font-size: 0.84rem; color: #777; line-height: 1.65; margin-bottom: 1rem; }
+.gcb-text { font-size: 0.84rem; color: rgba(255,255,255,0.40); line-height: 1.65; margin-bottom: 1rem; }
 .gcb-btns {
   display: -webkit-flex; display: flex;
   gap: 0.6rem; flex-wrap: wrap;
@@ -1279,8 +1310,8 @@ footer {
 /* ── Submit wrap ──────────────────────────────────────── */
 .glo-submit-wrap { display: flex; flex-direction: column; gap: 0.65rem; }
 .glo-submit-note {
-  text-align: center; font-size: 0.78rem;
-  color: #666; line-height: 1.55;
+  text-align: center; font-size: 0.74rem;
+  color: rgba(255,255,255,0.30); line-height: 1.55; letter-spacing: 0.02em;
 }
 .bk-form-error {
   font-size: 0.84rem; color: #f87171;
@@ -1290,33 +1321,43 @@ footer {
   line-height: 1.6; text-align: center;
 }
 .form-field-note {
-  font-size: 0.72rem; color: #666; line-height: 1.55;
+  font-size: 0.70rem; color: rgba(255,255,255,0.32); line-height: 1.55;
   margin-top: 0.35rem;
 }
-.req { color: rgba(0,195,255,0.6); font-style: normal; }
+.req { color: rgba(0,195,255,0.65); font-style: normal; }
 .form-group input::placeholder,
-.form-group textarea::placeholder { color: #444; }
+.form-group textarea::placeholder { color: rgba(255,255,255,0.20); }
 
 /* Submit */
 .glo-form-submit {
-  width: 100%; padding: 1.05rem;
-  background: var(--blue); color: #000;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.83rem; font-weight: 800;
-  letter-spacing: 0.13em; text-transform: uppercase;
-  border: none; border-radius: 12px; cursor: pointer;
-  box-shadow: 0 0 28px rgba(0,195,255,0.3);
-  transition: background 0.18s, box-shadow 0.18s, transform 0.18s;
+  width: 100%; padding: 0; height: 3.6rem;
+  background: linear-gradient(90deg, var(--blue) 0%, #18d8ff 100%);
+  color: #000;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.18rem; font-weight: 400;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  border: none; border-radius: 14px; cursor: pointer;
+  box-shadow: 0 4px 36px rgba(0,195,255,0.42), inset 0 1px 0 rgba(255,255,255,0.15);
+  transition: box-shadow 0.22s, transform 0.18s;
   margin-top: 0.5rem;
+  position: relative; overflow: hidden;
   -webkit-tap-highlight-color: transparent;
 }
+.glo-form-submit::after {
+  content: '';
+  position: absolute; top: 0; left: -130%; width: 75%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.26), transparent);
+  transform: skewX(-15deg);
+  transition: left 0.55s ease;
+}
+.glo-form-submit:hover::after { left: 155%; }
 .glo-form-submit:hover {
-  background: #2dd4ff;
-  box-shadow: 0 0 44px rgba(0,195,255,0.52);
+  box-shadow: 0 4px 60px rgba(0,195,255,0.70), inset 0 1px 0 rgba(255,255,255,0.18);
   transform: translateY(-2px);
 }
 .glo-form-submit:active { transform: translateY(0); }
-.glo-form-submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+.glo-form-submit:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+.glo-form-submit:disabled::after { display: none; }
 
 /* ── Success / Confirmation screen ───────────────────── */
 .glo-modal-success { display: none; }
