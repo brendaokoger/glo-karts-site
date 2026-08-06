@@ -534,6 +534,7 @@
           <div class="form-group">
             <label for="bk-phone">Mobile Phone Number <span class="req">*</span></label>
             <input id="bk-phone" name="phone" type="tel" placeholder="(000) 000-0000" required autocomplete="tel" />
+            <p id="bk-phone-error" class="form-field-error" style="display:none;" role="alert">Please enter a valid 10-digit US phone number.</p>
             <p class="form-field-note">We'll use this number to contact you regarding availability and booking confirmation.</p>
           </div>
 
@@ -880,6 +881,17 @@
     renderCalendar();
   })();
 
+  /* Phone number validation — real-time */
+  (function () {
+    var ph  = document.getElementById('bk-phone');
+    var err = document.getElementById('bk-phone-error');
+    if (!ph || !err) return;
+    ph.addEventListener('input', function () {
+      var digits = ph.value.replace(/\D/g, '');
+      err.style.display = digits.length > 10 ? 'block' : 'none';
+    });
+  })();
+
   /* Live booking summary + price calculation */
   (function () {
     var PRICE_PER_PERSON = 49.99;
@@ -1046,6 +1058,20 @@
         var dateTrigger = document.getElementById('bk-date-trigger');
         if (firstName  && !firstName.value.trim())  { firstName.focus();  return; }
         if (email      && !email.value.trim())       { email.focus();      return; }
+
+        /* Phone: must be 10 digits or fewer */
+        var phoneInput = document.getElementById('bk-phone');
+        var phoneErrEl = document.getElementById('bk-phone-error');
+        if (phoneInput) {
+          var digits = phoneInput.value.replace(/\D/g, '');
+          if (digits.length > 10) {
+            phoneInput.focus();
+            if (phoneErrEl) phoneErrEl.style.display = 'block';
+            return;
+          }
+          if (phoneErrEl) phoneErrEl.style.display = 'none';
+        }
+
         if (!dateInput || !dateInput.value) {
           if (dateTrigger) { dateTrigger.focus(); dateTrigger.classList.add('cal-trigger-err'); }
           return;
@@ -1080,6 +1106,9 @@
 
             form.style.display = 'none';
             if (success) success.classList.add('visible');
+            /* Scroll card to top so the confirmation screen is visible */
+            var card = modal && modal.querySelector('.glo-modal-card');
+            if (card) card.scrollTop = 0;
           } else {
             submitBtn.disabled  = false;
             submitBtn.innerHTML = 'Request My Tour &nbsp;&#8594;';
