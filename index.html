@@ -986,8 +986,20 @@
     var success  = document.getElementById('booking-success');
     var submitBtn = document.getElementById('bk-submit');
 
+    function resetModalForm() {
+      if (form)      { form.style.display = ''; }
+      if (success)   { success.classList.remove('visible'); }
+      if (submitBtn) {
+        submitBtn.disabled   = false;
+        submitBtn.innerHTML  = 'Request My Tour &nbsp;&#8594;';
+      }
+      var errEl = document.getElementById('bk-form-error');
+      if (errEl) errEl.style.display = 'none';
+    }
+
     function openModal() {
       if (!modal) return;
+      resetModalForm();
       modal.classList.add('open');
       document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow            = 'hidden';
@@ -1007,6 +1019,7 @@
         modal.classList.remove('open');
         document.documentElement.style.overflow = '';
         document.body.style.overflow            = '';
+        resetModalForm();
       }, 330);
     }
 
@@ -1068,15 +1081,15 @@
             form.style.display = 'none';
             if (success) success.classList.add('visible');
           } else {
-            submitBtn.disabled    = false;
-            submitBtn.textContent = 'Request My Tour';
+            submitBtn.disabled  = false;
+            submitBtn.innerHTML = 'Request My Tour &nbsp;&#8594;';
             var errEl = document.getElementById('bk-form-error');
             if (errEl) errEl.style.display = 'block';
           }
         })
         .catch(function () {
-          submitBtn.disabled    = false;
-          submitBtn.textContent = 'Submit Booking Request';
+          submitBtn.disabled   = false;
+          submitBtn.innerHTML  = 'Request My Tour &nbsp;&#8594;';
           var errEl = document.getElementById('bk-form-error');
           if (errEl) errEl.style.display = 'block';
         });
