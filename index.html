@@ -473,7 +473,7 @@
         </div>
         <div class="gbi-strip-item">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          2–5 Guests
+          2–10 Guests
         </div>
         <div class="gbi-strip-item">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -555,20 +555,54 @@
         </div>
       </div>
 
-      <!-- Experience & Guests -->
+      <!-- Experience -->
+      <div class="form-group">
+        <label for="bk-experience">Select Your Experience <span class="req">*</span></label>
+        <select id="bk-experience" name="experience" required>
+          <option value="" disabled selected>Choose an experience</option>
+          <option>Ladies Night Tour</option>
+          <option>Downtown Chicago Tour</option>
+        </select>
+      </div>
+
+      <!-- Date — custom calendar picker -->
+      <div class="form-group">
+        <label>Preferred Booking Date <span class="req">*</span></label>
+        <div class="cal-wrapper" id="cal-wrapper">
+          <button type="button" class="cal-trigger" id="bk-date-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="cal-popup">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span id="cal-display">Select a date</span>
+          </button>
+          <div class="cal-popup" id="cal-popup" role="region" aria-label="Date picker">
+            <div class="cal-nav">
+              <button type="button" class="cal-nav-btn" id="cal-prev" aria-label="Previous month">&#8592;</button>
+              <span class="cal-month-year" id="cal-month-year"></span>
+              <button type="button" class="cal-nav-btn" id="cal-next" aria-label="Next month">&#8594;</button>
+            </div>
+            <div class="cal-weekdays" aria-hidden="true">
+              <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+            </div>
+            <div class="cal-grid" id="cal-grid"></div>
+            <div class="cal-legend">
+              <span class="cal-legend-item"><span class="cal-leg-dot cal-leg-avail"></span>Available</span>
+              <span class="cal-legend-item"><span class="cal-leg-dot cal-leg-full"></span>Booked</span>
+              <span class="cal-legend-item"><span class="cal-leg-dot cal-leg-closed"></span>Closed</span>
+            </div>
+          </div>
+        </div>
+        <input type="hidden" id="bk-date-m" name="booking_date" />
+        <p class="form-field-note">Tours available Thursday – Sunday only.</p>
+      </div>
+
+      <!-- Time & Guests -->
       <div class="glo-form-row">
         <div class="form-group">
-          <label for="bk-experience">Select Your Experience <span class="req">*</span></label>
-          <select id="bk-experience" name="experience" required>
-            <option value="" disabled selected>Choose an experience</option>
-            <option>Chicago Skyline Tour</option>
-            <option>Navy Pier Lights Tour</option>
-            <option>Riverwalk Glow Tour</option>
-            <option>Downtown Chicago Tour</option>
-            <option>Ladies Night Tour</option>
-            <option>Date Night Tour</option>
-            <option>Birthday Tour</option>
-            <option>Private Glo Experience</option>
+          <label for="bk-time-m">Preferred Tour Time <span class="req">*</span></label>
+          <select id="bk-time-m" name="booking_time" required>
+            <option value="" disabled selected>Select a time</option>
+            <option>8:00 PM</option>
+            <option>9:15 PM</option>
+            <option>10:30 PM</option>
           </select>
         </div>
         <div class="form-group">
@@ -579,23 +613,11 @@
             <option value="3">3 Guests</option>
             <option value="4">4 Guests</option>
             <option value="5">5 Guests</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Date & Time -->
-      <div class="glo-form-row">
-        <div class="form-group">
-          <label for="bk-date-m">Preferred Booking Date <span class="req">*</span></label>
-          <input id="bk-date-m" name="booking_date" type="date" required />
-        </div>
-        <div class="form-group">
-          <label for="bk-time-m">Preferred Tour Time <span class="req">*</span></label>
-          <select id="bk-time-m" name="booking_time" required>
-            <option value="" disabled selected>Select a time</option>
-            <option>6:00 PM</option>
-            <option>7:30 PM</option>
-            <option>9:00 PM</option>
+            <option value="6">6 Guests</option>
+            <option value="7">7 Guests</option>
+            <option value="8">8 Guests</option>
+            <option value="9">9 Guests</option>
+            <option value="10">10 Guests</option>
           </select>
         </div>
       </div>
@@ -721,14 +743,148 @@
 
 <script src="./main.js"></script>
 <script>
-  /* Set today as the minimum selectable date on the booking date picker */
+  /* ── BOOKING CALENDAR ─────────────────────────────────────
+     ADMIN: Add fully-booked dates below in 'YYYY-MM-DD' format.
+     Example: '2026-08-16', '2026-09-01'
+     Tours run THURSDAY – SUNDAY. Time slots: 8:00 PM · 9:15 PM · 10:30 PM
+  ─────────────────────────────────────────────────────────── */
   (function () {
-    var d = new Date();
-    var today = d.getFullYear() + '-' +
-      String(d.getMonth() + 1).padStart(2, '0') + '-' +
-      String(d.getDate()).padStart(2, '0');
-    var dateField = document.getElementById('bk-date-m');
-    if (dateField) dateField.min = today;
+    var BOOKED_DATES = [
+      /* '2026-08-14', '2026-08-15' */
+    ];
+
+    var ALLOWED_DAYS = [0, 4, 5, 6]; /* Sun=0, Thu=4, Fri=5, Sat=6 */
+
+    var MONTHS_LONG = ['January','February','March','April','May','June',
+                       'July','August','September','October','November','December'];
+
+    var todayRaw = new Date();
+    todayRaw.setHours(0, 0, 0, 0);
+
+    var calState = { year: todayRaw.getFullYear(), month: todayRaw.getMonth(), selected: null };
+
+    var hiddenInput  = document.getElementById('bk-date-m');
+    var calTrigger   = document.getElementById('bk-date-trigger');
+    var calDisplay   = document.getElementById('cal-display');
+    var calPopup     = document.getElementById('cal-popup');
+    var calGrid      = document.getElementById('cal-grid');
+    var calMonthYear = document.getElementById('cal-month-year');
+    var calPrev      = document.getElementById('cal-prev');
+    var calNext      = document.getElementById('cal-next');
+
+    if (!hiddenInput || !calTrigger || !calPopup) return;
+
+    function pad(n)     { return String(n).padStart(2, '0'); }
+    function toYMD(d)   { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+    function todayYMD() { return toYMD(todayRaw); }
+    function isBooked(ymd)     { return BOOKED_DATES.indexOf(ymd) !== -1; }
+    function isAllowedDay(dow) { return ALLOWED_DAYS.indexOf(dow) !== -1; }
+
+    function renderCalendar() {
+      var yr = calState.year, mo = calState.month;
+      calMonthYear.textContent = MONTHS_LONG[mo] + ' ' + yr;
+
+      var firstDOW = new Date(yr, mo, 1).getDay();
+      var daysInMo = new Date(yr, mo + 1, 0).getDate();
+      var todayStr = todayYMD();
+      var html = '';
+
+      for (var i = 0; i < firstDOW; i++) html += '<div class="cal-day cal-day-empty"></div>';
+
+      for (var day = 1; day <= daysInMo; day++) {
+        var d   = new Date(yr, mo, day);
+        var ymd = toYMD(d);
+        var dow = d.getDay();
+        var cls = 'cal-day';
+        var attr = '';
+        var tip  = '';
+
+        if (ymd === todayStr) cls += ' cal-day-today';
+
+        if (ymd < todayStr) {
+          cls += ' cal-day-past';
+          tip = 'Date has passed';
+        } else if (!isAllowedDay(dow)) {
+          cls += ' cal-day-closed';
+          tip = 'Closed — tours run Thu–Sun';
+        } else if (isBooked(ymd)) {
+          cls += ' cal-day-booked';
+          tip = 'Fully booked';
+        } else {
+          cls += ' cal-day-avail';
+          attr = 'data-date="' + ymd + '" tabindex="0" role="button"';
+        }
+
+        if (calState.selected === ymd) cls += ' cal-day-sel';
+
+        html += '<div class="' + cls + '" ' + attr +
+          (tip ? ' title="' + tip + '"' : '') + '>' + day + '</div>';
+      }
+
+      calGrid.innerHTML = html;
+
+      calGrid.querySelectorAll('.cal-day-avail[data-date]').forEach(function (el) {
+        el.addEventListener('click', function () { pickDate(el.getAttribute('data-date')); });
+        el.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickDate(el.getAttribute('data-date')); }
+        });
+      });
+    }
+
+    function fmt(ymd) {
+      var p = ymd.split('-');
+      return MONTHS_LONG[parseInt(p[1], 10) - 1] + ' ' + parseInt(p[2], 10) + ', ' + p[0];
+    }
+
+    function pickDate(ymd) {
+      calState.selected = ymd;
+      hiddenInput.value = ymd;
+      calDisplay.textContent = fmt(ymd);
+      calTrigger.classList.add('cal-has-date');
+      calTrigger.classList.remove('cal-trigger-err');
+      closeCalendar();
+      hiddenInput.dispatchEvent(new Event('change'));
+      renderCalendar();
+    }
+
+    function openCalendar() {
+      calPopup.classList.add('open');
+      calTrigger.setAttribute('aria-expanded', 'true');
+      renderCalendar();
+    }
+
+    function closeCalendar() {
+      calPopup.classList.remove('open');
+      calTrigger.setAttribute('aria-expanded', 'false');
+    }
+
+    calTrigger.addEventListener('click', function () {
+      calPopup.classList.contains('open') ? closeCalendar() : openCalendar();
+    });
+
+    calPrev.addEventListener('click', function () {
+      if (calState.month === 0) { calState.month = 11; calState.year--; }
+      else calState.month--;
+      /* Never navigate before current month */
+      if (calState.year < todayRaw.getFullYear() ||
+          (calState.year === todayRaw.getFullYear() && calState.month < todayRaw.getMonth())) {
+        calState.year = todayRaw.getFullYear(); calState.month = todayRaw.getMonth();
+      }
+      renderCalendar();
+    });
+
+    calNext.addEventListener('click', function () {
+      if (calState.month === 11) { calState.month = 0; calState.year++; }
+      else calState.month++;
+      renderCalendar();
+    });
+
+    document.addEventListener('click', function (e) {
+      var wrapper = document.getElementById('cal-wrapper');
+      if (wrapper && !wrapper.contains(e.target) && calPopup.classList.contains('open')) closeCalendar();
+    });
+
+    renderCalendar();
   })();
 
   /* Live booking summary + price calculation */
@@ -878,10 +1034,16 @@
     if (form && submitBtn) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        var firstName = document.getElementById('bk-first-name');
-        var email     = document.getElementById('bk-email');
-        if (firstName && !firstName.value.trim()) { firstName.focus(); return; }
-        if (email     && !email.value.trim())     { email.focus();     return; }
+        var firstName  = document.getElementById('bk-first-name');
+        var email      = document.getElementById('bk-email');
+        var dateInput  = document.getElementById('bk-date-m');
+        var dateTrigger = document.getElementById('bk-date-trigger');
+        if (firstName  && !firstName.value.trim())  { firstName.focus();  return; }
+        if (email      && !email.value.trim())       { email.focus();      return; }
+        if (!dateInput || !dateInput.value) {
+          if (dateTrigger) { dateTrigger.focus(); dateTrigger.classList.add('cal-trigger-err'); }
+          return;
+        }
 
         /* Populate hidden pricing fields before sending */
         var hfTotal = document.getElementById('hf-total');
