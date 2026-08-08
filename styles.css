@@ -517,8 +517,8 @@ a   { color: inherit; text-decoration: none; }
   -webkit-flex-shrink: 0;
   flex-shrink: 0;
   width: max-content;
-  -webkit-animation: mq-scroll 28s linear infinite;
-  animation: mq-scroll 28s linear infinite;
+  -webkit-animation: mq-scroll 36s linear infinite;
+  animation: mq-scroll 36s linear infinite;
 }
 
 /* One content unit */
@@ -542,7 +542,7 @@ a   { color: inherit; text-decoration: none; }
 }
 
 .mq-sep {
-  font-size: 0.55rem;
+  font-size: 0.7rem;
   color: var(--blue);
   text-shadow:
     0 0 8px  rgba(0,195,255,0.80),
