@@ -453,6 +453,95 @@ a   { color: inherit; text-decoration: none; }
   .vl-close   { top: -2.4rem; font-size: 1.4rem; }
 }
 
+/* ── Marquee Bar ──────────────────────────────────────── */
+#marquee-bar {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 200% at 50% 50%, rgba(0,195,255,0.055) 0%, transparent 70%),
+    #000;
+  border-top:    1px solid rgba(0,195,255,0.22);
+  border-bottom: 1px solid rgba(232,35,58,0.28);
+  height: 46px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  /* Fade content into transparency at both edges */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0,0,0,1) 7%,
+    rgba(0,0,0,1) 93%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0,0,0,1) 7%,
+    rgba(0,0,0,1) 93%,
+    transparent 100%
+  );
+}
+
+/* Scrolling track — two identical halves side-by-side */
+.mq-track {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
+  width: max-content;
+  -webkit-animation: mq-scroll 28s linear infinite;
+  animation: mq-scroll 28s linear infinite;
+}
+
+/* One content unit */
+.mq-inner {
+  display: -webkit-inline-flex;
+  display: inline-flex;
+  -webkit-align-items: center;
+  align-items: center;
+  white-space: nowrap;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
+}
+
+.mq-word {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.88rem;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.82);
+  padding: 0 1.5rem;
+  text-transform: uppercase;
+}
+
+.mq-sep {
+  font-size: 0.55rem;
+  color: var(--blue);
+  text-shadow:
+    0 0 8px  rgba(0,195,255,0.80),
+    0 0 20px rgba(0,195,255,0.40);
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
+}
+
+@-webkit-keyframes mq-scroll {
+  0%   { -webkit-transform: translateX(0);    transform: translateX(0); }
+  100% { -webkit-transform: translateX(-50%); transform: translateX(-50%); }
+}
+@keyframes mq-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .mq-track {
+    -webkit-animation: none;
+    animation: none;
+  }
+}
+
 /* ── Booking Bar ──────────────────────────────────────── */
 #booking-bar {
   position: relative;
