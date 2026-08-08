@@ -58,29 +58,28 @@
     #door-left.open  { transform: translateX(-100%); }
     #door-right.open { transform: translateX(100%); }
 
-    /* ── Hero image zoom fix ── show full portrait, not cropped center */
+    /* ── Hero image fix ── show full portrait, not cropped center */
     #hero {
       background-size: auto 100vh !important;
       background-position: 100% 0% !important;
     }
     .hero-inner {
-      min-height: 100vh;
       box-sizing: border-box;
-      padding: 120px 7% 15vh !important;
+      padding: 120px 7% 3rem !important;
     }
     @media (max-width: 900px) {
       #hero {
         background-size: auto 100vh !important;
         background-position: 75% 0% !important;
       }
-      .hero-inner { padding: 100px 5% 12vh !important; }
+      .hero-inner { padding: 80px 5% 2rem !important; }
     }
     @media (max-width: 640px) {
       #hero {
         background-size: auto 100vh !important;
         background-position: 22% 0% !important;
       }
-      .hero-inner { padding: 90px 5% 10vh !important; }
+      .hero-inner { padding: 72px 5% 1rem !important; }
     }
   </style>
 
