@@ -2068,11 +2068,12 @@ footer {
   .mobile-nav  { top: 60px; }
   .nav-wm-name { font-size: 1.42rem; }
   #hero {
+    min-height: 0;   /* kill the 400px floor — content drives height on mobile */
     background-size: auto 100vh;
     background-position: 22% 0%;
   }
   .hero-inner {
-    padding: 76px 5% 2rem;
+    padding: 72px 5% 1rem; /* tight bottom: marquee follows immediately */
     text-align: left;
     -webkit-align-items: flex-start; align-items: flex-start;
     -webkit-justify-content: flex-start; justify-content: flex-start;
