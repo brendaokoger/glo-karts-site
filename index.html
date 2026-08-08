@@ -105,8 +105,8 @@
     </a>
 
     <nav class="header-nav" aria-label="Primary navigation">
-      <a href="#tours">Tours</a>
-      <a href="#private">Private Events</a>
+      <a href="#experiences">Experiences</a>
+      <a href="#support-cta">Private Events</a>
       <a href="#faq">FAQ</a>
     </nav>
 
@@ -119,8 +119,8 @@
 
   <!-- Mobile nav -->
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
-    <a href="#tours"   class="mobile-link">Tours</a>
-    <a href="#private" class="mobile-link">Private Events</a>
+    <a href="#experiences"  class="mobile-link">Experiences</a>
+    <a href="#support-cta"  class="mobile-link">Private Events</a>
     <a href="#faq"     class="mobile-link">FAQ</a>
     <button class="btn btn-primary mobile-link" id="btn-book-mobile" type="button" style="align-self:flex-start;margin-top:0.5rem;">BOOK NOW</button>
   </nav>
@@ -166,86 +166,54 @@
     </div>
   </div>
 
-  <!-- ── Our Tours ────────────────────────────────────────── -->
-  <section id="tours" class="section" aria-labelledby="tours-title">
+  <!-- ── Our Experiences ──────────────────────────────────── -->
+  <section id="experiences" class="section" aria-labelledby="experiences-title">
     <div class="section-inner">
-      <span class="section-eyebrow reveal" id="tours-title">Our Tours</span>
+      <span class="section-eyebrow reveal" id="experiences-title">Our Experiences</span>
+      <h2 class="section-title reveal">Two Ways to Ride. One Unforgettable Night.</h2>
 
-      <div class="tours-grid reveal">
+      <div class="exp-grid">
 
-        <article class="tour-card tc-1">
-          <div class="tc-img"></div>
-          <div class="tc-sky"></div>
-          <div class="tc-overlay"></div>
-          <span class="tc-badge">Most Popular</span>
-          <div class="tc-content">
-            <h3>CHICAGO<br>AFTER DARK</h3>
-            <div class="tc-meta">
-              <span class="tc-price">From $79 / Guest</span>
-              <span>2 Hours</span>
+        <!-- Experience 1: Downtown Chicago Tour -->
+        <article class="exp-card ec-downtown reveal">
+          <div class="ec-img ec-img-downtown"></div>
+          <div class="ec-overlay"></div>
+          <div class="ec-body">
+            <h3 class="ec-title">DOWNTOWN<br>CHICAGO TOUR</h3>
+            <p class="ec-accent">SEE CHICAGO LIKE NEVER BEFORE.</p>
+            <p class="ec-desc">Cruise through the heart of Downtown Chicago and take in iconic landmarks, city lights and unforgettable views from a whole new point of view.</p>
+            <div class="ec-footer">
+              <div class="ec-pricing">
+                <span class="ec-starting">STARTING AT</span>
+                <span class="ec-price">$49.99</span>
+              </div>
+              <button class="ec-cta" type="button" id="btn-exp-1">
+                VIEW EXPERIENCE &nbsp;&#8594;
+              </button>
             </div>
-            <button class="tc-arrow" type="button" id="btn-tour-1">
-              Book Now
-              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
           </div>
         </article>
 
-        <article class="tour-card tc-2">
-          <div class="tc-img"></div>
-          <div class="tc-sky"></div>
-          <div class="tc-overlay"></div>
-          <div class="tc-content">
-            <h3>RIVERWALK<br>GLOW TOUR</h3>
-            <div class="tc-meta">
-              <span class="tc-price">From $79 / Guest</span>
-              <span>90 Minutes</span>
+        <!-- Experience 2: R&B Ladies Night Tour -->
+        <article class="exp-card ec-ladies reveal">
+          <div class="ec-img ec-img-ladies"></div>
+          <div class="ec-overlay"></div>
+          <div class="ec-body">
+            <h3 class="ec-title">R&amp;B LADIES<br>NIGHT TOUR</h3>
+            <p class="ec-accent">GOOD MUSIC. GOOD VIBES. GOOD COMPANY.</p>
+            <p class="ec-desc">Turn up the R&amp;B, take in the city lights and enjoy a Glo Karts night out made for you and your crew.</p>
+            <div class="ec-footer">
+              <div class="ec-pricing">
+                <span class="ec-starting">STARTING AT</span>
+                <span class="ec-price">$49.99</span>
+              </div>
+              <button class="ec-cta" type="button" id="btn-exp-2">
+                VIEW EXPERIENCE &nbsp;&#8594;
+              </button>
             </div>
-            <button class="tc-arrow" type="button" id="btn-tour-2">
-              Book Now
-              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
           </div>
         </article>
 
-        <article class="tour-card tc-3">
-          <div class="tc-img"></div>
-          <div class="tc-sky"></div>
-          <div class="tc-overlay"></div>
-          <div class="tc-content">
-            <h3>NAVY PIER<br>LIGHTS</h3>
-            <div class="tc-meta">
-              <span class="tc-price">From $79 / Guest</span>
-              <span>2 Hours</span>
-            </div>
-            <button class="tc-arrow" type="button" id="btn-tour-3">
-              Book Now
-              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-          </div>
-        </article>
-
-        <article class="tour-card tc-4" id="private">
-          <div class="tc-img"></div>
-          <div class="tc-sky"></div>
-          <div class="tc-overlay"></div>
-          <div class="tc-content">
-            <h3>PRIVATE GLO<br>EXPERIENCE</h3>
-            <div class="tc-meta">
-              <span class="tc-price">From $149 / Guest</span>
-              <span>Custom Duration</span>
-            </div>
-            <button class="tc-arrow" type="button" id="btn-tour-4">
-              Inquire Now
-              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-          </div>
-        </article>
-
-      </div>
-
-      <div class="tours-view-all reveal">
-        <button class="btn btn-outline-blue" type="button" id="btn-view-tours">EXPLORE ALL EXPERIENCES</button>
       </div>
     </div>
   </section>
@@ -266,7 +234,7 @@
   </section>
 
 
-  <!-- ── Support CTA ─────────────────────────────────────── -->
+  <!-- ── Support CTA / Private Events anchor ──────────────── -->
   <section id="support-cta" aria-label="Customer support">
     <div class="support-inner">
       <div class="support-text">
@@ -941,8 +909,7 @@
     [
       'btn-book-header','btn-book-mobile','btn-book-tour',
       'btn-book-sticky','btn-reserve','btn-check-avail',
-      'btn-view-tours',
-      'btn-tour-1','btn-tour-2','btn-tour-3','btn-tour-4'
+      'btn-exp-1','btn-exp-2'
     ].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.addEventListener('click', openModal);

@@ -600,116 +600,178 @@ a   { color: inherit; text-decoration: none; }
   line-height: 1;
 }
 
-/* ── Our Tours ────────────────────────────────────────── */
-#tours { background: #000; }
+/* ── Our Experiences ─────────────────────────────────────── */
+#experiences { background: #000; }
 
-.tours-grid {
+.exp-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
   margin-top: 3rem;
-  margin-bottom: 2.5rem;
 }
-.tour-card {
+
+.exp-card {
   position: relative;
   overflow: hidden;
+  border-radius: var(--radius-lg);
   cursor: pointer;
+  min-height: 540px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
   background: #060608;
-  display: -webkit-flex; display: flex;
-  -webkit-flex-direction: column; flex-direction: column;
-  -webkit-justify-content: flex-end; justify-content: flex-end;
-  min-height: 340px;
-  transition: transform 0.35s ease;
-}
-.tour-card:hover { transform: scale(1.015); }
-.tour-card:hover .tc-img { transform: scale(1.07); }
-
-/* Night-city gradient backgrounds */
-.tc-img {
-  position: absolute; inset: 0;
-  transition: transform 0.5s ease;
-}
-.tc-1 .tc-img {
-  background:
-    radial-gradient(ellipse 55% 55% at 55% 25%, rgba(0,25,65,0.6) 0%, transparent 60%),
-    linear-gradient(180deg, #03030e 0%, #060818 45%, #080a1c 70%, #030308 100%);
-}
-.tc-2 .tc-img {
-  background:
-    radial-gradient(ellipse 50% 60% at 40% 30%, rgba(0,35,55,0.5) 0%, transparent 60%),
-    linear-gradient(180deg, #020a0e 0%, #040e16 45%, #060f1a 70%, #020608 100%);
-}
-.tc-3 .tc-img {
-  background:
-    radial-gradient(ellipse 45% 55% at 50% 30%, rgba(0,20,55,0.6) 0%, transparent 58%),
-    linear-gradient(180deg, #030410 0%, #050618 45%, #06091c 70%, #020308 100%);
-}
-.tc-4 .tc-img {
-  background:
-    radial-gradient(ellipse 50% 50% at 50% 30%, rgba(12,4,0,0.5) 0%, transparent 60%),
-    linear-gradient(180deg, #080402 0%, #100806 45%, #0c0a08 70%, #040302 100%);
 }
 
-/* Mini skyline in each card */
-.tc-sky {
-  position: absolute; left: 0; right: 0; bottom: 0;
-  height: 52%;
-  background: rgba(3,3,6,0.65);
-  -webkit-clip-path: polygon(0% 100%,0% 78%,5% 78%,5% 65%,8% 65%,8% 72%,12% 72%,12% 55%,14% 50%,15% 38%,15.5% 25%,16% 12%,16.5% 4%,17% 12%,17.5% 25%,18% 38%,18.5% 55%,20% 55%,20% 64%,25% 64%,25% 70%,30% 70%,30% 58%,33% 52%,34% 36%,34.5% 20%,35% 8%,35.5% 20%,36% 36%,36.5% 52%,37% 58%,42% 58%,42% 66%,48% 66%,48% 72%,54% 72%,54% 65%,60% 65%,60% 72%,65% 72%,65% 78%,70% 78%,70% 72%,75% 72%,75% 78%,80% 78%,80% 72%,85% 72%,85% 78%,90% 78%,90% 82%,95% 82%,95% 78%,100% 78%,100% 100%);
-  clip-path: polygon(0% 100%,0% 78%,5% 78%,5% 65%,8% 65%,8% 72%,12% 72%,12% 55%,14% 50%,15% 38%,15.5% 25%,16% 12%,16.5% 4%,17% 12%,17.5% 25%,18% 38%,18.5% 55%,20% 55%,20% 64%,25% 64%,25% 70%,30% 70%,30% 58%,33% 52%,34% 36%,34.5% 20%,35% 8%,35.5% 20%,36% 36%,36.5% 52%,37% 58%,42% 58%,42% 66%,48% 66%,48% 72%,54% 72%,54% 65%,60% 65%,60% 72%,65% 72%,65% 78%,70% 78%,70% 72%,75% 72%,75% 78%,80% 78%,80% 72%,85% 72%,85% 78%,90% 78%,90% 82%,95% 82%,95% 78%,100% 78%,100% 100%);
-  pointer-events: none; z-index: 1;
+.ec-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.65s ease;
+  will-change: transform;
 }
-.tc-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.45) 40%, transparent 75%);
+.exp-card:hover .ec-img { transform: scale(1.04); }
+
+/* Downtown: use the hero photo — kart + Chicago neon at night */
+.ec-img-downtown {
+  background-image: url('./glo-karts-hero.png');
+  background-position: 68% center;
+}
+
+/* R&B Ladies Night: vibrant nightlife energy */
+.ec-img-ladies {
+  background-image: url('https://images.unsplash.com/photo-1529543544282-ea669407fca3?auto=format&fit=crop&w=1400&q=85');
+  background-position: center 30%;
+}
+
+.ec-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.96) 0%,
+    rgba(0,0,0,0.65) 35%,
+    rgba(0,0,0,0.22) 65%,
+    rgba(0,0,0,0.06) 100%
+  );
+  z-index: 1;
+}
+
+/* Subtle blue top vignette on downtown card */
+.ec-downtown .ec-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.96) 0%,
+    rgba(0,0,0,0.65) 35%,
+    rgba(0,0,0,0.22) 65%,
+    rgba(0,0,0,0.08) 100%
+  ),
+  linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.38) 0%,
+    transparent 28%
+  );
+}
+
+.ec-body {
+  position: relative;
   z-index: 2;
+  padding: 2rem 2rem 2.2rem;
 }
-.tc-badge {
-  position: absolute; top: 1rem; left: 1rem;
-  background: var(--red); color: #fff;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.58rem; font-weight: 700;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  padding: 0.28rem 0.7rem; border-radius: 3px;
-  z-index: 4;
-  box-shadow: 0 0 12px rgba(232,35,58,0.35);
-}
-.tc-content {
-  position: relative; z-index: 3;
-  padding: 1.4rem 1.35rem;
-}
-.tc-content h3 {
+
+.ec-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.5rem; letter-spacing: 0.04em;
-  line-height: 1.05; color: #fff; margin-bottom: 0.5rem;
+  font-size: clamp(2rem, 3.2vw, 2.8rem);
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+  color: #fff;
+  margin-bottom: 0.75rem;
 }
-.tc-meta {
-  display: -webkit-flex; display: flex;
-  -webkit-align-items: center; align-items: center;
-  gap: 0.75rem; font-size: 0.72rem; color: var(--muted2);
-  margin-bottom: 0.8rem;
+
+.ec-accent {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.9rem;
+  text-shadow: 0 0 16px rgba(0,195,255,0.45);
+  display: block;
 }
-.tc-price { color: #fff; font-weight: 600; }
-.tc-arrow {
-  display: inline-flex; align-items: center;
-  gap: 0.4rem; font-size: 0.68rem; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--blue); transition: gap 0.2s, color 0.2s;
+
+.ec-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.91rem;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.68;
+  margin-bottom: 1.6rem;
+  max-width: 40ch;
 }
-.tour-card:hover .tc-arrow { gap: 0.65rem; color: rgba(255,255,255,0.90); }
-.tc-arrow svg {
-  width: 13px; height: 13px; stroke: var(--blue);
-  fill: none; stroke-width: 2;
-  stroke-linecap: round; stroke-linejoin: round;
-  transition: stroke 0.2s;
+
+.ec-footer {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: flex-end;
+  align-items: flex-end;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  gap: 1rem;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
-.tour-card:hover .tc-arrow svg { stroke: rgba(232,35,58,0.85); }
-.tours-view-all {
-  display: -webkit-flex; display: flex;
-  -webkit-justify-content: center; justify-content: center;
+
+.ec-pricing {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.ec-starting {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.40);
+}
+
+.ec-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: #fff;
+}
+
+.ec-cta {
+  display: -webkit-inline-flex;
+  display: inline-flex;
+  -webkit-align-items: center;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  background: transparent;
+  border: 1px solid rgba(0,195,255,0.45);
+  color: var(--blue);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.22s, border-color 0.22s, box-shadow 0.22s;
+  -webkit-tap-highlight-color: transparent;
+}
+.ec-cta:hover {
+  background: rgba(0,195,255,0.10);
+  border-color: var(--blue);
+  box-shadow: 0 0 24px rgba(0,195,255,0.22);
 }
 
 /* ── Final CTA ────────────────────────────────────────── */
@@ -1789,11 +1851,6 @@ footer {
 }
 
 /* ── Responsive ───────────────────────────────────────── */
-@media (max-width: 1060px) {
-  .tours-grid { grid-template-columns: repeat(2, 1fr); }
-  .tour-card  { min-height: 280px; }
-}
-
 @media (max-width: 900px) {
   #site-header { padding: 0 4%; height: 64px; }
   .header-nav, .hd-only { display: none; }
@@ -1811,10 +1868,10 @@ footer {
   .hero-text { max-width: 460px; }
   .hero-support { max-width: 100%; }
 
-  #booking-bar .booking-inner { -webkit-flex-direction: column; flex-direction: column; }
-  .booking-field { border-right: none; border-bottom: 1px solid rgba(0,195,255,0.08); padding: 1rem 1.4rem; }
-  .booking-submit { padding: 1rem 1.4rem; }
-  .booking-submit button { width: 100%; justify-content: center; }
+  .exp-grid { gap: 1rem; }
+  .exp-card { min-height: 460px; }
+  .ec-body  { padding: 1.6rem 1.6rem 1.8rem; }
+  .ec-title { font-size: clamp(1.7rem, 4vw, 2.4rem); }
 
   .mobile-sticky-cta { display: block; }
   #cta-final { text-align: center; }
@@ -1857,13 +1914,11 @@ footer {
   .glo-submit-wrap { padding: 0.5rem 1rem 0.75rem; }
   .glo-brand-footer { padding: 0 1rem 1rem; }
   .glo-modal-success { padding: 1.5rem 1rem; }
-  .why-grid { grid-template-columns: 1fr; }
-  .why-card { border-right: none; border-bottom: 1px solid rgba(0,195,255,0.07); padding: 2.25rem 1.5rem; }
-  .why-card:last-child { border-bottom: none; }
-  .why-card:nth-child(3),.why-card:nth-child(4) { border-right: none; border-top: none; }
-  .tours-grid { grid-template-columns: 1fr; }
-  .tour-card  { min-height: 220px; }
-  .social-proof-inner { -webkit-justify-content: flex-start; justify-content: flex-start; gap: 1.75rem; }
+  .exp-grid   { grid-template-columns: 1fr; gap: 1rem; }
+  .exp-card   { min-height: 400px; }
+  .ec-body    { padding: 1.4rem 1.4rem 1.6rem; }
+  .ec-desc    { max-width: 100%; }
+  .ec-footer  { -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: flex-start; align-items: flex-start; gap: 1rem; }
   #cta-final  { padding: 80px 4% 72px; }
   .cta-headline { font-size: clamp(3rem, 14vw, 5rem); }
   #support-cta { padding: 2.75rem 4%; }
