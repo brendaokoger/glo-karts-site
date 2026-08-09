@@ -641,39 +641,32 @@ a   { color: inherit; text-decoration: none; }
   background-position: 68% center;
 }
 
-/* R&B Ladies Night: vibrant nightlife energy */
+/* R&B Ladies Night — upload ./glo-karts-ladies-night.jpg to replace this */
 .ec-img-ladies {
-  background-image: url('https://images.unsplash.com/photo-1529543544282-ea669407fca3?auto=format&fit=crop&w=1400&q=85');
-  background-position: center 30%;
+  background-image: url('./glo-karts-ladies-night.jpg');
+  background-color: #07020f; /* dark purple fallback while photo loads */
+  background-position: center 25%;
 }
 
+/* Strong bottom+left gradient so text is always legible */
 .ec-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,0.96) 0%,
-    rgba(0,0,0,0.65) 35%,
-    rgba(0,0,0,0.22) 65%,
-    rgba(0,0,0,0.06) 100%
-  );
+  background:
+    linear-gradient(
+      to top,
+      rgba(0,0,0,0.97) 0%,
+      rgba(0,0,0,0.80) 30%,
+      rgba(0,0,0,0.30) 58%,
+      rgba(0,0,0,0.08) 100%
+    ),
+    linear-gradient(
+      to right,
+      rgba(0,0,0,0.70) 0%,
+      rgba(0,0,0,0.30) 42%,
+      transparent 68%
+    );
   z-index: 1;
-}
-
-/* Subtle blue top vignette on downtown card */
-.ec-downtown .ec-overlay {
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,0.96) 0%,
-    rgba(0,0,0,0.65) 35%,
-    rgba(0,0,0,0.22) 65%,
-    rgba(0,0,0,0.08) 100%
-  ),
-  linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.38) 0%,
-    transparent 28%
-  );
 }
 
 .ec-body {
@@ -689,6 +682,7 @@ a   { color: inherit; text-decoration: none; }
   line-height: 0.95;
   color: #fff;
   margin-bottom: 0.75rem;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.90), 0 1px 4px rgba(0,0,0,0.95);
 }
 
 .ec-accent {
@@ -702,13 +696,20 @@ a   { color: inherit; text-decoration: none; }
   display: block;
 }
 
+/* Ladies Night gets a pink/magenta accent to match R&B vibes */
+.ec-ladies .ec-accent {
+  color: #ff2d78;
+  text-shadow: 0 0 18px rgba(255,45,120,0.50);
+}
+
 .ec-desc {
   font-family: 'Inter', sans-serif;
   font-size: 0.91rem;
-  color: rgba(255,255,255,0.72);
+  color: rgba(255,255,255,0.85);
   line-height: 1.68;
   margin-bottom: 1.6rem;
   max-width: 40ch;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.80);
 }
 
 .ec-footer {
@@ -774,50 +775,186 @@ a   { color: inherit; text-decoration: none; }
   box-shadow: 0 0 24px rgba(0,195,255,0.22);
 }
 
-/* ── Final CTA ────────────────────────────────────────── */
-#cta-final {
-  position: relative;
-  padding: 110px 5% 100px;
-  overflow: hidden;
+/* ── Glo In Action — Video Gallery ──────────────────────── */
+#glo-in-action {
   background: #000;
+  padding: 96px 5%;
 }
-.cta-bg {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 80% 70% at 30% 60%, rgba(0,12,30,0.5) 0%, transparent 65%),
-    linear-gradient(180deg, #000 0%, #040610 50%, #000 100%);
-  z-index: 0;
+
+.gia-inner {
+  max-width: 1320px;
+  margin: 0 auto;
 }
-.cta-skyline {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 65%;
-  background: #040406;
-  -webkit-clip-path: polygon(0% 100%,0% 84%,3% 84%,3% 78%,5% 78%,5% 84%,7% 84%,7% 72%,9% 72%,9% 84%,11% 84%,11% 66%,13% 66%,13% 78%,15% 78%,15% 58%,16% 46%,17% 34%,17.5% 20%,18% 8%,18.3% 2%,18.7% 8%,19.2% 20%,19.8% 34%,20.6% 46%,21.5% 58%,22% 68%,24% 68%,24% 76%,27% 76%,27% 62%,30% 62%,30% 70%,33% 70%,33% 58%,35% 56%,35% 42%,36% 30%,36.5% 16%,37% 6%,37.5% 16%,38% 30%,38.5% 42%,38.5% 58%,40% 58%,40% 66%,43% 66%,43% 72%,46% 72%,46% 64%,49% 64%,49% 72%,53% 72%,53% 78%,57% 78%,57% 68%,60% 68%,60% 76%,64% 76%,64% 82%,68% 82%,68% 74%,71% 74%,71% 80%,75% 80%,75% 84%,79% 84%,79% 78%,82% 78%,82% 84%,86% 84%,86% 80%,89% 80%,89% 86%,93% 86%,93% 82%,96% 82%,96% 88%,100% 88%,100% 100%);
-  clip-path: polygon(0% 100%,0% 84%,3% 84%,3% 78%,5% 78%,5% 84%,7% 84%,7% 72%,9% 72%,9% 84%,11% 84%,11% 66%,13% 66%,13% 78%,15% 78%,15% 58%,16% 46%,17% 34%,17.5% 20%,18% 8%,18.3% 2%,18.7% 8%,19.2% 20%,19.8% 34%,20.6% 46%,21.5% 58%,22% 68%,24% 68%,24% 76%,27% 76%,27% 62%,30% 62%,30% 70%,33% 70%,33% 58%,35% 56%,35% 42%,36% 30%,36.5% 16%,37% 6%,37.5% 16%,38% 30%,38.5% 42%,38.5% 58%,40% 58%,40% 66%,43% 66%,43% 72%,46% 72%,46% 64%,49% 64%,49% 72%,53% 72%,53% 78%,57% 78%,57% 68%,60% 68%,60% 76%,64% 76%,64% 82%,68% 82%,68% 74%,71% 74%,71% 80%,75% 80%,75% 84%,79% 84%,79% 78%,82% 78%,82% 84%,86% 84%,86% 80%,89% 80%,89% 86%,93% 86%,93% 82%,96% 82%,96% 88%,100% 88%,100% 100%);
-  pointer-events: none; z-index: 1;
+
+.gia-header {
+  text-align: center;
+  margin-bottom: 3rem;
 }
-.cta-kart {
-  position: absolute; right: 0; bottom: 0;
-  width: 52%; max-width: 660px;
-  pointer-events: none; z-index: 2;
+
+.gia-eyebrow {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.85rem;
 }
-.cta-kart img {
-  width: 100%; object-fit: contain;
-  object-position: bottom right;
-  opacity: 0.55;
-  filter: drop-shadow(0 0 60px rgba(0,140,255,0.1));
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 20%, black 55%),
-                      linear-gradient(to bottom, transparent 0%, black 22%);
-  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 20%, black 55%),
-              linear-gradient(to bottom, transparent 0%, black 22%);
-}
-.cta-inner { position: relative; z-index: 3; max-width: 1200px; margin: 0 auto; }
-.cta-headline {
+
+.gia-headline {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(3.5rem, 7.5vw, 7.5rem);
-  letter-spacing: 0.02em; line-height: 0.92;
-  color: #fff; margin-bottom: 0.9rem;
+  font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+  letter-spacing: 0.03em;
+  line-height: 1;
+  color: #fff;
+  margin-bottom: 1rem;
 }
-.cta-sub { font-size: 1rem; color: var(--muted2); margin-bottom: 2.25rem; }
+
+.gia-sub {
+  font-size: 0.95rem;
+  color: var(--muted2);
+  line-height: 1.72;
+  max-width: 58ch;
+  margin: 0 auto;
+}
+
+/* ── Layout ── */
+.gia-tier-top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.gia-tier-bot {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.gia-stack {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ── Individual video card ── */
+.gia-vid {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #05080f;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: border-color 0.28s;
+  -webkit-tap-highlight-color: transparent;
+}
+.gia-vid:hover { border-color: rgba(0,195,255,0.20); }
+
+/* Featured tall video */
+.gia-vid-lg { aspect-ratio: 3/4; }
+
+/* Stacked pair in right column */
+.gia-stack .gia-vid { aspect-ratio: 16/10; }
+
+/* Bottom landscape pair */
+.gia-tier-bot .gia-vid { aspect-ratio: 16/9; }
+
+/* Actual <video> element */
+.gia-video {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.gia-video.gia-video-ready { opacity: 1; }
+
+/* Placeholder state — shown when no video is loaded */
+.gia-ph {
+  position: absolute;
+  inset: 0;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  gap: 0.7rem;
+  background:
+    radial-gradient(ellipse 65% 60% at 50% 38%, rgba(0,25,72,0.55) 0%, transparent 68%),
+    linear-gradient(170deg, #07080f 0%, #040508 100%);
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.gia-ph-icon { color: rgba(0,195,255,0.28); }
+.gia-ph-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.18);
+}
+
+/* Overlay for caption legibility */
+.gia-vid-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.18) 36%, transparent 60%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Centered play button */
+.gia-play-btn {
+  position: absolute;
+  top: 50%; left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.50);
+  border: 2px solid rgba(0,195,255,0.55);
+  color: #fff;
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  transition: background 0.22s, border-color 0.22s, box-shadow 0.22s, -webkit-transform 0.22s, transform 0.22s;
+}
+.gia-play-btn:hover {
+  background: rgba(0,195,255,0.18);
+  border-color: var(--blue);
+  box-shadow: 0 0 28px rgba(0,195,255,0.38);
+  -webkit-transform: translate(-50%, -50%) scale(1.09);
+  transform: translate(-50%, -50%) scale(1.09);
+}
+.gia-stack .gia-play-btn,
+.gia-tier-bot .gia-play-btn {
+  width: 40px; height: 40px;
+}
+
+/* Bottom caption label */
+.gia-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 2;
+  padding: 0.55rem 0.9rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  pointer-events: none;
+}
 
 /* ── Support CTA ─────────────────────────────────────── */
 #support-cta {
@@ -1874,8 +2011,10 @@ footer {
   .ec-title { font-size: clamp(1.7rem, 4vw, 2.4rem); }
 
   .mobile-sticky-cta { display: block; }
-  #cta-final { text-align: center; }
-  .cta-kart  { display: none; }
+  .gia-tier-top { grid-template-columns: 1fr; }
+  .gia-vid-lg   { aspect-ratio: 16/9; }
+  .gia-stack    { -webkit-flex-direction: row; flex-direction: row; }
+  .gia-stack .gia-vid { aspect-ratio: 4/3; }
   .glo-form-row { grid-template-columns: 1fr; }
   .glo-modal-card { padding: 0; border-radius: 16px; }
   .glo-modal-header { border-radius: 16px 16px 0 0; min-height: 240px; }
@@ -1919,8 +2058,13 @@ footer {
   .ec-body    { padding: 1.4rem 1.4rem 1.6rem; }
   .ec-desc    { max-width: 100%; }
   .ec-footer  { -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: flex-start; align-items: flex-start; gap: 1rem; }
-  #cta-final  { padding: 80px 4% 72px; }
-  .cta-headline { font-size: clamp(3rem, 14vw, 5rem); }
+  #glo-in-action { padding: 72px 4%; }
+  .gia-tier-top  { grid-template-columns: 1fr; }
+  .gia-stack     { -webkit-flex-direction: column; flex-direction: column; }
+  .gia-stack .gia-vid { aspect-ratio: 16/9; }
+  .gia-tier-bot  { grid-template-columns: 1fr; }
+  .gia-vid-lg    { aspect-ratio: 16/9; }
+  .gia-play-btn  { width: 44px; height: 44px; }
   #support-cta { padding: 2.75rem 4%; }
   .support-inner { -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: flex-start; align-items: flex-start; gap: 1.5rem; }
   .support-btn { -webkit-align-self: flex-start; align-self: flex-start; }
