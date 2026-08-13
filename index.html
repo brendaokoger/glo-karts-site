@@ -228,96 +228,83 @@
         <p class="gia-sub">From city lights and music to birthdays, girls' nights and unforgettable Chicago views — see what happens when you Ride the Glo.</p>
       </div>
 
-      <!-- Video Grid: featured left + 2 stacked right, then 2 bottom -->
-      <div class="gia-tier-top">
+    </div><!-- /.gia-inner -->
 
-        <!-- V1: Featured tall video -->
-        <div class="gia-vid gia-vid-lg" data-src="./videos/glo-01.mp4">
+    <!-- ── Video Carousel ──────────────────────────────────────── -->
+    <div class="gia-carousel-wrap">
+      <div class="gia-carousel" id="gia-carousel" role="list" aria-label="Video gallery">
+
+        <!-- Slide 1: Downtown Chicago Tour (footage available) -->
+        <div class="gia-slide" data-src="./videos/glo-01.mp4" role="listitem">
           <video class="gia-video" muted playsinline autoplay preload="auto">
             <source src="./videos/glo-01.mp4" type="video/mp4">
           </video>
-          <div class="gia-ph">
-            <svg class="gia-ph-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-            <span class="gia-ph-label">Video Coming Soon</span>
-          </div>
           <div class="gia-vid-overlay"></div>
-          <button class="gia-play-btn" type="button" aria-label="Play video">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <button class="gia-play-btn" type="button" aria-label="Watch Downtown Chicago Tour">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           </button>
           <div class="gia-caption">Downtown Chicago Tour</div>
         </div>
 
-        <!-- V2 + V3: Stacked right -->
-        <div class="gia-stack">
-          <div class="gia-vid" data-src="./videos/glo-02.mp4">
-            <video class="gia-video" muted playsinline autoplay preload="auto">
-              <source src="./videos/glo-02.mp4" type="video/mp4">
-            </video>
-            <div class="gia-ph">
-              <svg class="gia-ph-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-              <span class="gia-ph-label">Video Coming Soon</span>
+        <!-- Slide 2: R&B Ladies Night (coming soon — no footage yet) -->
+        <div class="gia-slide gia-slide--soon" role="listitem">
+          <div class="gia-poster gia-poster--pink">
+            <svg class="gia-poster-skyline" viewBox="0 0 200 80" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+              <path fill="currentColor" d="M0,80 V55 H10 V42 H18 V30 H22 V25 H26 V30 H34 V42 H42 V55 H50 V48 H54 V38 H62 V48 H70 V55 H76 V45 H80 V35 H86 V45 H94 V55 H100 V48 H106 V38 H112 V48 H120 V55 H126 V42 H128 V24 H132 V42 H136 V55 H144 V48 H150 V55 H158 V45 H162 V38 H168 V45 H174 V55 H182 V42 H190 V55 H200 V80 Z"/>
+            </svg>
+            <div class="gia-poster-content">
+              <span class="gia-poster-brand">GLO KARTS</span>
+              <span class="gia-poster-city">CHICAGO</span>
             </div>
-            <div class="gia-vid-overlay"></div>
-            <button class="gia-play-btn" type="button" aria-label="Play video">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </button>
-            <div class="gia-caption">R&amp;B Ladies Night</div>
           </div>
+          <div class="gia-vid-overlay"></div>
+          <span class="gia-coming-badge">Coming Soon</span>
+          <div class="gia-caption">R&amp;B Ladies Night</div>
+        </div>
 
-          <div class="gia-vid" data-src="./videos/glo-03.mp4">
-            <video class="gia-video" muted playsinline autoplay preload="auto">
-              <source src="./videos/glo-03.mp4" type="video/mp4">
-            </video>
-            <div class="gia-ph">
-              <svg class="gia-ph-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-              <span class="gia-ph-label">Video Coming Soon</span>
-            </div>
-            <div class="gia-vid-overlay"></div>
-            <button class="gia-play-btn" type="button" aria-label="Play video">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </button>
-            <div class="gia-caption">Birthday Night Out</div>
-          </div>
-        </div><!-- /.gia-stack -->
+        <!-- Slide 3: Birthday Celebration (footage available) -->
+        <div class="gia-slide" data-src="./videos/glo-03.mp4" role="listitem">
+          <video class="gia-video" muted playsinline autoplay preload="auto">
+            <source src="./videos/glo-03.mp4" type="video/mp4">
+          </video>
+          <div class="gia-vid-overlay"></div>
+          <button class="gia-play-btn" type="button" aria-label="Watch Birthday Celebration">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </button>
+          <div class="gia-caption">Birthday Celebration</div>
+        </div>
 
-      </div><!-- /.gia-tier-top -->
-
-      <!-- V4 + V5: Bottom landscape row -->
-      <div class="gia-tier-bot">
-
-        <div class="gia-vid" data-src="./videos/glo-04.mp4">
+        <!-- Slide 4: Chicago Nights (footage available) -->
+        <div class="gia-slide" data-src="./videos/glo-04.mp4" role="listitem">
           <video class="gia-video" muted playsinline autoplay preload="auto">
             <source src="./videos/glo-04.mp4" type="video/mp4">
           </video>
-          <div class="gia-ph">
-            <svg class="gia-ph-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-            <span class="gia-ph-label">Video Coming Soon</span>
-          </div>
           <div class="gia-vid-overlay"></div>
-          <button class="gia-play-btn" type="button" aria-label="Play video">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <button class="gia-play-btn" type="button" aria-label="Watch Chicago Nights">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           </button>
-          <div class="gia-caption">City Lights Ride</div>
+          <div class="gia-caption">Chicago Nights</div>
         </div>
 
-        <div class="gia-vid" data-src="./videos/glo-05.mp4">
-          <video class="gia-video" muted playsinline autoplay preload="auto">
-            <source src="./videos/glo-05.mp4" type="video/mp4">
-          </video>
-          <div class="gia-ph">
-            <svg class="gia-ph-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-            <span class="gia-ph-label">Video Coming Soon</span>
+        <!-- Slide 5: Glo After Dark (coming soon — no footage yet) -->
+        <div class="gia-slide gia-slide--soon" role="listitem">
+          <div class="gia-poster gia-poster--blue">
+            <svg class="gia-poster-skyline" viewBox="0 0 200 80" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+              <path fill="currentColor" d="M0,80 V55 H10 V42 H18 V30 H22 V25 H26 V30 H34 V42 H42 V55 H50 V48 H54 V38 H62 V48 H70 V55 H76 V45 H80 V35 H86 V45 H94 V55 H100 V48 H106 V38 H112 V48 H120 V55 H126 V42 H128 V24 H132 V42 H136 V55 H144 V48 H150 V55 H158 V45 H162 V38 H168 V45 H174 V55 H182 V42 H190 V55 H200 V80 Z"/>
+            </svg>
+            <div class="gia-poster-content">
+              <span class="gia-poster-brand">GLO KARTS</span>
+              <span class="gia-poster-city">CHICAGO</span>
+            </div>
           </div>
           <div class="gia-vid-overlay"></div>
-          <button class="gia-play-btn" type="button" aria-label="Play video">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          </button>
-          <div class="gia-caption">Glo Karts After Dark</div>
+          <span class="gia-coming-badge">Coming Soon</span>
+          <div class="gia-caption">Glo After Dark</div>
         </div>
 
-      </div><!-- /.gia-tier-bot -->
-
-    </div><!-- /.gia-inner -->
+      </div><!-- /.gia-carousel -->
+      <p class="gia-swipe-hint" aria-hidden="true">Swipe to explore&nbsp;→</p>
+    </div><!-- /.gia-carousel-wrap -->
   </section>
 
 
@@ -1091,18 +1078,22 @@
   })();
 
 
-  /* ── Glo In Action video gallery ─────────────────────────
-     Loads first frame of each video so cards show real content.
-     Hover: silent preview. Click: opens in lightbox with audio.
-  ─────────────────────────────────────────────────────────── */
+  /* ── Glo In Action — Swipe Carousel + Video Thumbnails ──────
+     Desktop / trackpad : drag to scroll.
+     Mobile             : native touch-scroll + scroll-snap.
+     Slides with footage: show first frame on load, click → lightbox with audio.
+     Slides coming-soon : branded poster + Coming Soon badge, no play button.
+  ──────────────────────────────────────────────────────────── */
   (function () {
     var lightbox = document.getElementById('video-lightbox');
     var lbVideo  = document.getElementById('vl-video');
+    var carousel = document.getElementById('gia-carousel');
 
+    /* ── Open video in full-screen lightbox with audio ── */
     function openInLightbox(src) {
-      if (!lightbox || !lbVideo) return;
+      if (!lightbox || !lbVideo || !src) return;
       var source = lbVideo.querySelector('source');
-      if (source) { source.src = src; }
+      if (source) source.src = src;
       lbVideo.load();
       lightbox.classList.add('open');
       document.documentElement.style.overflow = 'hidden';
@@ -1113,81 +1104,92 @@
       lbVideo.play().catch(function () {});
     }
 
-    document.querySelectorAll('.gia-vid').forEach(function (wrap) {
-      var vid     = wrap.querySelector('.gia-video');
-      var ph      = wrap.querySelector('.gia-ph');
-      var playBtn = wrap.querySelector('.gia-play-btn');
-      var src     = wrap.getAttribute('data-src');
+    /* ── Mouse-drag scroll for desktop / trackpad ── */
+    var isDragging = false, dragStartX = 0, scrollAtStart = 0, didDrag = false;
+    if (carousel) {
+      carousel.addEventListener('mousedown', function (e) {
+        isDragging = true;
+        didDrag    = false;
+        dragStartX = e.pageX;
+        scrollAtStart = carousel.scrollLeft;
+        carousel.classList.add('is-dragging');
+      });
+      document.addEventListener('mouseup', function () {
+        isDragging = false;
+        carousel.classList.remove('is-dragging');
+      });
+      carousel.addEventListener('mouseleave', function () {
+        isDragging = false;
+        carousel.classList.remove('is-dragging');
+      });
+      carousel.addEventListener('mousemove', function (e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        var delta = e.pageX - dragStartX;
+        if (Math.abs(delta) > 5) didDrag = true;
+        carousel.scrollLeft = scrollAtStart - delta;
+      });
+    }
 
+    /* ── Per-slide setup ── */
+    document.querySelectorAll('.gia-slide').forEach(function (slide) {
+      var vid     = slide.querySelector('.gia-video');
+      var playBtn = slide.querySelector('.gia-play-btn');
+      var src     = slide.getAttribute('data-src');
+
+      /* Coming-soon slides have no <video> — skip all video logic */
       if (!vid) return;
 
-      /* Reveal the video frame and hide the placeholder */
+      /* Reveal: fade video over black background once a frame is ready */
       var revealed = false;
       function revealVideo() {
         if (revealed) return;
         revealed = true;
         vid.classList.add('gia-video-ready');
-        if (ph) { ph.style.opacity = '0'; ph.style.pointerEvents = 'none'; }
       }
 
-      /* Listen on several events — different browsers fire different ones first */
       vid.addEventListener('loadeddata',     revealVideo);
       vid.addEventListener('canplay',        revealVideo);
       vid.addEventListener('canplaythrough', revealVideo);
       vid.addEventListener('playing',        revealVideo);
-
-      /* After metadata loads, seek to 0.001s to force the first frame to render */
       vid.addEventListener('loadedmetadata', function () {
         try { vid.currentTime = 0.001; } catch (e) {}
-        revealVideo(); /* also try here in case loadeddata never fires */
+        revealVideo();
       });
 
-      /* Keep placeholder for missing / broken files */
-      vid.addEventListener('error', function () {
-        revealed = false;
-        vid.classList.remove('gia-video-ready');
-        if (ph) { ph.style.opacity = '1'; ph.style.pointerEvents = 'none'; }
-      });
+      /* Catch already-ready state (autoplay fired before listeners attached) */
+      if (vid.readyState >= 2) revealVideo();
 
-      /* If autoplay already fired before our listeners were attached, reveal now */
-      if (vid.readyState >= 2) { revealVideo(); }
-
-      /* iOS Safari won't render any frame from load() alone — play() is required.
-         Muted + playsinline + autoplay (on the element) is allowed without a user
-         gesture. We play to force first-frame decode, then immediately pause. */
+      /* iOS Safari requires play() — not just load() — to decode any frame.
+         Muted + playsinline + autoplay attr = permitted without user gesture. */
       vid.muted = true;
       var initPlay = vid.play();
       if (initPlay && typeof initPlay.then === 'function') {
         initPlay.then(function () {
-          revealVideo(); /* frame is now rendered */
+          revealVideo();
           vid.pause();
           try { vid.currentTime = 0; } catch (e) {}
-        }).catch(function () {
-          /* Autoplay blocked (power-saver / aggressive browser) — fall back */
-          vid.load();
-        });
+        }).catch(function () { vid.load(); });
       } else {
-        vid.load(); /* older browser */
+        vid.load();
       }
 
-      /* Hover: silent auto-preview */
-      wrap.addEventListener('mouseenter', function () {
-        vid.play().catch(function () {});
-      });
-      wrap.addEventListener('mouseleave', function () {
-        vid.pause();
-        vid.currentTime = 0;
-      });
+      /* Hover: silent preview (desktop only — no hover on touch) */
+      slide.addEventListener('mouseenter', function () { vid.play().catch(function () {}); });
+      slide.addEventListener('mouseleave', function () { vid.pause(); vid.currentTime = 0; });
 
-      /* Click anywhere on card (or play button): open in lightbox with audio */
-      function handlePlay() { if (src) openInLightbox(src); }
+      /* Click → lightbox (suppressed when the action was a drag-scroll) */
+      function handlePlay() {
+        if (didDrag) return;
+        if (src) openInLightbox(src);
+      }
       if (playBtn) {
         playBtn.addEventListener('click', function (e) {
           e.stopPropagation();
           handlePlay();
         });
       }
-      wrap.addEventListener('click', handlePlay);
+      slide.addEventListener('click', handlePlay);
     });
   })();
 

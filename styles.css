@@ -778,12 +778,13 @@ a   { color: inherit; text-decoration: none; }
 /* ── Glo In Action — Video Gallery ──────────────────────── */
 #glo-in-action {
   background: #000;
-  padding: 96px 5%;
+  padding: 96px 0 110px; /* side padding lives on carousel / inner; bottom clears sticky bar */
 }
 
 .gia-inner {
   max-width: 1320px;
   margin: 0 auto;
+  padding: 0 5%;
 }
 
 .gia-header {
@@ -818,51 +819,52 @@ a   { color: inherit; text-decoration: none; }
   margin: 0 auto;
 }
 
-/* ── Layout ── */
-.gia-tier-top {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
-}
+/* ── Carousel wrapper ── */
+.gia-carousel-wrap { position: relative; }
 
-.gia-tier-bot {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-}
-
-.gia-stack {
+.gia-carousel {
   display: -webkit-flex;
   display: flex;
-  -webkit-flex-direction: column;
-  flex-direction: column;
-  gap: 0.75rem;
+  gap: 12px;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+  padding: 0 5% 4px;
+  -webkit-user-select: none; user-select: none;
 }
+.gia-carousel::-webkit-scrollbar { display: none; }
+.gia-carousel.is-dragging { cursor: grabbing; }
 
-/* ── Individual video card ── */
-.gia-vid {
+/* ── Individual slide ── */
+.gia-slide {
+  flex: 0 0 82%;
+  -webkit-flex-shrink: 0; flex-shrink: 0;
+  scroll-snap-align: start;
   position: relative;
   overflow: hidden;
-  border-radius: 10px;
-  background: #05080f;
+  border-radius: 12px;
+  background: #050810;
   cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.07);
   transition: border-color 0.28s;
+  aspect-ratio: 4/5;
   -webkit-tap-highlight-color: transparent;
 }
-.gia-vid:hover { border-color: rgba(0,195,255,0.20); }
+.gia-slide:hover { border-color: rgba(0,195,255,0.22); }
+.gia-slide--soon  { cursor: default; }
 
-/* Featured tall video */
-.gia-vid-lg { aspect-ratio: 3/4; }
+/* Desktop: ~3 cards + peek of 4th */
+@media (min-width: 700px) {
+  .gia-slide    { flex: 0 0 30%; }
+  .gia-carousel { gap: 16px; }
+}
+@media (min-width: 1100px) {
+  .gia-slide { flex: 0 0 28%; }
+}
 
-/* Stacked pair in right column */
-.gia-stack .gia-vid { aspect-ratio: 16/10; }
-
-/* Bottom landscape pair */
-.gia-tier-bot .gia-vid { aspect-ratio: 16/9; }
-
-/* Actual <video> element */
+/* ── Video element ── */
 .gia-video {
   position: absolute;
   inset: 0;
@@ -874,44 +876,89 @@ a   { color: inherit; text-decoration: none; }
 }
 .gia-video.gia-video-ready { opacity: 1; }
 
-/* Placeholder state — shown when no video is loaded */
-.gia-ph {
+/* ── Branded poster (coming-soon slides) ── */
+.gia-poster {
   position: absolute;
   inset: 0;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-direction: column;
-  flex-direction: column;
-  -webkit-align-items: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  gap: 0.7rem;
-  background:
-    radial-gradient(ellipse 65% 60% at 50% 38%, rgba(0,25,72,0.55) 0%, transparent 68%),
-    linear-gradient(170deg, #07080f 0%, #040508 100%);
-  pointer-events: none;
-  transition: opacity 0.3s;
+  overflow: hidden;
 }
-.gia-ph-icon { color: rgba(0,195,255,0.28); }
-.gia-ph-label {
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.18);
+.gia-poster--pink {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(200,20,80,0.22) 0%, transparent 70%),
+    linear-gradient(155deg, #130018 0%, #0c0012 55%, #040006 100%);
+}
+.gia-poster--blue {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(0,120,200,0.20) 0%, transparent 70%),
+    linear-gradient(155deg, #010c1e 0%, #010810 55%, #000408 100%);
 }
 
-/* Overlay for caption legibility */
+/* Faint city-skyline silhouette */
+.gia-poster-skyline {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  width: 100%; height: 55%;
+}
+.gia-poster--pink .gia-poster-skyline { color: rgba(200,0,80,0.09); }
+.gia-poster--blue  .gia-poster-skyline { color: rgba(0,140,220,0.09); }
+
+/* Ghost brand text */
+.gia-poster-content {
+  position: absolute;
+  inset: 0;
+  display: -webkit-flex; display: flex;
+  -webkit-flex-direction: column; flex-direction: column;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+  gap: 0.3rem;
+  padding-bottom: 10%;
+}
+.gia-poster-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  letter-spacing: 0.1em;
+  line-height: 1;
+  color: rgba(255,255,255,0.07);
+}
+.gia-poster-city {
+  font-size: 0.58rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.06);
+}
+
+/* Coming Soon chip */
+.gia-coming-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  z-index: 4;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(0,195,255,0.40);
+  color: rgba(0,195,255,0.88);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 3px;
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+/* Gradient overlay — caption legibility */
 .gia-vid-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.18) 36%, transparent 60%);
+  background: linear-gradient(to top,
+    rgba(0,0,0,0.82) 0%,
+    rgba(0,0,0,0.16) 36%,
+    transparent 60%);
   z-index: 1;
   pointer-events: none;
 }
 
-/* Centered play button */
+/* Play button — only rendered on slides with footage */
 .gia-play-btn {
   position: absolute;
   top: 50%; left: 50%;
@@ -928,7 +975,8 @@ a   { color: inherit; text-decoration: none; }
   -webkit-justify-content: center; justify-content: center;
   cursor: pointer;
   -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-  transition: background 0.22s, border-color 0.22s, box-shadow 0.22s, -webkit-transform 0.22s, transform 0.22s;
+  transition: background 0.22s, border-color 0.22s, box-shadow 0.22s,
+              -webkit-transform 0.22s, transform 0.22s;
 }
 .gia-play-btn:hover {
   background: rgba(0,195,255,0.18);
@@ -937,25 +985,36 @@ a   { color: inherit; text-decoration: none; }
   -webkit-transform: translate(-50%, -50%) scale(1.09);
   transform: translate(-50%, -50%) scale(1.09);
 }
-.gia-stack .gia-play-btn,
-.gia-tier-bot .gia-play-btn {
-  width: 40px; height: 40px;
-}
 
-/* Bottom caption label */
+/* Bottom caption */
 .gia-caption {
   position: absolute;
   bottom: 0; left: 0; right: 0;
   z-index: 2;
-  padding: 0.55rem 0.9rem;
+  padding: 0.6rem 1rem;
   font-family: 'Inter', sans-serif;
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.58);
   pointer-events: none;
 }
+
+/* Swipe cue — mobile only */
+.gia-swipe-hint {
+  display: block;
+  text-align: center;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.22);
+  margin-top: 1.2rem;
+  -webkit-user-select: none; user-select: none;
+  pointer-events: none;
+}
+@media (min-width: 700px) { .gia-swipe-hint { display: none; } }
 
 /* ── Support CTA ─────────────────────────────────────── */
 #support-cta {
@@ -2012,10 +2071,6 @@ footer {
   .ec-title { font-size: clamp(1.7rem, 4vw, 2.4rem); }
 
   .mobile-sticky-cta { display: block; }
-  .gia-tier-top { grid-template-columns: 1fr; }
-  .gia-vid-lg   { aspect-ratio: 16/9; }
-  .gia-stack    { -webkit-flex-direction: row; flex-direction: row; }
-  .gia-stack .gia-vid { aspect-ratio: 4/3; }
   .glo-form-row { grid-template-columns: 1fr; }
   .glo-modal-card { padding: 0; border-radius: 16px; }
   .glo-modal-header { border-radius: 16px 16px 0 0; min-height: 240px; }
@@ -2059,12 +2114,8 @@ footer {
   .ec-body    { padding: 1.4rem 1.4rem 1.6rem; }
   .ec-desc    { max-width: 100%; }
   .ec-footer  { -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: flex-start; align-items: flex-start; gap: 1rem; }
-  #glo-in-action { padding: 72px 4%; }
-  .gia-tier-top  { grid-template-columns: 1fr; }
-  .gia-stack     { -webkit-flex-direction: column; flex-direction: column; }
-  .gia-stack .gia-vid { aspect-ratio: 16/9; }
-  .gia-tier-bot  { grid-template-columns: 1fr; }
-  .gia-vid-lg    { aspect-ratio: 16/9; }
+  #glo-in-action { padding-top: 72px; }
+  .gia-carousel  { padding: 0 4% 4px; }
   .gia-play-btn  { width: 44px; height: 44px; }
   #support-cta { padding: 2.75rem 4%; }
   .support-inner { -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: flex-start; align-items: flex-start; gap: 1.5rem; }
