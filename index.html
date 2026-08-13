@@ -233,7 +233,7 @@
 
         <!-- V1: Featured tall video -->
         <div class="gia-vid gia-vid-lg" data-src="./videos/glo-01.mp4">
-          <video class="gia-video" muted playsinline preload="none">
+          <video class="gia-video" muted playsinline preload="metadata">
             <source src="./videos/glo-01.mp4" type="video/mp4">
           </video>
           <div class="gia-ph">
@@ -250,7 +250,7 @@
         <!-- V2 + V3: Stacked right -->
         <div class="gia-stack">
           <div class="gia-vid" data-src="./videos/glo-02.mp4">
-            <video class="gia-video" muted playsinline preload="none">
+            <video class="gia-video" muted playsinline preload="metadata">
               <source src="./videos/glo-02.mp4" type="video/mp4">
             </video>
             <div class="gia-ph">
@@ -265,7 +265,7 @@
           </div>
 
           <div class="gia-vid" data-src="./videos/glo-03.mp4">
-            <video class="gia-video" muted playsinline preload="none">
+            <video class="gia-video" muted playsinline preload="metadata">
               <source src="./videos/glo-03.mp4" type="video/mp4">
             </video>
             <div class="gia-ph">
@@ -286,7 +286,7 @@
       <div class="gia-tier-bot">
 
         <div class="gia-vid" data-src="./videos/glo-04.mp4">
-          <video class="gia-video" muted playsinline preload="none">
+          <video class="gia-video" muted playsinline preload="metadata">
             <source src="./videos/glo-04.mp4" type="video/mp4">
           </video>
           <div class="gia-ph">
@@ -301,7 +301,7 @@
         </div>
 
         <div class="gia-vid" data-src="./videos/glo-05.mp4">
-          <video class="gia-video" muted playsinline preload="none">
+          <video class="gia-video" muted playsinline preload="metadata">
             <source src="./videos/glo-05.mp4" type="video/mp4">
           </video>
           <div class="gia-ph">
@@ -1120,10 +1120,15 @@
 
       if (!vid) return;
 
-      /* Show video element once it can play */
-      vid.addEventListener('canplay', function () {
+      /* Show first frame once the file has loaded enough data */
+      vid.addEventListener('loadeddata', function () {
         vid.classList.add('gia-video-ready');
-        if (ph) ph.style.opacity = '0';
+        if (ph) { ph.style.opacity = '0'; ph.style.pointerEvents = 'none'; }
+      });
+      /* Keep placeholder if the file doesn't exist yet */
+      vid.addEventListener('error', function () {
+        vid.classList.remove('gia-video-ready');
+        if (ph) { ph.style.opacity = '1'; ph.style.pointerEvents = 'none'; }
       });
 
       /* Hover: silent auto-preview */

@@ -869,7 +869,8 @@ a   { color: inherit; text-decoration: none; }
   width: 100%; height: 100%;
   object-fit: cover;
   opacity: 0;
-  transition: opacity 0.4s;
+  transition: opacity 0.5s ease;
+  z-index: 1;
 }
 .gia-video.gia-video-ready { opacity: 1; }
 
