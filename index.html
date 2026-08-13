@@ -288,6 +288,13 @@
           </div>
         </article>
 
+        <!-- Ladies Night video -->
+        <div class="ladies-video-wrap reveal">
+          <video class="ladies-video" muted playsinline autoplay loop preload="auto" aria-hidden="true">
+            <source src="./videos/glo-ladies-night.mp4" type="video/mp4">
+          </video>
+        </div>
+
       </div>
     </div>
   </section>
@@ -1255,6 +1262,15 @@
       }
     });
   }
+
+  /* Ladies Night video — loop guard */
+  (function () {
+    var lnV = document.querySelector('.ladies-video');
+    if (lnV) {
+      lnV.play().catch(function () {});
+      addCapCutGuard(lnV, { loop: true });
+    }
+  })();
 
   /* Chicago After Dark video — loop guard */
   (function () {

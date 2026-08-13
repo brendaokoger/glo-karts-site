@@ -795,8 +795,25 @@ a   { color: inherit; text-decoration: none; }
 .exp-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
   gap: 1.5rem;
   margin-top: 3rem;
+}
+/* Downtown spans both rows — matches combined height of card + video */
+.ec-downtown { grid-row: 1 / 3; }
+
+/* Ladies Night video — below the Ladies Night card */
+.ladies-video-wrap {
+  grid-column: 2; grid-row: 2;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(255,45,120,0.18);
+  box-shadow: 0 0 32px rgba(255,45,120,0.05), 0 4px 24px rgba(0,0,0,0.5);
+}
+.ladies-video {
+  width: 100%; display: block;
+  max-height: 360px; object-fit: cover;
+  background: #07020f;
 }
 
 .exp-card {
@@ -2627,8 +2644,11 @@ a   { color: inherit; text-decoration: none; }
   .glo-submit-wrap { padding: 0.5rem 1rem 0.75rem; }
   .glo-brand-footer { padding: 0 1rem 1rem; }
   .glo-modal-success { padding: 1.5rem 1rem; }
-  .exp-grid   { grid-template-columns: 1fr; gap: 1rem; }
-  .exp-card   { min-height: 400px; }
+  .exp-grid          { grid-template-columns: 1fr; gap: 1rem; }
+  .ec-downtown       { grid-row: auto; }
+  .ladies-video-wrap { grid-column: auto; grid-row: auto; max-height: 260px; }
+  .ladies-video      { max-height: 260px; }
+  .exp-card          { min-height: 400px; }
   .ec-body    { padding: 1.4rem 1.4rem 1.6rem; }
   .ec-desc    { max-width: 100%; }
   .ec-footer  { -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: flex-start; align-items: flex-start; gap: 1rem; }
