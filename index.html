@@ -1163,6 +1163,60 @@
   })();
 
 
+  /* ── CapCut tail removal ─────────────────────────────────────
+     CapCut adds a ~2.5s watermark at the end of each exported clip.
+     We stop / loop each video 2.5s before its natural end so the
+     watermark never plays, without re-encoding the files.
+  ─────────────────────────────────────────────────────────── */
+  var CAPCUT_TRIM = 2.5; /* seconds to cut from tail */
+
+  function addCapCutGuard(videoEl, opts) {
+    /* opts.loop  = true  → loop back to 0 (featured preview)
+       opts.pause = true  → just pause (carousel hover preview)
+       opts.close = fn    → close lightbox */
+    if (!videoEl) return;
+    videoEl.addEventListener('timeupdate', function () {
+      if (!videoEl.duration || videoEl.duration <= CAPCUT_TRIM) return;
+      var cutAt = videoEl.duration - CAPCUT_TRIM;
+      if (videoEl.currentTime >= cutAt) {
+        if (opts && opts.loop) {
+          videoEl.currentTime = 0;
+          videoEl.play().catch(function () {});
+        } else if (opts && opts.close) {
+          videoEl.pause();
+          opts.close();
+        } else {
+          videoEl.pause();
+          videoEl.currentTime = 0;
+        }
+      }
+    });
+  }
+
+  /* Featured video — loop guard */
+  (function () {
+    var fv = document.querySelector('.gia-feat-video');
+    if (fv) addCapCutGuard(fv, { loop: true });
+  })();
+
+  /* Lightbox video — close guard (applied once lightbox source is set) */
+  (function () {
+    var lbv = document.getElementById('vl-video');
+    var closeFn = function () {
+      var lb = document.getElementById('video-lightbox');
+      if (!lb || !lb.classList.contains('open')) return;
+      lb.classList.remove('visible');
+      if (lbv) lbv.pause();
+      setTimeout(function () {
+        lb.classList.remove('open');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+        if (lbv) lbv.currentTime = 0;
+      }, 450);
+    };
+    if (lbv) addCapCutGuard(lbv, { close: closeFn });
+  })();
+
   /* ── Glo In Action — Swipe Carousel + Video Thumbnails ──────
      Desktop / trackpad : drag to scroll.
      Mobile             : native touch-scroll + scroll-snap.
@@ -1298,6 +1352,9 @@
       } else {
         vid.load();
       }
+
+      /* CapCut guard on carousel preview */
+      addCapCutGuard(vid, { pause: true });
 
       /* Hover: silent preview (desktop only — no hover on touch) */
       slide.addEventListener('mouseenter', function () { vid.play().catch(function () {}); });
