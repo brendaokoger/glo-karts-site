@@ -856,7 +856,7 @@ a   { color: inherit; text-decoration: none; }
 }
 .cad-bottom-video {
   width: 100%; display: block;
-  max-height: 65vh; object-fit: cover;
+  height: 320px; object-fit: cover;
   background: #07020f;
 }
 
