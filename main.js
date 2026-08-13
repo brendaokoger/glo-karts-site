@@ -102,8 +102,8 @@ if (mobileStickyEl) {
       }, { threshold: 0.05 }).observe(_heroEl);
     }
 
-    /* Hide when the footer (id="faq") enters view */
-    var _footerEl = document.getElementById('faq');
+    /* Hide when the footer enters view */
+    var _footerEl = document.getElementById('site-footer');
     if (_footerEl) {
       new IntersectionObserver(function (entries) {
         _footerVis = entries[0].isIntersecting;
@@ -112,3 +112,34 @@ if (mobileStickyEl) {
     }
   }
 }
+
+/* ── FAQ Accordion ────────────────────────────────────── */
+document.querySelectorAll('.faq-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var panelId = btn.getAttribute('aria-controls');
+    var panel   = document.getElementById(panelId);
+    var isOpen  = btn.getAttribute('aria-expanded') === 'true';
+
+    /* Close all other open items */
+    document.querySelectorAll('.faq-btn[aria-expanded="true"]').forEach(function (ob) {
+      if (ob !== btn) {
+        ob.setAttribute('aria-expanded', 'false');
+        var op = document.getElementById(ob.getAttribute('aria-controls'));
+        if (op) { op.classList.remove('open'); op.setAttribute('aria-hidden', 'true'); }
+        ob.closest('.faq-item').classList.remove('open');
+      }
+    });
+
+    if (isOpen) {
+      btn.setAttribute('aria-expanded', 'false');
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden', 'true');
+      btn.closest('.faq-item').classList.remove('open');
+    } else {
+      btn.setAttribute('aria-expanded', 'true');
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden', 'false');
+      btn.closest('.faq-item').classList.add('open');
+    }
+  });
+});

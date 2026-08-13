@@ -1100,44 +1100,124 @@ a   { color: inherit; text-decoration: none; }
   letter-spacing: 0.14em;
 }
 
-/* ── Footer ───────────────────────────────────────────── */
-footer {
-  background: #000;
+/* ── FAQ Accordion ────────────────────────────────────── */
+#faq {
+  padding: 5rem 5%;
+  background: var(--bg);
   border-top: 1px solid var(--border);
-  padding: 0 5%;
 }
-.footer-inner { max-width: 1200px; margin: 0 auto; }
-.footer-top {
+.faq-inner { max-width: 780px; margin: 0 auto; }
+.faq-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: 0.06em;
+  color: var(--text);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+.faq-list { display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; gap: 0; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-item:first-of-type { border-top: 1px solid var(--border); }
+
+.faq-btn {
+  width: 100%;
   display: -webkit-flex; display: flex;
   -webkit-align-items: center; align-items: center;
   -webkit-justify-content: space-between; justify-content: space-between;
-  padding: 2.5rem 0;
-  border-bottom: 1px solid var(--border);
-  gap: 2rem; flex-wrap: wrap;
+  gap: 1rem;
+  background: none; border: none; cursor: pointer;
+  padding: 1.25rem 0;
+  text-align: left;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.2s;
 }
-.footer-logo .logo-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.25rem; letter-spacing: 0.1em; color: #fff; line-height: 1;
+.faq-btn:hover { color: var(--blue); }
+.faq-item.open .faq-btn { color: var(--blue); }
+
+.faq-icon {
+  font-size: 1.25rem; font-weight: 300; line-height: 1;
+  color: var(--muted); flex-shrink: 0;
+  -webkit-transition: -webkit-transform 0.3s ease, color 0.2s;
+  transition: transform 0.3s ease, color 0.2s;
+  display: inline-block;
 }
-.footer-logo .logo-sub {
-  font-size: 0.56rem; font-weight: 600;
-  letter-spacing: 0.24em; text-transform: uppercase;
-  color: #2a2a2a; margin-top: 2px;
+.faq-item.open .faq-icon {
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  color: var(--blue);
 }
-.footer-contacts { display: -webkit-flex; display: flex; gap: 2rem; flex-wrap: wrap; }
-.footer-contact {
+
+.faq-panel {
+  max-height: 0;
+  overflow: hidden;
+  -webkit-transition: max-height 0.38s ease, opacity 0.3s ease;
+  transition: max-height 0.38s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+.faq-panel.open { max-height: 600px; opacity: 1; }
+.faq-panel p {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.75;
+  padding-bottom: 1.25rem;
+}
+.faq-panel p a { color: var(--blue); text-decoration: underline; }
+.faq-panel p a:hover { color: #1ad4ff; }
+
+/* ── Footer ───────────────────────────────────────────── */
+#site-footer {
+  background: #000;
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 5%;
+}
+.footer-inner {
+  max-width: 1100px; margin: 0 auto;
   display: -webkit-flex; display: flex;
+  -webkit-flex-direction: column; flex-direction: column;
   -webkit-align-items: center; align-items: center;
-  gap: 0.45rem; font-size: 0.8rem; color: var(--muted);
+  gap: 1.5rem;
+  text-align: center;
 }
-.footer-contact a { color: var(--muted); transition: color 0.2s; }
-.footer-contact a:hover { color: var(--text); }
-.footer-contact svg {
-  width: 14px; height: 14px; stroke: var(--muted);
-  fill: none; stroke-width: 1.6;
-  stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0;
+
+/* Logo wordmark */
+.footer-logo-wrap {
+  display: -webkit-flex; display: flex;
+  -webkit-flex-direction: column; flex-direction: column;
+  -webkit-align-items: center; align-items: center;
+  line-height: 1;
 }
-.footer-socials { display: -webkit-flex; display: flex; gap: 0.6rem; }
+.footer-wm-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem; letter-spacing: 0.1em; color: #fff;
+}
+.footer-logo-o { color: var(--blue); }
+.footer-wm-sub {
+  font-size: 0.5rem; font-weight: 700;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: #383838; margin-top: 3px;
+}
+
+/* Legal nav */
+.footer-legal {
+  display: -webkit-flex; display: flex;
+  -webkit-flex-wrap: wrap; flex-wrap: wrap;
+  -webkit-justify-content: center; justify-content: center;
+  gap: 0.25rem 1.75rem;
+}
+.footer-legal a {
+  font-size: 0.7rem; color: #383838;
+  text-decoration: none;
+  -webkit-transition: color 0.2s; transition: color 0.2s;
+}
+.footer-legal a:hover { color: var(--muted); }
+
+/* Social icons */
+.footer-socials { display: -webkit-flex; display: flex; gap: 0.75rem; }
 .social-link {
   width: 34px; height: 34px; border-radius: 50%;
   border: 1px solid var(--border);
@@ -1158,16 +1238,8 @@ footer {
 .social-link.tiktok svg { fill: var(--muted); stroke: none; transition: fill 0.2s; }
 .social-link.tiktok:hover svg { fill: var(--text); }
 
-.footer-bottom {
-  display: -webkit-flex; display: flex;
-  -webkit-align-items: center; align-items: center;
-  -webkit-justify-content: space-between; justify-content: space-between;
-  padding: 1.4rem 0; flex-wrap: wrap; gap: 0.75rem;
-}
-.footer-copy { font-size: 0.72rem; color: #2e2e2e; }
-.footer-links { display: -webkit-flex; display: flex; gap: 1.5rem; }
-.footer-links a { font-size: 0.72rem; color: #2e2e2e; transition: color 0.2s; }
-.footer-links a:hover { color: var(--muted); }
+/* Copyright */
+.footer-copy { font-size: 0.68rem; color: #303030; }
 
 /* ── Mobile sticky CTA ────────────────────────────────── */
 .mobile-sticky-cta {
@@ -2174,7 +2246,4 @@ footer {
   #support-cta { padding: 2.75rem 4%; }
   .support-inner { -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: flex-start; align-items: flex-start; gap: 1.5rem; }
   .support-btn { -webkit-align-self: flex-start; align-self: flex-start; }
-  .footer-top { -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: flex-start; align-items: flex-start; }
-  .footer-contacts { -webkit-flex-direction: column; flex-direction: column; gap: 0.65rem; }
-  .footer-bottom { -webkit-flex-direction: column; flex-direction: column; -webkit-align-items: flex-start; align-items: flex-start; }
 }
