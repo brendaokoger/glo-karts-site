@@ -238,6 +238,14 @@
         </div>
 
       </div><!-- /.cad-cards -->
+
+      <!-- Video below MADE FOR THE NIGHT card -->
+      <div class="cad-bottom-video-wrap reveal">
+        <video class="cad-bottom-video" muted playsinline autoplay loop preload="auto" aria-hidden="true">
+          <source src="./videos/glo-cad-bottom.mp4" type="video/mp4">
+        </video>
+      </div>
+
     </div>
 
   </section>
@@ -1255,6 +1263,15 @@
     if (lnV) {
       lnV.play().catch(function () {});
       addCapCutGuard(lnV, { loop: true });
+    }
+  })();
+
+  /* CAD bottom video — loop guard */
+  (function () {
+    var bv = document.querySelector('.cad-bottom-video');
+    if (bv) {
+      bv.play().catch(function () {});
+      addCapCutGuard(bv, { loop: true });
     }
   })();
 
