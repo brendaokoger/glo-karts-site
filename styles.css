@@ -689,10 +689,10 @@ a   { color: inherit; text-decoration: none; }
 }
 
 
-/* 2 × 2 card grid */
+/* Single-column card stack — each card spans the full width */
 .cad-cards {
-  display: -ms-grid; display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: -webkit-flex; display: flex;
+  -webkit-flex-direction: column; flex-direction: column;
   gap: 1.25rem; width: 100%;
   overflow: hidden;  /* clip cards while they slide in from the right */
 }
@@ -839,7 +839,7 @@ a   { color: inherit; text-decoration: none; }
 
 @media (max-width: 560px) {
   #chicago-after-dark { padding: 4rem 0; }
-  .cad-cards { grid-template-columns: 1fr; gap: 0.85rem; }
+  .cad-cards { gap: 0.85rem; }
   .cad-card  { padding: 1.75rem 1.5rem; }
   .cad-feat-video { max-height: 55vh; }
 }

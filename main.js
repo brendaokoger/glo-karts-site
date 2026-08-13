@@ -56,9 +56,13 @@ var revealEls = document.querySelectorAll('.reveal');
 if ('IntersectionObserver' in window) {
   var revealObserver = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
+      var repeat = entry.target.hasAttribute('data-reveal-repeat');
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
+        if (!repeat) revealObserver.unobserve(entry.target);
+      } else if (repeat) {
+        /* Remove visible so the animation replays next time */
+        entry.target.classList.remove('visible');
       }
     });
   }, { threshold: 0.1 });
