@@ -1092,7 +1092,8 @@
 
 
   /* ── Glo In Action video gallery ─────────────────────────
-     Hover: silent preview. Click play button: opens lightbox.
+     Loads first frame of each video so cards show real content.
+     Hover: silent preview. Click: opens in lightbox with audio.
   ─────────────────────────────────────────────────────────── */
   (function () {
     var lightbox = document.getElementById('video-lightbox');
@@ -1120,16 +1121,36 @@
 
       if (!vid) return;
 
-      /* Show first frame once the file has loaded enough data */
-      vid.addEventListener('loadeddata', function () {
+      /* Reveal the video frame and hide the placeholder */
+      var revealed = false;
+      function revealVideo() {
+        if (revealed) return;
+        revealed = true;
         vid.classList.add('gia-video-ready');
         if (ph) { ph.style.opacity = '0'; ph.style.pointerEvents = 'none'; }
+      }
+
+      /* Listen on several events — different browsers fire different ones first */
+      vid.addEventListener('loadeddata',     revealVideo);
+      vid.addEventListener('canplay',        revealVideo);
+      vid.addEventListener('canplaythrough', revealVideo);
+      vid.addEventListener('playing',        revealVideo);
+
+      /* After metadata loads, seek to 0.001s to force the first frame to render */
+      vid.addEventListener('loadedmetadata', function () {
+        try { vid.currentTime = 0.001; } catch (e) {}
+        revealVideo(); /* also try here in case loadeddata never fires */
       });
-      /* Keep placeholder if the file doesn't exist yet */
+
+      /* Keep placeholder for missing / broken files */
       vid.addEventListener('error', function () {
+        revealed = false;
         vid.classList.remove('gia-video-ready');
         if (ph) { ph.style.opacity = '1'; ph.style.pointerEvents = 'none'; }
       });
+
+      /* Force the browser to start loading — don't rely on preload hint alone */
+      vid.load();
 
       /* Hover: silent auto-preview */
       wrap.addEventListener('mouseenter', function () {
@@ -1140,14 +1161,15 @@
         vid.currentTime = 0;
       });
 
-      /* Click play button or anywhere on card: open in lightbox */
-      function handlePlay(e) {
-        if (src) openInLightbox(src);
+      /* Click anywhere on card (or play button): open in lightbox with audio */
+      function handlePlay() { if (src) openInLightbox(src); }
+      if (playBtn) {
+        playBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          handlePlay();
+        });
       }
-      if (playBtn) playBtn.addEventListener('click', handlePlay);
-      wrap.addEventListener('click', function (e) {
-        if (!playBtn || !playBtn.contains(e.target)) handlePlay(e);
-      });
+      wrap.addEventListener('click', handlePlay);
     });
   })();
 
