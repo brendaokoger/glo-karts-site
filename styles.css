@@ -401,11 +401,11 @@ a   { color: inherit; text-decoration: none; }
   line-height: 1.25;
   margin-bottom: 0.85rem;
   letter-spacing: 0.01em;
-  /* White-to-blue gradient text — city lights at night */
-  background: linear-gradient(90deg, #fff 30%, var(--blue) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #fff;
+}
+/* "Chicago" in the tagline — matches electric-blue branding */
+.hero-sub-blue {
+  color: var(--blue);
 }
 .hero-support {
   font-family: 'Inter', sans-serif;
@@ -570,7 +570,10 @@ a   { color: inherit; text-decoration: none; }
   display: flex;
   -webkit-flex-shrink: 0;
   flex-shrink: 0;
+  -webkit-align-items: center;
+  align-items: center;
   width: max-content;
+  height: 46px; /* explicit height so flex centering has a reference */
   -webkit-animation: mq-scroll 44s linear infinite;
   animation: mq-scroll 44s linear infinite;
 }
@@ -581,6 +584,7 @@ a   { color: inherit; text-decoration: none; }
   display: inline-flex;
   -webkit-align-items: center;
   align-items: center;
+  height: 100%;
   white-space: nowrap;
   -webkit-flex-shrink: 0;
   flex-shrink: 0;
