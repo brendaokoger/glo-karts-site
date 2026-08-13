@@ -180,7 +180,7 @@
 
     <!-- Full-bleed video — above the cards, edge to edge, always live -->
     <div class="cad-video-wrap">
-      <video class="cad-feat-video" muted playsinline autoplay loop preload="auto" aria-hidden="true">
+      <video class="cad-feat-video" muted playsinline webkit-playsinline autoplay loop preload="auto" aria-hidden="true" disablepictureinpicture>
         <source src="./videos/glo-ladies-night.mp4" type="video/mp4">
       </video>
     </div>
@@ -240,7 +240,7 @@
 
     <!-- Video below MADE FOR THE NIGHT — always live, no play button -->
     <div class="cad-bottom-video-wrap">
-      <video class="cad-bottom-video" muted playsinline autoplay loop preload="auto" aria-hidden="true">
+      <video class="cad-bottom-video" muted playsinline webkit-playsinline autoplay loop preload="auto" aria-hidden="true" disablepictureinpicture>
         <source src="./videos/glo-cad-bottom.mp4" type="video/mp4">
       </video>
     </div>
@@ -1254,22 +1254,38 @@
     });
   }
 
-  /* Chicago After Dark feature video — loop guard */
+  /* Chicago After Dark background videos — force live, no play button */
   (function () {
-    var lnV = document.querySelector('.cad-feat-video');
-    if (lnV) {
-      lnV.play().catch(function () {});
-      addCapCutGuard(lnV, { loop: true });
-    }
-  })();
+    var cadVids = [
+      document.querySelector('.cad-feat-video'),
+      document.querySelector('.cad-bottom-video')
+    ].filter(Boolean);
 
-  /* CAD bottom video — loop guard */
-  (function () {
-    var bv = document.querySelector('.cad-bottom-video');
-    if (bv) {
-      bv.play().catch(function () {});
-      addCapCutGuard(bv, { loop: true });
+    function forcePlay(v) {
+      if (v.paused) v.play().catch(function () {});
     }
+    function forcePlayAll() {
+      cadVids.forEach(forcePlay);
+    }
+
+    cadVids.forEach(function (v) {
+      /* Try immediately */
+      forcePlay(v);
+      /* Retry when enough data is buffered */
+      v.addEventListener('loadedmetadata', function () { forcePlay(v); });
+      v.addEventListener('canplay',        function () { forcePlay(v); });
+      /* Re-play if ever paused (e.g. CapCut guard seek, tab switch return) */
+      v.addEventListener('pause', function () {
+        setTimeout(function () { forcePlay(v); }, 80);
+      });
+      /* CapCut watermark guard */
+      addCapCutGuard(v, { loop: true });
+    });
+
+    /* On first touch / scroll iOS unlocks muted autoplay — use it */
+    ['touchstart', 'scroll'].forEach(function (evt) {
+      document.addEventListener(evt, forcePlayAll, { once: true, passive: true });
+    });
   })();
 
   /* Featured video — loop guard */
