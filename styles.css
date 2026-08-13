@@ -823,7 +823,7 @@ a   { color: inherit; text-decoration: none; }
 /* ── Glo In Action — Video Gallery ──────────────────────── */
 #glo-in-action {
   background: #000;
-  padding: 96px 0 110px; /* side padding lives on carousel / inner; bottom clears sticky bar */
+  padding: 96px 0 80px; /* side padding lives on carousel / inner; bottom clears sticky bar */
 }
 
 .gia-inner {
@@ -834,7 +834,7 @@ a   { color: inherit; text-decoration: none; }
 
 .gia-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 }
 
 .gia-eyebrow {
@@ -862,6 +862,99 @@ a   { color: inherit; text-decoration: none; }
   line-height: 1.72;
   max-width: 58ch;
   margin: 0 auto;
+}
+
+/* ── Featured / Cinematic Video ── */
+.gia-feat-wrap {
+  position: relative;
+  width: 92%;
+  max-width: 1100px;
+  margin: 0 auto 3rem;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #050810;
+  border: 1px solid rgba(255,255,255,0.08);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-transition: border-color 0.28s; transition: border-color 0.28s;
+}
+.gia-feat-wrap:hover { border-color: rgba(0,195,255,0.25); }
+
+.gia-feat-video {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  -webkit-transition: opacity 0.5s ease; transition: opacity 0.5s ease;
+  z-index: 1;
+}
+.gia-feat-video.gia-video-ready { opacity: 1; }
+
+.gia-feat-play-btn {
+  position: absolute;
+  top: 50%; left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.50);
+  border: 2px solid rgba(0,195,255,0.55);
+  color: #fff;
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  -webkit-transition: background 0.22s, border-color 0.22s, box-shadow 0.22s,
+    -webkit-transform 0.22s; transition: background 0.22s, border-color 0.22s,
+    box-shadow 0.22s, transform 0.22s;
+}
+.gia-feat-play-btn:hover {
+  background: rgba(0,195,255,0.18);
+  border-color: var(--blue);
+  box-shadow: 0 0 48px rgba(0,195,255,0.50);
+  -webkit-transform: translate(-50%, -50%) scale(1.08);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.gia-feat-label {
+  position: absolute;
+  top: 14px; left: 16px;
+  z-index: 4;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.57rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.52);
+  background: rgba(0,0,0,0.46);
+  padding: 4px 10px;
+  border-radius: 3px;
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+/* "More Glo Moments" label above carousel */
+.gia-more-header {
+  padding: 0 5%;
+  margin-bottom: 1.25rem;
+}
+.gia-more-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media (max-width: 700px) {
+  .gia-feat-wrap      { width: 94%; }
+  .gia-feat-play-btn  { width: 56px; height: 56px; }
+  .gia-feat-play-btn svg { width: 18px; height: 18px; }
 }
 
 /* ── Carousel wrapper ── */

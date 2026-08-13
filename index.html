@@ -151,7 +151,7 @@
           <button class="btn btn-primary" id="btn-book-tour" type="button">BOOK YOUR RIDE</button>
           <button class="btn btn-ghost"   id="btn-watch"     type="button">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            EXPLORE THE FLEET
+            EXPERIENCE THE GLO
           </button>
         </div>
       </div>
@@ -228,30 +228,46 @@
     <div class="gia-inner">
 
       <div class="gia-header">
-        <span class="gia-eyebrow">The Glo In Action</span>
-        <h2 class="gia-headline" id="gia-headline">This Is What the Night Looks Like.</h2>
-        <p class="gia-sub">From city lights and music to birthdays, girls' nights and unforgettable Chicago views — see what happens when you Ride the Glo.</p>
+        <span class="gia-eyebrow">Experience the Glo</span>
+        <h2 class="gia-headline" id="gia-headline">See what a night with Glo Karts really looks like.</h2>
+      </div>
+
+      <!-- ── Featured / Cinematic Video ────────────────────── -->
+      <div class="gia-feat-wrap" id="featured-video" data-src="./videos/glo-featured.mp4">
+        <video class="gia-feat-video" muted playsinline autoplay preload="auto" loop>
+          <source src="./videos/glo-featured.mp4" type="video/mp4">
+        </video>
+        <div class="gia-vid-overlay"></div>
+        <button class="gia-feat-play-btn" type="button" aria-label="Watch Glo Karts featured video">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </button>
+        <span class="gia-feat-label">Featured Video</span>
       </div>
 
     </div><!-- /.gia-inner -->
 
-    <!-- ── Video Carousel ──────────────────────────────────────── -->
+    <!-- ── "More Glo Moments" heading ────────────────────── -->
+    <div class="gia-more-header">
+      <span class="gia-more-label">More Glo Moments&nbsp;→</span>
+    </div>
+
+    <!-- ── Video Carousel ──────────────────────────────────── -->
     <div class="gia-carousel-wrap">
       <div class="gia-carousel" id="gia-carousel" role="list" aria-label="Video gallery">
 
-        <!-- Slide 1: Downtown Chicago Tour (footage available) -->
+        <!-- Slide 1: Downtown Chicago -->
         <div class="gia-slide" data-src="./videos/glo-01.mp4" role="listitem">
           <video class="gia-video" muted playsinline autoplay preload="auto">
             <source src="./videos/glo-01.mp4" type="video/mp4">
           </video>
           <div class="gia-vid-overlay"></div>
-          <button class="gia-play-btn" type="button" aria-label="Watch Downtown Chicago Tour">
+          <button class="gia-play-btn" type="button" aria-label="Watch Downtown Chicago">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           </button>
-          <div class="gia-caption">Downtown Chicago Tour</div>
+          <div class="gia-caption">Downtown Chicago</div>
         </div>
 
-        <!-- Slide 2: R&B Ladies Night (coming soon — no footage yet) -->
+        <!-- Slide 2: R&B Ladies Night (coming soon) -->
         <div class="gia-slide gia-slide--soon" role="listitem">
           <div class="gia-poster gia-poster--pink">
             <svg class="gia-poster-skyline" viewBox="0 0 200 80" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
@@ -267,31 +283,31 @@
           <div class="gia-caption">R&amp;B Ladies Night</div>
         </div>
 
-        <!-- Slide 3: Birthday Celebration (footage available) -->
+        <!-- Slide 3: Birthday With Glo -->
         <div class="gia-slide" data-src="./videos/glo-03.mp4" role="listitem">
           <video class="gia-video" muted playsinline autoplay preload="auto">
             <source src="./videos/glo-03.mp4" type="video/mp4">
           </video>
           <div class="gia-vid-overlay"></div>
-          <button class="gia-play-btn" type="button" aria-label="Watch Birthday Celebration">
+          <button class="gia-play-btn" type="button" aria-label="Watch Birthday With Glo">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           </button>
-          <div class="gia-caption">Birthday Celebration</div>
+          <div class="gia-caption">Birthday With Glo</div>
         </div>
 
-        <!-- Slide 4: Chicago Nights (footage available) -->
+        <!-- Slide 4: Girls' Night Out -->
         <div class="gia-slide" data-src="./videos/glo-04.mp4" role="listitem">
           <video class="gia-video" muted playsinline autoplay preload="auto">
             <source src="./videos/glo-04.mp4" type="video/mp4">
           </video>
           <div class="gia-vid-overlay"></div>
-          <button class="gia-play-btn" type="button" aria-label="Watch Chicago Nights">
+          <button class="gia-play-btn" type="button" aria-label="Watch Girls' Night Out">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           </button>
-          <div class="gia-caption">Chicago Nights</div>
+          <div class="gia-caption">Girls' Night Out</div>
         </div>
 
-        <!-- Slide 5: Glo After Dark (coming soon — no footage yet) -->
+        <!-- Slide 5: Chicago After Dark (coming soon) -->
         <div class="gia-slide gia-slide--soon" role="listitem">
           <div class="gia-poster gia-poster--blue">
             <svg class="gia-poster-skyline" viewBox="0 0 200 80" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
@@ -304,7 +320,7 @@
           </div>
           <div class="gia-vid-overlay"></div>
           <span class="gia-coming-badge">Coming Soon</span>
-          <div class="gia-caption">Glo After Dark</div>
+          <div class="gia-caption">Chicago After Dark</div>
         </div>
 
       </div><!-- /.gia-carousel -->
@@ -1219,6 +1235,46 @@
       });
     }
 
+    /* ── Featured video setup ── */
+    var featWrap = document.getElementById('featured-video');
+    if (featWrap) {
+      var featVid     = featWrap.querySelector('.gia-feat-video');
+      var featPlayBtn = featWrap.querySelector('.gia-feat-play-btn');
+      var featSrc     = featWrap.getAttribute('data-src');
+
+      if (featVid) {
+        var featRevealed = false;
+        function revealFeat() {
+          if (featRevealed) return;
+          featRevealed = true;
+          featVid.classList.add('gia-video-ready');
+        }
+        featVid.addEventListener('loadeddata',     revealFeat);
+        featVid.addEventListener('canplay',        revealFeat);
+        featVid.addEventListener('canplaythrough', revealFeat);
+        featVid.addEventListener('playing',        revealFeat);
+        featVid.addEventListener('loadedmetadata', function () {
+          try { featVid.currentTime = 0.001; } catch (e) {}
+          revealFeat();
+        });
+        if (featVid.readyState >= 2) revealFeat();
+
+        featVid.muted = true;
+        var featInit = featVid.play();
+        if (featInit && typeof featInit.then === 'function') {
+          featInit.then(function () { revealFeat(); }).catch(function () { featVid.load(); });
+        }
+      }
+
+      function openFeatLightbox() {
+        if (featSrc) openInLightbox(featSrc);
+      }
+      if (featPlayBtn) featPlayBtn.addEventListener('click', function (e) {
+        e.stopPropagation(); openFeatLightbox();
+      });
+      featWrap.addEventListener('click', openFeatLightbox);
+    }
+
     /* ── Per-slide setup ── */
     document.querySelectorAll('.gia-slide').forEach(function (slide) {
       var vid     = slide.querySelector('.gia-video');
@@ -1289,19 +1345,6 @@
     var backdrop = lightbox && lightbox.querySelector('.vl-backdrop');
     if (!lightbox || !video) return;
 
-    var CUT_TIME = 35.85;
-
-    function openLightbox() {
-      lightbox.classList.add('open');
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () { lightbox.classList.add('visible'); });
-      });
-      video.currentTime = 0;
-      video.play().catch(function () {});
-    }
-
     function closeLightbox() {
       lightbox.classList.remove('visible');
       video.pause();
@@ -1313,15 +1356,18 @@
       }, 450);
     }
 
-    video.addEventListener('timeupdate', function () {
-      if (video.currentTime >= CUT_TIME) {
-        video.pause();
-        closeLightbox();
+    /* Hero secondary button → scroll to featured video */
+    var watchBtn = document.getElementById('btn-watch');
+    if (watchBtn) watchBtn.addEventListener('click', function () {
+      var target = document.getElementById('featured-video');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        var sec = document.getElementById('glo-in-action');
+        if (sec) sec.scrollIntoView({ behavior: 'smooth' });
       }
     });
 
-    var watchBtn = document.getElementById('btn-watch');
-    if (watchBtn) watchBtn.addEventListener('click', openLightbox);
     if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
     if (backdrop) backdrop.addEventListener('click', closeLightbox);
     document.addEventListener('keydown', function (e) {
