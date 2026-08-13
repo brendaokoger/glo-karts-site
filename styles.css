@@ -697,68 +697,123 @@ a   { color: inherit; text-decoration: none; }
 /* Animated card */
 .cad-card {
   position: relative; overflow: hidden;
-  background: linear-gradient(150deg, #0d0d14 0%, #080810 100%);
-  border: 1px solid rgba(0,195,255,0.10);
+  background: linear-gradient(150deg, #0e0e1a 0%, #070710 100%);
+  border: 1px solid rgba(0,195,255,0.15);
   border-radius: 16px;
   padding: 2.25rem 2rem;
   display: -webkit-flex; display: flex;
   -webkit-flex-direction: column; flex-direction: column;
   gap: 1rem;
-  -webkit-transition: border-color 0.35s, box-shadow 0.35s;
-  transition: border-color 0.35s, box-shadow 0.35s;
+  -webkit-transition: border-color 0.4s, box-shadow 0.4s, -webkit-transform 0.4s;
+  transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
 }
 .cad-card:hover {
-  border-color: rgba(0,195,255,0.30);
-  box-shadow: 0 0 28px rgba(0,195,255,0.08), inset 0 0 40px rgba(0,195,255,0.03);
+  border-color: rgba(0,195,255,0.50);
+  box-shadow: 0 0 48px rgba(0,195,255,0.16), 0 0 96px rgba(0,195,255,0.06), inset 0 0 48px rgba(0,195,255,0.05);
+  -webkit-transform: translateY(-6px);
+  transform: translateY(-6px);
 }
 
-/* Sweep-shimmer on the top edge — staggered per card */
+/* Brighter sweep-shimmer — 2 px tall, full width */
 .cad-card::before {
   content: '';
   position: absolute;
-  top: 0; left: -80%;
-  width: 70%; height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(0,195,255,0.7) 50%, transparent 100%);
-  -webkit-animation: cad-shimmer 5s ease-in-out infinite;
-  animation: cad-shimmer 5s ease-in-out infinite;
+  top: 0; left: -100%;
+  width: 90%; height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0,195,255,1) 50%, transparent 100%);
+  -webkit-animation: cad-shimmer 4s ease-in-out infinite;
+  animation: cad-shimmer 4s ease-in-out infinite;
   pointer-events: none;
 }
-.cad-cards .cad-card:nth-child(1)::before { -webkit-animation-delay: 0s;    animation-delay: 0s;    }
-.cad-cards .cad-card:nth-child(2)::before { -webkit-animation-delay: 1.25s; animation-delay: 1.25s; }
-.cad-cards .cad-card:nth-child(3)::before { -webkit-animation-delay: 2.5s;  animation-delay: 2.5s;  }
-.cad-cards .cad-card:nth-child(4)::before { -webkit-animation-delay: 3.75s; animation-delay: 3.75s; }
+.cad-cards .cad-card:nth-child(1)::before { -webkit-animation-delay: 0s;  animation-delay: 0s;  }
+.cad-cards .cad-card:nth-child(2)::before { -webkit-animation-delay: 1s;  animation-delay: 1s;  }
+.cad-cards .cad-card:nth-child(3)::before { -webkit-animation-delay: 2s;  animation-delay: 2s;  }
+.cad-cards .cad-card:nth-child(4)::before { -webkit-animation-delay: 3s;  animation-delay: 3s;  }
+
+/* Diagonal inner-light on hover */
+.cad-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 20%, rgba(0,195,255,0.055) 50%, transparent 80%);
+  opacity: 0;
+  -webkit-transition: opacity 0.45s; transition: opacity 0.45s;
+  pointer-events: none;
+}
+.cad-card:hover::after { opacity: 1; }
 
 @-webkit-keyframes cad-shimmer {
-  0%         { left: -80%;  opacity: 0; }
-  8%         { opacity: 1;  }
-  70%        { opacity: 1;  }
-  100%       { left: 160%; opacity: 0; }
+  0%   { left: -100%; opacity: 0; }
+  6%   { opacity: 1;  }
+  75%  { opacity: 1;  }
+  100% { left: 160%;  opacity: 0; }
 }
 @keyframes cad-shimmer {
-  0%         { left: -80%;  opacity: 0; }
-  8%         { opacity: 1;  }
-  70%        { opacity: 1;  }
-  100%       { left: 160%; opacity: 0; }
+  0%   { left: -100%; opacity: 0; }
+  6%   { opacity: 1;  }
+  75%  { opacity: 1;  }
+  100% { left: 160%;  opacity: 0; }
 }
 
 /* Staggered scroll-reveal */
-.cad-cards .cad-card:nth-child(2).reveal { -webkit-transition-delay: 0.08s; transition-delay: 0.08s; }
-.cad-cards .cad-card:nth-child(3).reveal { -webkit-transition-delay: 0.16s; transition-delay: 0.16s; }
-.cad-cards .cad-card:nth-child(4).reveal { -webkit-transition-delay: 0.24s; transition-delay: 0.24s; }
+.cad-cards .cad-card:nth-child(2).reveal { -webkit-transition-delay: 0.10s; transition-delay: 0.10s; }
+.cad-cards .cad-card:nth-child(3).reveal { -webkit-transition-delay: 0.20s; transition-delay: 0.20s; }
+.cad-cards .cad-card:nth-child(4).reveal { -webkit-transition-delay: 0.30s; transition-delay: 0.30s; }
 
 .cad-icon {
-  width: 42px; height: 42px;
+  width: 44px; height: 44px;
+  position: relative;
   display: -webkit-flex; display: flex;
   -webkit-align-items: center; align-items: center;
 }
+/* Pulsing glow halo behind the icon */
+.cad-icon::before {
+  content: '';
+  position: absolute;
+  inset: -6px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,195,255,0.20) 0%, transparent 70%);
+  -webkit-animation: cad-icon-halo 2.8s ease-in-out infinite;
+  animation: cad-icon-halo 2.8s ease-in-out infinite;
+  pointer-events: none;
+}
+.cad-cards .cad-card:nth-child(1) .cad-icon::before { -webkit-animation-delay: 0s;   animation-delay: 0s;   }
+.cad-cards .cad-card:nth-child(2) .cad-icon::before { -webkit-animation-delay: 0.7s; animation-delay: 0.7s; }
+.cad-cards .cad-card:nth-child(3) .cad-icon::before { -webkit-animation-delay: 1.4s; animation-delay: 1.4s; }
+.cad-cards .cad-card:nth-child(4) .cad-icon::before { -webkit-animation-delay: 2.1s; animation-delay: 2.1s; }
 .cad-icon svg {
   width: 26px; height: 26px;
   stroke: var(--blue);
-  -webkit-transition: -webkit-filter 0.3s; transition: filter 0.3s;
+  position: relative; z-index: 1;
+  -webkit-transition: -webkit-filter 0.3s, -webkit-transform 0.3s;
+  transition: filter 0.3s, transform 0.3s;
+  -webkit-animation: cad-icon-float 3s ease-in-out infinite;
+  animation: cad-icon-float 3s ease-in-out infinite;
 }
+.cad-cards .cad-card:nth-child(1) .cad-icon svg { -webkit-animation-delay: 0s;    animation-delay: 0s;    }
+.cad-cards .cad-card:nth-child(2) .cad-icon svg { -webkit-animation-delay: 0.75s; animation-delay: 0.75s; }
+.cad-cards .cad-card:nth-child(3) .cad-icon svg { -webkit-animation-delay: 1.5s;  animation-delay: 1.5s;  }
+.cad-cards .cad-card:nth-child(4) .cad-icon svg { -webkit-animation-delay: 2.25s; animation-delay: 2.25s; }
 .cad-card:hover .cad-icon svg {
-  -webkit-filter: drop-shadow(0 0 7px rgba(0,195,255,0.65));
-  filter: drop-shadow(0 0 7px rgba(0,195,255,0.65));
+  -webkit-filter: drop-shadow(0 0 10px rgba(0,195,255,0.90));
+  filter: drop-shadow(0 0 10px rgba(0,195,255,0.90));
+  -webkit-animation-play-state: paused; animation-play-state: paused;
+  -webkit-transform: scale(1.15); transform: scale(1.15);
+}
+
+@-webkit-keyframes cad-icon-float {
+  0%, 100% { -webkit-transform: translateY(0);    transform: translateY(0); }
+  50%       { -webkit-transform: translateY(-5px); transform: translateY(-5px); }
+}
+@keyframes cad-icon-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-5px); }
+}
+@-webkit-keyframes cad-icon-halo {
+  0%, 100% { opacity: 0.35; -webkit-transform: scale(0.85); transform: scale(0.85); }
+  50%       { opacity: 1.00; -webkit-transform: scale(1.35); transform: scale(1.35); }
+}
+@keyframes cad-icon-halo {
+  0%, 100% { opacity: 0.35; transform: scale(0.85); }
+  50%       { opacity: 1.00; transform: scale(1.35); }
 }
 .cad-card-title {
   font-family: 'Bebas Neue', sans-serif;
@@ -782,25 +837,33 @@ a   { color: inherit; text-decoration: none; }
 .exp-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
   gap: 1.5rem;
   margin-top: 3rem;
 }
-/* Downtown spans both rows — matches combined height of card + video */
-.ec-downtown { grid-row: 1 / 3; }
 
-/* Ladies Night video — below the Ladies Night card */
-.ladies-video-wrap {
-  grid-column: 2; grid-row: 2;
-  border-radius: var(--radius-lg);
+/* ── Chicago After Dark feature video ─────────────────────── */
+.cad-video-wrap {
+  margin-top: 2.5rem;
+  border-radius: 16px;
   overflow: hidden;
-  border: 1px solid rgba(255,45,120,0.18);
-  box-shadow: 0 0 32px rgba(255,45,120,0.05), 0 4px 24px rgba(0,0,0,0.5);
+  position: relative;
+  border: 1px solid rgba(0,195,255,0.22);
+  box-shadow: 0 0 60px rgba(0,195,255,0.10), 0 8px 40px rgba(0,0,0,0.6);
+  -webkit-animation: cad-vid-glow 3s ease-in-out infinite;
+  animation: cad-vid-glow 3s ease-in-out infinite;
 }
-.ladies-video {
+.cad-feat-video {
   width: 100%; display: block;
-  max-height: 360px; object-fit: cover;
+  max-height: 500px; object-fit: cover;
   background: #07020f;
+}
+@-webkit-keyframes cad-vid-glow {
+  0%, 100% { box-shadow: 0 0 40px rgba(0,195,255,0.06), 0 8px 40px rgba(0,0,0,0.6); border-color: rgba(0,195,255,0.18); }
+  50%       { box-shadow: 0 0 80px rgba(0,195,255,0.18), 0 0 140px rgba(0,195,255,0.06), 0 8px 40px rgba(0,0,0,0.6); border-color: rgba(0,195,255,0.40); }
+}
+@keyframes cad-vid-glow {
+  0%, 100% { box-shadow: 0 0 40px rgba(0,195,255,0.06), 0 8px 40px rgba(0,0,0,0.6); border-color: rgba(0,195,255,0.18); }
+  50%       { box-shadow: 0 0 80px rgba(0,195,255,0.18), 0 0 140px rgba(0,195,255,0.06), 0 8px 40px rgba(0,0,0,0.6); border-color: rgba(0,195,255,0.40); }
 }
 
 .exp-card {
@@ -2632,9 +2695,7 @@ a   { color: inherit; text-decoration: none; }
   .glo-brand-footer { padding: 0 1rem 1rem; }
   .glo-modal-success { padding: 1.5rem 1rem; }
   .exp-grid          { grid-template-columns: 1fr; gap: 1rem; }
-  .ec-downtown       { grid-row: auto; }
-  .ladies-video-wrap { grid-column: auto; grid-row: auto; max-height: 260px; }
-  .ladies-video      { max-height: 260px; }
+  .cad-feat-video    { max-height: 300px; }
   .exp-card          { min-height: 400px; }
   .ec-body    { padding: 1.4rem 1.4rem 1.6rem; }
   .ec-desc    { max-width: 100%; }
