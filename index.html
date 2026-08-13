@@ -172,16 +172,22 @@
     <div class="cad-inner">
 
       <div class="cad-header reveal">
-        <p class="cad-eyebrow">CHICAGO AFTER DARK</p>
         <h2 class="cad-heading" id="cad-heading">NOT YOUR AVERAGE<br><span class="glo-blue">CHICAGO TOUR.</span></h2>
         <p class="cad-sub">Glo Karts combines sightseeing, music and nightlife energy into one unforgettable open-air Chicago experience.</p>
       </div>
 
-      <!-- Live video -->
-      <div class="cad-video-wrap reveal">
-        <video class="cad-video" muted playsinline autoplay loop preload="auto" aria-hidden="true">
-          <source src="./videos/glo-chicago-after-dark.mp4" type="video/mp4">
-        </video>
+      <!-- Live videos — side by side -->
+      <div class="cad-videos">
+        <div class="cad-video-wrap reveal">
+          <video class="cad-video" muted playsinline autoplay loop preload="auto" aria-hidden="true">
+            <source src="./videos/glo-chicago-after-dark.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="cad-video-wrap reveal">
+          <video class="cad-video" muted playsinline autoplay loop preload="auto" aria-hidden="true">
+            <source src="./videos/glo-chicago-after-dark-2.mp4" type="video/mp4">
+          </video>
+        </div>
       </div>
 
       <!-- 4 feature cards — 2 × 2 -->
@@ -305,7 +311,7 @@
     <div class="gia-inner">
 
       <div class="gia-header">
-        <span class="gia-eyebrow">Experience the Glo</span>
+        <span class="gia-eyebrow">CHICAGO AFTER DARK</span>
         <h2 class="gia-headline" id="gia-headline">See what a night with Glo Karts really looks like.</h2>
       </div>
 
@@ -1272,13 +1278,12 @@
     }
   })();
 
-  /* Chicago After Dark video — loop guard */
+  /* Chicago After Dark videos — loop + CapCut guard on all */
   (function () {
-    var cadV = document.querySelector('.cad-video');
-    if (cadV) {
-      cadV.play().catch(function () {});
-      addCapCutGuard(cadV, { loop: true });
-    }
+    document.querySelectorAll('.cad-video').forEach(function (v) {
+      v.play().catch(function () {});
+      addCapCutGuard(v, { loop: true });
+    });
   })();
 
   /* Featured video — loop guard */
