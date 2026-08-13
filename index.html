@@ -167,43 +167,51 @@
     </div>
   </div>
 
-  <!-- ── Why Glo Karts ───────────────────────────────────── -->
-  <section id="why-glo" aria-labelledby="why-glo-title">
-    <div class="wg-inner">
+  <!-- ── Chicago After Dark ──────────────────────────────── -->
+  <section id="chicago-after-dark" aria-labelledby="cad-heading">
+    <div class="cad-inner">
 
-      <div class="wg-intro reveal">
-        <p class="wg-eyebrow">WHY GLO KARTS?</p>
-        <h2 class="wg-heading" id="why-glo-title">NOT YOUR AVERAGE<br><span class="glo-blue">CHICAGO TOUR.</span></h2>
-        <p class="wg-sub">Glo Karts combines sightseeing, music and nightlife energy into one unforgettable open-air Chicago experience.</p>
+      <div class="cad-header reveal">
+        <p class="cad-eyebrow">CHICAGO AFTER DARK</p>
+        <h2 class="cad-heading" id="cad-heading">NOT YOUR AVERAGE<br><span class="glo-blue">CHICAGO TOUR.</span></h2>
+        <p class="cad-sub">Glo Karts combines sightseeing, music and nightlife energy into one unforgettable open-air Chicago experience.</p>
       </div>
 
-      <div class="wg-cards">
+      <!-- Live video -->
+      <div class="cad-video-wrap reveal">
+        <video class="cad-video" muted playsinline autoplay loop preload="auto" aria-hidden="true">
+          <source src="./videos/glo-chicago-after-dark.mp4" type="video/mp4">
+        </video>
+      </div>
 
-        <div class="wg-card reveal">
-          <div class="wg-icon" aria-hidden="true">
+      <!-- 4 feature cards — 2 × 2 -->
+      <div class="cad-cards">
+
+        <div class="cad-card reveal">
+          <div class="cad-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="1,20 1,13 4,13 4,9 7,9 7,13 9,13 9,6 12,6 12,13 14,13 14,10 17,10 17,13 19,13 19,7 22,7 22,13 23,13"/>
               <line x1="1" y1="20" x2="23" y2="20"/>
             </svg>
           </div>
-          <h3 class="wg-card-title">OPEN-AIR VIEWS</h3>
-          <p class="wg-card-desc">See Chicago without looking through a bus window.</p>
+          <h3 class="cad-card-title">OPEN-AIR VIEWS</h3>
+          <p class="cad-card-desc">See Chicago without looking through a bus window.</p>
         </div>
 
-        <div class="wg-card reveal">
-          <div class="wg-icon" aria-hidden="true">
+        <div class="cad-card reveal">
+          <div class="cad-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
               <path d="M9 18V5l12-2v13"/>
               <circle cx="6" cy="18" r="3"/>
               <circle cx="18" cy="16" r="3"/>
             </svg>
           </div>
-          <h3 class="wg-card-title">MUSIC + VIBES</h3>
-          <p class="wg-card-desc">Your soundtrack is part of the experience.</p>
+          <h3 class="cad-card-title">MUSIC + VIBES</h3>
+          <p class="cad-card-desc">Your soundtrack is part of the experience.</p>
         </div>
 
-        <div class="wg-card reveal">
-          <div class="wg-icon" aria-hidden="true">
+        <div class="cad-card reveal">
+          <div class="cad-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="9" cy="7" r="3"/>
               <path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
@@ -211,23 +219,23 @@
               <path d="M22 21v-1.5a3.5 3.5 0 0 0-2.5-3.35"/>
             </svg>
           </div>
-          <h3 class="wg-card-title">SMALL GROUP EXPERIENCE</h3>
-          <p class="wg-card-desc">No packed tour buses.</p>
+          <h3 class="cad-card-title">SMALL GROUP EXPERIENCE</h3>
+          <p class="cad-card-desc">No packed tour buses.</p>
         </div>
 
-        <div class="wg-card reveal">
-          <div class="wg-icon" aria-hidden="true">
+        <div class="cad-card reveal">
+          <div class="cad-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
               <circle cx="19.5" cy="4.5" r="0.6" fill="currentColor" stroke="none"/>
-              <circle cx="22" cy="8"   r="0.6" fill="currentColor" stroke="none"/>
+              <circle cx="22"   cy="8"   r="0.6" fill="currentColor" stroke="none"/>
             </svg>
           </div>
-          <h3 class="wg-card-title">MADE FOR THE NIGHT</h3>
-          <p class="wg-card-desc">Chicago lights hit differently after dark.</p>
+          <h3 class="cad-card-title">MADE FOR THE NIGHT</h3>
+          <p class="cad-card-desc">Chicago lights hit differently after dark.</p>
         </div>
 
-      </div><!-- /.wg-cards -->
+      </div><!-- /.cad-cards -->
 
     </div>
   </section>
@@ -1247,6 +1255,15 @@
       }
     });
   }
+
+  /* Chicago After Dark video — loop guard */
+  (function () {
+    var cadV = document.querySelector('.cad-video');
+    if (cadV) {
+      cadV.play().catch(function () {});
+      addCapCutGuard(cadV, { loop: true });
+    }
+  })();
 
   /* Featured video — loop guard */
   (function () {
