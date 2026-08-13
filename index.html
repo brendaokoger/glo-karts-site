@@ -176,20 +176,6 @@
         <p class="cad-sub">Glo Karts combines sightseeing, music and nightlife energy into one unforgettable open-air Chicago experience.</p>
       </div>
 
-      <!-- Live videos — side by side -->
-      <div class="cad-videos">
-        <div class="cad-video-wrap reveal">
-          <video class="cad-video" muted playsinline autoplay loop preload="auto" aria-hidden="true">
-            <source src="./videos/glo-chicago-after-dark.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="cad-video-wrap reveal">
-          <video class="cad-video" muted playsinline autoplay loop preload="auto" aria-hidden="true">
-            <source src="./videos/glo-chicago-after-dark-2.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-
       <!-- 4 feature cards — 2 × 2 -->
       <div class="cad-cards">
 
@@ -390,19 +376,15 @@
           <div class="gia-caption">Girls' Night Out</div>
         </div>
 
-        <!-- Slide 5: Chicago After Dark (coming soon) -->
-        <div class="gia-slide gia-slide--soon" role="listitem">
-          <div class="gia-poster gia-poster--blue">
-            <svg class="gia-poster-skyline" viewBox="0 0 200 80" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
-              <path fill="currentColor" d="M0,80 V55 H10 V42 H18 V30 H22 V25 H26 V30 H34 V42 H42 V55 H50 V48 H54 V38 H62 V48 H70 V55 H76 V45 H80 V35 H86 V45 H94 V55 H100 V48 H106 V38 H112 V48 H120 V55 H126 V42 H128 V24 H132 V42 H136 V55 H144 V48 H150 V55 H158 V45 H162 V38 H168 V45 H174 V55 H182 V42 H190 V55 H200 V80 Z"/>
-            </svg>
-            <div class="gia-poster-content">
-              <span class="gia-poster-brand">GLO KARTS</span>
-              <span class="gia-poster-city">CHICAGO</span>
-            </div>
-          </div>
+        <!-- Slide 5: Chicago After Dark -->
+        <div class="gia-slide" data-src="./videos/glo-05.mp4" role="listitem">
+          <video class="gia-video" muted playsinline autoplay loop preload="auto">
+            <source src="./videos/glo-05.mp4" type="video/mp4">
+          </video>
           <div class="gia-vid-overlay"></div>
-          <span class="gia-coming-badge">Coming Soon</span>
+          <button class="gia-play-btn" type="button" aria-label="Watch Chicago After Dark">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </button>
           <div class="gia-caption">Chicago After Dark</div>
         </div>
 
@@ -1276,14 +1258,6 @@
       lnV.play().catch(function () {});
       addCapCutGuard(lnV, { loop: true });
     }
-  })();
-
-  /* Chicago After Dark videos — loop + CapCut guard on all */
-  (function () {
-    document.querySelectorAll('.cad-video').forEach(function (v) {
-      v.play().catch(function () {});
-      addCapCutGuard(v, { loop: true });
-    });
   })();
 
   /* Featured video — loop guard */

@@ -686,26 +686,6 @@ a   { color: inherit; text-decoration: none; }
   color: var(--muted); line-height: 1.72; margin: 0;
 }
 
-/* Videos — side-by-side pair */
-.cad-videos {
-  display: -ms-grid; display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem; width: 100%;
-}
-.cad-video-wrap {
-  border-radius: 16px; overflow: hidden;
-  border: 1px solid rgba(0,195,255,0.13);
-  box-shadow: 0 0 48px rgba(0,195,255,0.06), 0 8px 40px rgba(0,0,0,0.6);
-}
-.cad-video {
-  width: 100%; display: block;
-  height: 500px; object-fit: cover;
-  background: #000;
-}
-@media (max-width: 640px) {
-  .cad-videos { grid-template-columns: 1fr; }
-  .cad-video  { height: 260px; }
-}
 
 /* 2 × 2 card grid */
 .cad-cards {
