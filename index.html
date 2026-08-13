@@ -105,24 +105,29 @@
     </a>
 
     <nav class="header-nav" aria-label="Primary navigation">
-      <a href="#experiences">Experiences</a>
-      <a href="#support-cta">Private Events</a>
-      <a href="#faq">FAQ</a>
+      <a href="#hero">Home</a>
+      <a href="#experiences">Tours</a>
+      <a href="#">About</a>
+      <a href="#faq">FAQs</a>
+      <a href="#support-cta">Contact</a>
     </nav>
 
-    <button class="btn-book-header hd-only" id="btn-book-header" type="button">BOOK NOW</button>
+    <button class="btn-book-header hd-only" id="btn-book-header" type="button">Book Now</button>
 
-    <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation" aria-expanded="false">
+    <button class="hamburger" id="hamburger-btn"
+            aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav">
       <span></span><span></span><span></span>
     </button>
   </header>
 
-  <!-- Mobile nav -->
-  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
-    <a href="#experiences"  class="mobile-link">Experiences</a>
-    <a href="#support-cta"  class="mobile-link">Private Events</a>
-    <a href="#faq"     class="mobile-link">FAQ</a>
-    <button class="btn btn-primary mobile-link" id="btn-book-mobile" type="button" style="align-self:flex-start;margin-top:0.5rem;">BOOK NOW</button>
+  <!-- Mobile nav drawer -->
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
+    <a href="#hero"        class="mobile-link">Home</a>
+    <a href="#experiences" class="mobile-link">Tours</a>
+    <a href="#"            class="mobile-link">About</a>
+    <a href="#faq"         class="mobile-link">FAQs</a>
+    <a href="#support-cta" class="mobile-link">Contact</a>
+    <button class="btn-book-mobile mobile-link" id="btn-book-mobile" type="button">Book Now</button>
   </nav>
 
 

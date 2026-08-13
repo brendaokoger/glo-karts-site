@@ -161,45 +161,45 @@ a   { color: inherit; text-decoration: none; }
 .header-nav {
   display: flex;
   align-items: center;
-  gap: 2.5rem;
+  gap: 2rem;
 }
 .header-nav a {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255,255,255,0.62);
   transition: color 0.2s;
-  padding-bottom: 2px;
-  border-bottom: 1px solid transparent;
+  white-space: nowrap;
 }
-.header-nav a:hover {
-  color: #fff;
-  border-bottom-color: rgba(232,35,58,0.55);
-}
+.header-nav a:hover,
+.header-nav a:focus { color: #fff; outline: none; }
 
+/* Desktop BOOK NOW — solid blue, white text */
 .btn-book-header {
   display: inline-block;
-  padding: 0.6rem 1.4rem;
-  border-radius: 3px;
+  padding: 0.58rem 1.3rem;
+  border-radius: var(--radius);
   font-family: 'Inter', sans-serif;
   font-size: 0.74rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  background: transparent;
-  border: 1px solid rgba(0,195,255,0.68);
-  color: var(--blue);
+  background: var(--blue);
+  border: none;
+  color: #fff;
   cursor: pointer;
-  transition: all 0.22s ease;
+  transition: background 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
   white-space: nowrap;
   -webkit-tap-highlight-color: transparent;
-  box-shadow: 0 0 16px rgba(0,195,255,0.10);
 }
 .btn-book-header:hover {
-  background: rgba(0,195,255,0.09);
-  border-color: var(--blue);
-  box-shadow: 0 0 28px rgba(0,195,255,0.32), 0 0 6px rgba(0,195,255,0.10);
+  background: #1ad4ff;
+  box-shadow: 0 0 26px rgba(0,195,255,0.42);
+  transform: translateY(-1px);
+}
+.btn-book-header:active {
+  transform: translateY(0);
 }
 
 /* Hamburger */
@@ -225,30 +225,75 @@ a   { color: inherit; text-decoration: none; }
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-/* Mobile nav */
+/* Mobile nav drawer — always flex, shown/hidden via opacity+visibility */
 .mobile-nav {
-  display: none;
   position: fixed;
   top: 80px; left: 0; right: 0;
   z-index: 999;
-  background: rgba(0,0,0,0.97);
-  border-bottom: 1px solid var(--border);
-  padding: 2rem 5% 2.5rem;
+  display: flex;
   flex-direction: column;
-  gap: 1.6rem;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  gap: 0;
+  padding: 0.5rem 0 1.5rem;
+  background: rgba(4,4,6,0.98);
+  border-bottom: 1px solid rgba(0,195,255,0.12);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+
+  /* Hidden state */
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s linear 0.22s;
 }
-.mobile-nav.open { display: flex; }
+.mobile-nav.open {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s linear 0s;
+}
+
+/* Mobile nav links */
 .mobile-nav a {
-  font-size: 1rem;
+  display: block;
+  padding: 0.95rem 6%;
+  font-size: 0.88rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--muted2);
-  transition: color 0.2s;
+  color: rgba(255,255,255,0.60);
+  transition: color 0.18s, background 0.18s;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
 }
-.mobile-nav a:hover { color: #fff; }
+.mobile-nav a:last-of-type { border-bottom: none; }
+.mobile-nav a:hover,
+.mobile-nav a:focus { color: #fff; background: rgba(255,255,255,0.03); outline: none; }
+
+/* Mobile BOOK NOW — full-width CTA in drawer */
+.btn-book-mobile {
+  display: block;
+  width: calc(100% - 12%);
+  margin: 1.25rem 6% 0;
+  padding: 1rem;
+  background: var(--blue);
+  border: none;
+  border-radius: var(--radius);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-book-mobile:hover {
+  background: #1ad4ff;
+  box-shadow: 0 0 22px rgba(0,195,255,0.38);
+}
 
 /* ── Hero ─────────────────────────────────────────────── */
 #hero {
@@ -1130,21 +1175,30 @@ footer {
   position: fixed;
   bottom: 0; left: 0; right: 0;
   z-index: 900;
-  padding: 0.9rem 1.25rem;
-  background: rgba(0,0,0,0.96);
-  border-top: 1px solid var(--border);
+  /* Safe-area bottom padding for iPhone home indicator */
+  padding: 0.75rem 1.25rem calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  background: rgba(4,4,6,0.96);
+  border-top: 1px solid rgba(255,255,255,0.06);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
 .mobile-sticky-cta button {
   width: 100%;
-  background: var(--blue); color: #000;
-  border: none; font-family: 'Inter', sans-serif;
-  font-size: 0.82rem; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 1rem; border-radius: var(--radius);
-  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.9rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s ease;
 }
+.mobile-sticky-cta button:hover { background: #1ad4ff; }
 
 /* ── Scroll reveal ────────────────────────────────────── */
 .reveal {
