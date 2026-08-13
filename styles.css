@@ -692,10 +692,10 @@ a   { color: inherit; text-decoration: none; }
   background-position: 68% center;
 }
 
-/* R&B Ladies Night — vibrant pink/purple neon night atmosphere */
+/* R&B Ladies Night — focus right: cart + skyline, crops out left-side neon text */
 .ec-img-ladies {
   background:
-    url('./glo-karts-ladies-night.jpg') center 30% / cover no-repeat;
+    url('./glo-karts-ladies-night.jpg') 78% 30% / cover no-repeat;
   background-color: #07020f;
 }
 
@@ -1439,7 +1439,7 @@ a   { color: inherit; text-decoration: none; }
 .footer-wm-sub {
   font-size: 0.5rem; font-weight: 700;
   letter-spacing: 0.28em; text-transform: uppercase;
-  color: #666; margin-top: 3px;
+  color: var(--blue); margin-top: 3px;
 }
 
 /* Contact info */

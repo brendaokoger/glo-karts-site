@@ -329,101 +329,6 @@
   </section>
 
 
-  <!-- ── Contact Section ──────────────────────────────────── -->
-  <section id="support-cta" aria-labelledby="contact-heading">
-    <div class="contact-inner">
-
-      <div class="contact-hdr">
-        <h2 class="contact-title" id="contact-heading">LET'S TALK GLO</h2>
-        <p class="contact-sub">Have a question about your ride, an existing reservation, or something you don't see in our FAQs? We're here to help.</p>
-      </div>
-
-      <div class="contact-cards">
-
-        <div class="contact-card">
-          <div class="cc-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.59 10.9a19.79 19.79 0 01-3.07-8.67A2 2 0 012.49 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.63 6.63l.87-.87a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-          </div>
-          <p class="cc-label">CALL OR TEXT</p>
-          <a href="tel:+16303290885" class="cc-value">630-329-0885</a>
-          <p class="cc-desc">Questions, booking assistance &amp; existing reservations</p>
-        </div>
-
-        <div class="contact-card">
-          <div class="cc-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <p class="cc-label">EMAIL US</p>
-          <a href="mailto:info@glokarts.com" class="cc-value">info@glokarts.com</a>
-          <p class="cc-desc">General questions and customer support</p>
-        </div>
-
-        <div class="contact-card">
-          <div class="cc-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-          </div>
-          <p class="cc-label">PLANNING A GROUP OR EVENT?</p>
-          <p class="cc-desc">Birthdays, celebrations, corporate outings and larger groups.</p>
-          <button type="button" class="btn btn-primary cc-event-btn" id="btn-plan-event">PLAN AN EVENT</button>
-        </div>
-
-      </div><!-- /.contact-cards -->
-
-      <div class="contact-form-section">
-        <h3 class="cf-title">SEND US A MESSAGE</h3>
-        <form class="cf-form" id="contact-form" method="POST" action="https://formspree.io/f/xzepbjeb" novalidate>
-          <input type="hidden" name="_subject" value="Glo Karts Contact Form" />
-          <div class="cf-row cf-row--2">
-            <div class="cf-field">
-              <input type="text"  name="full_name" placeholder="Full Name"    required />
-            </div>
-            <div class="cf-field">
-              <input type="email" name="email"     placeholder="Email"        required />
-            </div>
-          </div>
-          <div class="cf-row cf-row--2">
-            <div class="cf-field">
-              <input type="tel"   name="phone"     placeholder="Phone Number" />
-            </div>
-            <div class="cf-field">
-              <select name="topic" required>
-                <option value="" disabled selected>What can we help with?</option>
-                <option value="General Question">General Question</option>
-                <option value="Existing Reservation">Existing Reservation</option>
-                <option value="Booking Assistance">Booking Assistance</option>
-                <option value="Group/Event">Group/Event</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-          </div>
-          <div class="cf-row">
-            <div class="cf-field">
-              <input type="text" name="reservation_number" placeholder="Reservation Number (optional)" />
-            </div>
-          </div>
-          <div class="cf-row">
-            <div class="cf-field">
-              <textarea name="message" placeholder="Message" rows="4" required></textarea>
-            </div>
-          </div>
-          <button type="submit" class="cf-submit" id="cf-submit-btn">SEND MESSAGE</button>
-          <p class="cf-error" id="cf-error" style="display:none;">Something went wrong. Please try again or email us directly.</p>
-        </form>
-        <div class="cf-success" id="cf-success" style="display:none;" aria-live="polite">
-          <div class="cf-success-icon">&#10003;</div>
-          <p class="cf-success-msg">Message sent! We'll get back to you shortly.</p>
-        </div>
-      </div><!-- /.contact-form-section -->
-
-      <div class="contact-book-note">
-        <p>Looking to book a ride? You don't need to contact us first.</p>
-        <button type="button" class="btn btn-primary" id="btn-contact-book">BOOK NOW</button>
-      </div>
-
-    </div><!-- /.contact-inner -->
-  </section>
-
-
   <!-- ── FAQ Accordion ─────────────────────────────────────── -->
   <section id="faq" aria-label="Frequently asked questions">
     <div class="faq-inner">
@@ -1156,7 +1061,7 @@
     [
       'btn-book-header','btn-book-mobile','btn-book-tour',
       'btn-book-sticky','btn-reserve','btn-check-avail',
-      'btn-exp-1','btn-exp-2','btn-plan-event','btn-contact-book'
+      'btn-exp-1','btn-exp-2'
     ].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.addEventListener('click', openModal);
