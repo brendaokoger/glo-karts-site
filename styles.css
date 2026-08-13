@@ -706,8 +706,8 @@ a   { color: inherit; text-decoration: none; }
   display: -webkit-flex; display: flex;
   -webkit-flex-direction: column; flex-direction: column;
   gap: 1rem;
-  -webkit-transition: border-color 0.4s, box-shadow 0.4s, -webkit-transform 0.4s;
-  transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
+  -webkit-transition: opacity 0.75s ease, -webkit-transform 0.75s ease, border-color 0.4s, box-shadow 0.4s;
+  transition: opacity 0.75s ease, transform 0.75s ease, border-color 0.4s, box-shadow 0.4s;
 }
 .cad-card:hover {
   border-color: rgba(0,195,255,0.50);
@@ -756,10 +756,11 @@ a   { color: inherit; text-decoration: none; }
   100% { left: 160%;  opacity: 0; }
 }
 
-/* Staggered scroll-reveal */
-.cad-cards .cad-card:nth-child(2).reveal { -webkit-transition-delay: 0.10s; transition-delay: 0.10s; }
-.cad-cards .cad-card:nth-child(3).reveal { -webkit-transition-delay: 0.20s; transition-delay: 0.20s; }
-.cad-cards .cad-card:nth-child(4).reveal { -webkit-transition-delay: 0.30s; transition-delay: 0.30s; }
+/* Staggered scroll-reveal — each card fades in 0.2 s after the previous */
+.cad-cards .cad-card:nth-child(1).reveal { -webkit-transition-delay: 0s;   transition-delay: 0s;   }
+.cad-cards .cad-card:nth-child(2).reveal { -webkit-transition-delay: 0.2s; transition-delay: 0.2s; }
+.cad-cards .cad-card:nth-child(3).reveal { -webkit-transition-delay: 0.4s; transition-delay: 0.4s; }
+.cad-cards .cad-card:nth-child(4).reveal { -webkit-transition-delay: 0.6s; transition-delay: 0.6s; }
 
 .cad-icon {
   width: 44px; height: 44px;
