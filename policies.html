@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Glo Karts Chicago Ride Policies — safety rules, prohibited items, age requirements, and guidelines for all riders." />
+  <title>Ride Policies — Glo Karts Chicago</title>
+
+  <link rel="icon" href="./favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png" />
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+  <link rel="manifest" href="./site.webmanifest" />
+  <meta name="theme-color" content="#000000" />
+
+  <meta property="og:title"       content="Ride Policies — Glo Karts Chicago" />
+  <meta property="og:description" content="Safety rules, prohibited items, and guidelines for all Glo Karts riders." />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://glokarts.com/policies.html" />
+  <meta property="og:image"       content="https://glokarts.com/glo-karts-logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css?v=aug22a" />
+
+  <style>
+    /* ── Policies page layout ─────────────────────────────── */
+    #policies-page {
+      min-height: 100vh;
+      padding: 7rem 0 6rem;
+    }
+    .pol-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 6%;
+    }
+    .pol-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.6rem;
+    }
+    .pol-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.4rem, 7vw, 4rem);
+      letter-spacing: 0.04em;
+      line-height: 1.0;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .pol-updated {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.36);
+      margin-bottom: 3rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* Key rules highlight */
+    .pol-rules-highlight {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 3.5rem;
+      padding: 1.75rem 2rem;
+      background: rgba(0,195,255,0.06);
+      border: 1px solid rgba(0,195,255,0.25);
+      border-radius: 14px;
+    }
+    .pol-rule-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(0,195,255,0.18);
+      border-radius: 50px;
+      padding: 0.55rem 1.1rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.88);
+      letter-spacing: 0.04em;
+    }
+    .pol-rule-chip .pol-chip-icon {
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .pol-highlight-note {
+      width: 100%;
+      font-size: 0.80rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6;
+      margin: 0;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    /* Sections */
+    .pol-section {
+      margin-bottom: 2.75rem;
+    }
+    .pol-section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.55rem;
+      letter-spacing: 0.08em;
+      color: #fff;
+      margin-bottom: 1rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid rgba(0,195,255,0.18);
+    }
+    .pol-section-title .pol-num {
+      color: var(--blue);
+      margin-right: 0.4em;
+    }
+    .pol-list {
+      list-style: none;
+      padding: 0; margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .pol-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.91rem;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.65;
+    }
+    .pol-list li::before {
+      content: '✦';
+      color: var(--blue);
+      font-size: 0.55rem;
+      flex-shrink: 0;
+      margin-top: 0.45rem;
+      opacity: 0.75;
+    }
+    .pol-list li strong {
+      color: rgba(255,255,255,0.88);
+      font-weight: 600;
+    }
+    .pol-para {
+      font-size: 0.91rem;
+      color: rgba(255,255,255,0.68);
+      line-height: 1.75;
+      margin-bottom: 0.85rem;
+    }
+    .pol-para:last-child { margin-bottom: 0; }
+
+    /* Contact note */
+    .pol-contact-note {
+      margin-top: 3.5rem;
+      padding: 1.75rem 2rem;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      text-align: center;
+    }
+    .pol-contact-note p {
+      font-size: 0.87rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      margin: 0 0 1rem;
+    }
+    .pol-contact-note .pol-contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .pol-contact-links a {
+      color: var(--blue);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: opacity 0.2s;
+    }
+    .pol-contact-links a:hover { opacity: 0.75; }
+
+    /* Back link */
+    .pol-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      font-size: 0.80rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 2.5rem;
+      transition: color 0.2s;
+    }
+    .pol-back:hover { color: var(--blue); }
+    .pol-back svg { flex-shrink: 0; }
+
+    @media (max-width: 600px) {
+      .pol-rules-highlight { padding: 1.25rem 1.25rem; gap: 0.75rem; }
+      .pol-rule-chip { font-size: 0.78rem; padding: 0.45rem 0.9rem; }
+      .pol-contact-links { flex-direction: column; gap: 0.75rem; }
+    }
+  </style>
+</head>
+
+<body>
+<div id="site-content" class="revealed">
+
+  <!-- ── Header ──────────────────────────────────────────── -->
+  <header id="site-header" role="banner">
+    <a href="./index.html" class="site-logo" aria-label="Glo Karts Chicago — Home">
+      <span class="nav-wordmark" aria-hidden="true">
+        <span class="nav-wm-name">GL<span class="logo-o">O</span>&nbsp;KARTS</span>
+        <span class="nav-wm-sub">Chicago</span>
+      </span>
+    </a>
+
+    <nav class="header-nav" aria-label="Primary navigation">
+      <a href="./index.html">Home</a>
+      <a href="./index.html#experiences">Tours</a>
+      <a href="#">Events</a>
+      <a href="#">Shop</a>
+      <a href="./contact.html">Contact</a>
+    </nav>
+
+    <button class="btn-book-header hd-only" id="btn-book-header" type="button">Book Now</button>
+
+    <button class="hamburger" id="hamburger-btn"
+            aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- Mobile nav drawer -->
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
+    <a href="./index.html"             class="mobile-link">Home</a>
+    <a href="./index.html#experiences" class="mobile-link">Tours</a>
+    <a href="#"                        class="mobile-link">Events</a>
+    <a href="#"                        class="mobile-link">Shop</a>
+    <a href="./contact.html"           class="mobile-link">Contact</a>
+    <button class="btn-book-mobile mobile-link" id="btn-book-mobile" type="button">Book Now</button>
+  </nav>
+
+
+  <!-- ── Policies Page ───────────────────────────────────── -->
+  <main id="policies-page" aria-labelledby="pol-heading">
+    <div class="pol-inner">
+
+      <a href="./index.html" class="pol-back" aria-label="Back to home">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to Home
+      </a>
+
+      <p class="pol-eyebrow">Glo Karts Chicago</p>
+      <h1 class="pol-heading" id="pol-heading">Ride Policies</h1>
+      <p class="pol-updated">Effective: 2025 Season</p>
+
+      <!-- Key prohibitions highlight -->
+      <div class="pol-rules-highlight" role="note" aria-label="Key rules at a glance">
+        <div class="pol-rule-chip">
+          <span class="pol-chip-icon" aria-hidden="true">🚫</span> No Eating on the Karts
+        </div>
+        <div class="pol-rule-chip">
+          <span class="pol-chip-icon" aria-hidden="true">🚫</span> No Alcohol
+        </div>
+        <div class="pol-rule-chip">
+          <span class="pol-chip-icon" aria-hidden="true">🚫</span> No Smoking or Vaping
+        </div>
+        <div class="pol-rule-chip">
+          <span class="pol-chip-icon" aria-hidden="true">📋</span> Waiver Required
+        </div>
+        <p class="pol-highlight-note">All guests must agree to these policies before participating in a Glo Karts experience. Failure to comply may result in removal from the tour without a refund.</p>
+      </div>
+
+      <!-- Section 1: General Conduct -->
+      <div class="pol-section">
+        <h2 class="pol-section-title"><span class="pol-num">01.</span> General Conduct</h2>
+        <ul class="pol-list">
+          <li>All guests are expected to conduct themselves in a safe, respectful, and responsible manner throughout the entire Glo Karts experience.</li>
+          <li>Glo Karts reserves the right to remove any guest from a tour at any time, without refund, for behavior that jeopardizes the safety or enjoyment of others.</li>
+          <li>Guests must follow all instructions given by Glo Karts guides and staff at all times.</li>
+          <li>Disruptive, aggressive, or threatening behavior toward other guests or staff will not be tolerated.</li>
+        </ul>
+      </div>
+
+      <!-- Section 2: Prohibited Items & Activities -->
+      <div class="pol-section">
+        <h2 class="pol-section-title"><span class="pol-num">02.</span> Prohibited Items &amp; Activities</h2>
+        <ul class="pol-list">
+          <li><strong>No Eating.</strong> Food and beverages are not permitted on or near the karts during the tour. Please finish all food and drinks before your tour begins.</li>
+          <li><strong>No Alcohol.</strong> Alcoholic beverages are strictly prohibited during the Glo Karts experience. Guests who appear intoxicated will not be permitted to ride and will not receive a refund.</li>
+          <li><strong>No Smoking or Vaping.</strong> Smoking, vaping, and the use of all tobacco or cannabis products are prohibited during the tour and while in the vicinity of the karts.</li>
+          <li><strong>No Illegal Substances.</strong> The possession or use of illegal substances is strictly prohibited and may result in removal from the tour and referral to law enforcement.</li>
+          <li>Guests may not operate a kart while under the influence of alcohol, drugs, or any substance that may impair their judgment or reaction time.</li>
+        </ul>
+      </div>
+
+      <!-- Section 3: Safety Requirements -->
+      <div class="pol-section">
+        <h2 class="pol-section-title"><span class="pol-num">03.</span> Safety Requirements</h2>
+        <ul class="pol-list">
+          <li>All guests must remain seated in their assigned kart and keep their hands and feet inside the kart at all times while the kart is in motion.</li>
+          <li>Guests must wear seatbelts at all times while riding. Seatbelts must remain fastened for the entire duration of the tour.</li>
+          <li>No standing, leaning out of, or climbing on the karts at any time.</li>
+          <li>Guests must maintain a safe following distance from the kart in front of them at all times.</li>
+          <li>Glo Karts guides set the pace. Guests may not accelerate beyond the designated tour speed or attempt to race other karts.</li>
+          <li>Cell phones and cameras may be used for photos and videos, but guests must not allow device use to distract from safe operation of the kart.</li>
+        </ul>
+      </div>
+
+      <!-- Section 4: Age & Physical Requirements -->
+      <div class="pol-section">
+        <h2 class="pol-section-title"><span class="pol-num">04.</span> Age &amp; Physical Requirements</h2>
+        <ul class="pol-list">
+          <li>All guests must meet the minimum age and height requirements established by Glo Karts. Please contact us in advance if you have questions about age eligibility.</li>
+          <li>Minors must be accompanied by a parent or legal guardian who accepts responsibility for their participation. A parent or guardian must complete the liability waiver on behalf of any minor guest.</li>
+          <li>Guests with back, neck, heart conditions, or other physical limitations that may be affected by the motion of the karts should consult a physician before participating.</li>
+          <li>Pregnant guests are advised not to participate in the Glo Karts experience.</li>
+          <li>Guests must be able to safely operate the kart independently. Glo Karts staff cannot physically assist guests in operating the kart during the tour.</li>
+        </ul>
+      </div>
+
+      <!-- Section 5: Liability Waiver -->
+      <div class="pol-section">
+        <h2 class="pol-section-title"><span class="pol-num">05.</span> Liability Waiver</h2>
+        <ul class="pol-list">
+          <li><strong>A completed and signed liability waiver is required before every guest may participate in a Glo Karts experience.</strong> No exceptions.</li>
+          <li>Waiver instructions will be sent after your booking is confirmed. Each adult guest must complete an individual waiver.</li>
+          <li>A parent or legal guardian must complete the waiver for any minor guest.</li>
+          <li>Guests who have not completed the waiver will not be permitted to ride and will not receive a refund for missed tours.</li>
+        </ul>
+      </div>
+
+      <!-- Section 6: Weather & Cancellation -->
+      <div class="pol-section">
+        <h2 class="pol-section-title"><span class="pol-num">06.</span> Weather &amp; Cancellations</h2>
+        <ul class="pol-list">
+          <li>Glo Karts operates rain-free. Tours will not run in rain, lightning, severe wind, or other unsafe weather conditions.</li>
+          <li>If weather affects your scheduled tour, your reservation will be rescheduled for the next available date and time at no additional charge.</li>
+          <li>Glo Karts monitors weather conditions closely and will contact you directly if your tour needs to be rescheduled.</li>
+          <li>Cancellations or rescheduling requests made by the guest must be submitted at least 48 hours in advance. Cancellations within 48 hours of the tour may not be eligible for a refund or reschedule.</li>
+          <li>For group and private event bookings, cancellation policies may vary. Please refer to your booking confirmation for details.</li>
+        </ul>
+      </div>
+
+      <!-- Section 7: Photography & Media -->
+      <div class="pol-section">
+        <h2 class="pol-section-title"><span class="pol-num">07.</span> Photography &amp; Media</h2>
+        <ul class="pol-list">
+          <li>By participating in a Glo Karts experience, guests consent to being photographed or filmed for use in Glo Karts promotional materials, including social media.</li>
+          <li>If you do not wish to appear in promotional materials, please notify a Glo Karts representative before your tour begins.</li>
+          <li>Guests are welcome to take personal photos and videos during the tour for personal, non-commercial use.</li>
+        </ul>
+      </div>
+
+      <!-- Section 8: Booking & Payment -->
+      <div class="pol-section">
+        <h2 class="pol-section-title"><span class="pol-num">08.</span> Booking &amp; Payment</h2>
+        <ul class="pol-list">
+          <li>All bookings are requests until confirmed by a Glo Karts representative. Your tour is not officially scheduled until you receive a direct confirmation.</li>
+          <li>Payment instructions will be provided after your booking is confirmed. No payment is collected through the online booking form.</li>
+          <li>Pricing is $49.99 per guest for standard tour experiences. Group, private, and event pricing may vary.</li>
+          <li>Glo Karts is not responsible for costs incurred due to cancellations, rescheduling, or changes to your tour.</li>
+        </ul>
+      </div>
+
+      <!-- Contact note -->
+      <div class="pol-contact-note">
+        <p>Questions about our ride policies? We're happy to help.<br>Contact Glo Karts before your tour if you have any concerns or need clarification.</p>
+        <div class="pol-contact-links">
+          <a href="tel:+16303290885">(630) 329-0885</a>
+          <a href="sms:+16303290885">Text Us</a>
+          <a href="mailto:info@glokarts.com">info@glokarts.com</a>
+        </div>
+      </div>
+
+    </div><!-- /.pol-inner -->
+  </main>
+
+
+  <!-- ── Footer ──────────────────────────────────────────── -->
+  <footer id="site-footer" role="contentinfo">
+    <div class="footer-inner">
+
+      <div class="footer-logo-wrap">
+        <span class="footer-wm-name">GLO&nbsp;KARTS</span>
+        <span class="footer-wm-sub">Chicago</span>
+      </div>
+
+      <div class="footer-contact-info">
+        <a href="tel:6303290885" class="footer-contact-a">630-329-0885</a>
+        <a href="mailto:info@glokarts.com" class="footer-contact-a">info@glokarts.com</a>
+      </div>
+
+      <nav class="footer-legal" aria-label="Legal links">
+        <a href="./policies.html" aria-current="page">Policies</a>
+        <a href="#">Waivers</a>
+        <a href="#">Terms &amp; Conditions</a>
+        <a href="#">Privacy Policy</a>
+      </nav>
+
+      <div class="footer-socials">
+        <a href="https://instagram.com/glokartschicago" class="social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="https://tiktok.com/@glokartschicago" class="social-link tiktok" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.17 8.17 0 004.77 1.52V6.78a4.85 4.85 0 01-1-.09z"/></svg>
+        </a>
+      </div>
+
+      <p class="footer-copy">&copy; <span id="footer-year"></span> Glo Karts, LLC. All Rights Reserved.</p>
+
+    </div>
+  </footer>
+
+</div><!-- /#site-content -->
+
+<script src="./main.js?v=aug22a"></script>
+</body>
+</html>

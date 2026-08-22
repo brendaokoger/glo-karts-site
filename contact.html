@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./styles.css?v=aug22a" />
 </head>
 
 <body>
@@ -125,7 +125,7 @@
       </div>
 
       <nav class="footer-legal" aria-label="Legal links">
-        <a href="#">Policies</a>
+        <a href="./policies.html">Policies</a>
         <a href="#">Waivers</a>
         <a href="#">Terms &amp; Conditions</a>
         <a href="#">Privacy Policy</a>
@@ -349,6 +349,16 @@
             </label>
           </div>
 
+          <div class="glo-check-group">
+            <label class="glo-check-label">
+              <input type="checkbox" id="bk-policies" name="policies_acknowledged" value="yes" required />
+              <span class="glo-check-box" aria-hidden="true"></span>
+              <span class="glo-check-text">
+                I understand that eating, alcohol, smoking, and vaping are prohibited during the Glo Karts experience, and I agree to the <a href="./policies.html" target="_blank" rel="noopener" class="glo-check-link">Ride Policies</a>. <span class="req">*</span>
+              </span>
+            </label>
+          </div>
+
           <div class="glo-contact-box">
             <div class="gcb-header">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -383,7 +393,7 @@
 </div>
 
 
-<script src="./main.js"></script>
+<script src="./main.js?v=aug22a"></script>
 <script>
   /* ── BOOKING CALENDAR ─────────────────────────────────────
      ADMIN: Add fully-booked dates below in 'YYYY-MM-DD' format.
@@ -624,6 +634,13 @@
           if (dateTrigger) { dateTrigger.focus(); dateTrigger.classList.add('cal-trigger-err'); }
           return;
         }
+        /* Checkboxes — waiver, consent, policies */
+        var waiverCheck   = document.getElementById('bk-waiver');
+        var consentCheck  = document.getElementById('bk-consent');
+        var policiesCheck = document.getElementById('bk-policies');
+        if (waiverCheck   && !waiverCheck.checked)   { waiverCheck.focus();   return; }
+        if (consentCheck  && !consentCheck.checked)   { consentCheck.focus();  return; }
+        if (policiesCheck && !policiesCheck.checked)  { policiesCheck.focus(); return; }
         var hfReplyto = document.getElementById('hf-replyto');
         if (hfReplyto && email) hfReplyto.value = email.value.trim();
         var hfTotal = document.getElementById('hf-total');
