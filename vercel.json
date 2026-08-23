@@ -5,7 +5,7 @@
   "cleanUrls": true,
   "headers": [
     {
-      "source": "/(index\\.html|styles\\.css|main\\.js)",
+      "source": "/(index\\.html|styles\\.css|main\\.js|booking-wizard\\.js)",
       "headers": [
         { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },
         { "key": "Pragma", "value": "no-cache" }

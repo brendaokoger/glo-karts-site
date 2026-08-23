@@ -2977,3 +2977,553 @@ a   { color: inherit; text-decoration: none; }
   transition: opacity 0.2s;
 }
 .glo-check-link:hover { opacity: 0.75; }
+
+/* ════════════════════════════════════════════════════════════
+   GLO KARTS BOOKING WIZARD  v1.0
+   ════════════════════════════════════════════════════════════ */
+
+/* Wizard card overrides */
+.glo-wiz-card {
+  display: -webkit-flex; display: flex;
+  -webkit-flex-direction: column; flex-direction: column;
+  max-height: 92vh; padding: 0; border-radius: 20px;
+  overflow: hidden;
+}
+
+/* ── Wizard header ─────────────────────────────────────────── */
+.glo-wiz-header {
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: space-between; justify-content: space-between;
+  padding: 1.1rem 1.5rem 0.9rem;
+  border-bottom: 1px solid rgba(0,195,255,0.14);
+  background: rgba(0,0,0,0.55);
+  -webkit-flex-shrink: 0; flex-shrink: 0;
+  gap: 1rem;
+}
+.glo-wiz-brand {
+  display: -webkit-flex; display: flex;
+  -webkit-flex-direction: column; flex-direction: column;
+  -webkit-flex-shrink: 0; flex-shrink: 0;
+}
+.gwb-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.05rem; letter-spacing: 0.12em; color: #fff;
+}
+.gwb-city {
+  font-size: 0.55rem; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+}
+
+/* Progress dots */
+.glo-wiz-progress {
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  gap: 0; flex: 1; overflow-x: auto;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.glo-wiz-progress::-webkit-scrollbar { display: none; }
+.gwp-step {
+  display: -webkit-flex; display: flex;
+  -webkit-flex-direction: column; flex-direction: column;
+  -webkit-align-items: center; align-items: center;
+  gap: 0.2rem;
+  -webkit-flex-shrink: 0; flex-shrink: 0;
+  cursor: default;
+}
+.gwp-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+  font-size: 0.65rem; font-weight: 700;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.35);
+  -webkit-transition: all 0.3s; transition: all 0.3s;
+}
+.gwp-label {
+  font-size: 0.5rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: rgba(255,255,255,0.25);
+  -webkit-transition: color 0.3s; transition: color 0.3s;
+  white-space: nowrap;
+}
+.gwp-step.active .gwp-num {
+  background: var(--blue); border-color: var(--blue);
+  color: #000; box-shadow: 0 0 12px rgba(0,195,255,0.5);
+}
+.gwp-step.active .gwp-label { color: var(--blue); }
+.gwp-step.done .gwp-num {
+  background: rgba(0,195,255,0.18); border-color: rgba(0,195,255,0.5);
+  color: var(--blue);
+}
+.gwp-step.done .gwp-label { color: rgba(0,195,255,0.6); }
+.gwp-line {
+  height: 1px; flex: 1; min-width: 12px;
+  background: rgba(255,255,255,0.1);
+  -webkit-transition: background 0.3s; transition: background 0.3s;
+}
+.gwp-line.done { background: rgba(0,195,255,0.4); }
+
+/* ── Wizard body ───────────────────────────────────────────── */
+.glo-wiz-body {
+  -webkit-flex: 1; flex: 1;
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 1.5rem 1.6rem 1rem;
+}
+.glo-wiz-step { display: none; }
+.glo-wiz-step.active { display: block; }
+.glo-wiz-step-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  letter-spacing: 0.04em; color: #fff; margin-bottom: 0.3rem;
+}
+.glo-wiz-step-sub {
+  font-size: 0.84rem; color: rgba(255,255,255,0.5); line-height: 1.6;
+  margin-bottom: 1.4rem;
+}
+
+/* ── Step 1: Tour cards ────────────────────────────────────── */
+.gwt-cards { display: -webkit-flex; display: flex; flex-direction: column; gap: 1rem; }
+.gwt-card {
+  position: relative; display: -webkit-flex; display: flex;
+  -webkit-align-items: stretch; align-items: stretch;
+  background: rgba(0,0,0,0.55);
+  border: 1.5px solid rgba(255,255,255,0.10);
+  border-radius: 14px; overflow: hidden; cursor: pointer;
+  -webkit-transition: border-color 0.25s, box-shadow 0.25s;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  text-align: left; padding: 0;
+}
+.gwt-card:hover { border-color: rgba(0,195,255,0.3); }
+.gwt-card.selected {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 1px var(--blue), 0 0 20px rgba(0,195,255,0.18);
+}
+.gwt-card-img {
+  width: 110px; min-height: 110px; flex-shrink: 0;
+  background-size: cover; background-position: center;
+}
+.gwt-img-downtown { background-image: url('./glo-karts-cart.jpeg'); }
+.gwt-img-ladies   { background-image: url('./glo-karts-ladies-night.jpg'); }
+.gwt-card-body {
+  padding: 1rem 1rem 1rem 1.1rem; flex: 1;
+  display: -webkit-flex; display: flex; flex-direction: column; gap: 0.3rem;
+}
+.gwt-card-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.15rem; letter-spacing: 0.05em; color: #fff;
+}
+.gwt-card-desc { font-size: 0.8rem; color: rgba(255,255,255,0.55); line-height: 1.55; }
+.gwt-card-price { font-size: 0.82rem; font-weight: 700; color: var(--blue); margin-top: auto; }
+.gwt-card-price span { font-weight: 400; color: rgba(255,255,255,0.4); }
+.gwt-card-check {
+  position: absolute; top: 10px; right: 12px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--blue); color: #000;
+  font-size: 0.75rem; font-weight: 900;
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+  opacity: 0; -webkit-transform: scale(0.6); transform: scale(0.6);
+  -webkit-transition: opacity 0.2s, transform 0.2s; transition: opacity 0.2s, transform 0.2s;
+}
+.gwt-card.selected .gwt-card-check { opacity: 1; -webkit-transform: scale(1); transform: scale(1); }
+
+/* ── Step 2: Calendar ──────────────────────────────────────── */
+.gwdt-cal-wrap {
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; padding: 1rem; margin-bottom: 1.2rem;
+}
+.gwdt-cal-nav {
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: space-between; justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.gwdt-nav-btn {
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.7); border-radius: 8px;
+  width: 34px; height: 34px; font-size: 1rem; cursor: pointer;
+  -webkit-transition: background 0.2s; transition: background 0.2s;
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+}
+.gwdt-nav-btn:hover { background: rgba(0,195,255,0.15); color: var(--blue); }
+.gwdt-cal-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+  letter-spacing: 0.06em; color: #fff;
+}
+.gwdt-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+  margin-top: 0.5rem;
+}
+.gwdt-day {
+  aspect-ratio: 1; display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+  font-size: 0.78rem; border-radius: 7px;
+  cursor: default; color: rgba(255,255,255,0.55);
+}
+.gwdt-avail {
+  background: rgba(0,195,255,0.08);
+  border: 1px solid rgba(0,195,255,0.22);
+  color: #fff; cursor: pointer;
+  -webkit-transition: background 0.18s; transition: background 0.18s;
+}
+.gwdt-avail:hover { background: rgba(0,195,255,0.22); }
+.gwdt-sel {
+  background: var(--blue) !important; color: #000 !important;
+  border-color: var(--blue) !important; font-weight: 700;
+}
+.gwdt-today { border: 1px solid rgba(255,255,255,0.22); }
+.gwdt-past, .gwdt-closed, .gwdt-booked { opacity: 0.25; }
+.gwdt-closed { color: rgba(255,255,255,0.3); }
+
+.gwdt-times { margin-bottom: 1.2rem; }
+.gwdt-time-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.65rem; }
+.gwdt-time-chips { display: -webkit-flex; display: flex; gap: 0.65rem; -webkit-flex-wrap: wrap; flex-wrap: wrap; }
+.gwdt-time-chip {
+  padding: 0.6rem 1.2rem;
+  background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px; color: rgba(255,255,255,0.7);
+  font-size: 0.88rem; font-weight: 600; cursor: pointer;
+  -webkit-transition: all 0.2s; transition: all 0.2s;
+}
+.gwdt-time-chip:hover { border-color: rgba(0,195,255,0.4); color: var(--blue); }
+.gwdt-time-chip.selected {
+  background: rgba(0,195,255,0.15); border-color: var(--blue); color: var(--blue);
+  box-shadow: 0 0 10px rgba(0,195,255,0.2);
+}
+.gwdt-notice {
+  display: -webkit-flex; display: flex; align-items: flex-start; gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  background: rgba(255,200,0,0.06); border: 1px solid rgba(255,200,0,0.18);
+  border-radius: 10px; font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.5;
+}
+.gwdt-notice svg { flex-shrink: 0; margin-top: 2px; color: rgba(255,200,0,0.6); }
+
+/* ── Step 3: Rider count ───────────────────────────────────── */
+.gwr-stepper {
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  gap: 2rem; margin: 2rem auto 1.5rem;
+  -webkit-justify-content: center; justify-content: center;
+}
+.gwr-step-btn {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(0,195,255,0.12);
+  border: 1.5px solid rgba(0,195,255,0.3);
+  color: var(--blue); font-size: 1.5rem; line-height: 1;
+  cursor: pointer; -webkit-transition: all 0.2s; transition: all 0.2s;
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+}
+.gwr-step-btn:hover:not(:disabled) { background: rgba(0,195,255,0.25); }
+.gwr-step-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.gwr-count-wrap { text-align: center; }
+.gwr-count {
+  display: block; font-family: 'Bebas Neue', sans-serif;
+  font-size: 4rem; letter-spacing: 0.04em; color: #fff; line-height: 1;
+}
+.gwr-count-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+.gwr-total-preview {
+  text-align: center; font-size: 0.9rem; color: rgba(255,255,255,0.5);
+  margin-bottom: 0.75rem;
+}
+.gwr-total-preview strong { color: var(--blue); font-size: 1.05rem; }
+.gwr-note { text-align: center; font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+
+/* ── Step 4: Contact form ──────────────────────────────────── */
+.gwc-form { display: -webkit-flex; display: flex; flex-direction: column; gap: 0.85rem; }
+.gwc-row { display: -webkit-flex; display: flex; gap: 0.75rem; }
+.gwc-row .gwc-group { flex: 1; }
+.gwc-group { display: -webkit-flex; display: flex; flex-direction: column; gap: 0.35rem; }
+.gwc-group label { font-size: 0.73rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+.gwc-group input, .gwc-group select {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 9px; padding: 0.7rem 0.9rem;
+  color: #fff; font-size: 0.9rem; font-family: inherit;
+  -webkit-transition: border-color 0.2s; transition: border-color 0.2s;
+  width: 100%; box-sizing: border-box;
+}
+.gwc-group input:focus, .gwc-group select:focus {
+  outline: none; border-color: var(--blue);
+  box-shadow: 0 0 0 2px rgba(0,195,255,0.12);
+}
+.gwc-group input::placeholder { color: rgba(255,255,255,0.22); }
+.gwc-note { font-size: 0.73rem; color: rgba(255,255,255,0.35); line-height: 1.5; }
+.gwc-optional { font-weight: 400; letter-spacing: 0; text-transform: none; color: rgba(255,255,255,0.3); }
+.gwc-riding-q { margin-top: 0.5rem; }
+.gwc-riding-label { font-size: 0.73rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 0.6rem; }
+.gwc-riding-opts { display: -webkit-flex; display: flex; gap: 0.65rem; }
+.gwc-riding-btn {
+  flex: 1; padding: 0.65rem 1rem;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 9px; color: rgba(255,255,255,0.55); font-size: 0.88rem; font-weight: 600;
+  cursor: pointer; -webkit-transition: all 0.2s; transition: all 0.2s;
+}
+.gwc-riding-btn:hover { border-color: rgba(0,195,255,0.3); color: var(--blue); }
+.gwc-riding-btn.active {
+  background: rgba(0,195,255,0.12); border-color: var(--blue); color: var(--blue);
+}
+
+/* ── Step 5: Rider cards ───────────────────────────────────── */
+.gwri-cards { display: -webkit-flex; display: flex; flex-direction: column; gap: 1rem; }
+.gwri-card {
+  background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 12px; padding: 1rem 1.1rem; display: -webkit-flex; display: flex;
+  flex-direction: column; gap: 0.75rem;
+}
+.gwri-card-hd {
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: space-between; justify-content: space-between;
+  gap: 0.75rem;
+}
+.gwri-card-num { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; color: rgba(255,255,255,0.7); }
+.gwri-you { color: var(--blue); font-weight: 400; }
+.gwri-type-toggle { display: -webkit-flex; display: flex; border-radius: 7px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); }
+.gwri-minor-toggle {
+  padding: 0.32rem 0.7rem; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  background: transparent; color: rgba(255,255,255,0.4); cursor: pointer;
+  border: none; -webkit-transition: all 0.2s; transition: all 0.2s;
+}
+.gwri-minor-toggle.active[data-minor="no"] { background: rgba(0,195,255,0.18); color: var(--blue); }
+.gwri-minor-toggle.active[data-minor="yes"] { background: rgba(255,150,0,0.18); color: #ffab40; }
+.gwri-adult-badge {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--blue); background: rgba(0,195,255,0.1);
+  border: 1px solid rgba(0,195,255,0.25); border-radius: 50px; padding: 0.22rem 0.65rem;
+}
+.gwri-prefilled { font-size: 0.88rem; color: rgba(255,255,255,0.65); }
+.gwri-prefill-note { display: block; font-size: 0.72rem; color: rgba(0,195,255,0.6); margin-top: 0.15rem; }
+.gwri-add-later-wrap {
+  display: -webkit-flex; display: flex; align-items: center; gap: 0.5rem; cursor: pointer;
+}
+.gwri-add-later-wrap input { accent-color: var(--blue); width: 14px; height: 14px; }
+.gwri-add-later-lbl { font-size: 0.78rem; color: rgba(255,255,255,0.45); }
+.gwri-name-fields { display: -webkit-flex; display: flex; flex-direction: column; gap: 0.65rem; }
+.gwri-hidden { display: none !important; }
+.gwri-guardian-section {
+  border-top: 1px solid rgba(255,150,0,0.18);
+  padding-top: 0.75rem;
+  display: -webkit-flex; display: flex; flex-direction: column; gap: 0.65rem;
+}
+.gwri-minor-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #ffab40; }
+.gwri-waiver-badge {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.28rem 0.7rem; border-radius: 50px; display: inline-block; align-self: flex-start;
+}
+.gwri-waiver-pending { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.35); border: 1px solid rgba(255,255,255,0.1); }
+.gwri-waiver-complete { background: rgba(0,195,255,0.12); color: var(--blue); border: 1px solid rgba(0,195,255,0.25); }
+
+/* ── Step 6: Waiver ────────────────────────────────────────── */
+.gww-waiver-text {
+  max-height: 200px; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px; padding: 1rem 1.1rem; margin-bottom: 1.2rem;
+  font-size: 0.78rem; color: rgba(255,255,255,0.55); line-height: 1.7;
+  scrollbar-width: thin; scrollbar-color: rgba(0,195,255,0.25) transparent;
+}
+.gww-waiver-text p { margin-bottom: 0.65rem; }
+.gww-waiver-text p:last-child { margin-bottom: 0; }
+.gww-waiver-text strong { color: rgba(255,255,255,0.75); }
+.gww-signing-for { margin-bottom: 1.2rem; }
+.gww-sf-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.6rem; }
+.gww-sf-list { display: -webkit-flex; display: flex; flex-direction: column; gap: 0.45rem; }
+.gww-sf-item { display: -webkit-flex; display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; color: rgba(255,255,255,0.75); }
+.gww-sf-badge {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.18rem 0.6rem; border-radius: 50px;
+}
+.gww-sf-adult { background: rgba(0,195,255,0.12); color: var(--blue); border: 1px solid rgba(0,195,255,0.3); }
+.gww-sf-minor { background: rgba(255,150,0,0.12); color: #ffab40; border: 1px solid rgba(255,150,0,0.3); }
+.gww-sf-other { font-size: 0.76rem; color: rgba(255,255,255,0.38); font-style: italic; }
+.gww-sig-section { display: -webkit-flex; display: flex; flex-direction: column; gap: 0.85rem; }
+.gww-sig-group { display: -webkit-flex; display: flex; flex-direction: column; gap: 0.35rem; }
+.gww-sig-group label { font-size: 0.73rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+.gww-sig-canvas-wrap {
+  position: relative;
+  background: rgba(255,255,255,0.04); border: 1.5px dashed rgba(255,255,255,0.18);
+  border-radius: 10px; overflow: hidden; height: 120px;
+}
+#wiz-sig-canvas { display: block; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
+.gww-sig-clear {
+  position: absolute; bottom: 8px; right: 10px;
+  background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.5); font-size: 0.68rem; border-radius: 5px;
+  padding: 0.22rem 0.6rem; cursor: pointer;
+}
+.gww-sig-clear:hover { color: rgba(255,80,80,0.9); border-color: rgba(255,80,80,0.3); }
+.gww-sig-date { font-size: 0.88rem; color: rgba(255,255,255,0.5); padding: 0.5rem 0; }
+.gww-ack-label {
+  display: -webkit-flex; display: flex; align-items: flex-start; gap: 0.7rem; cursor: pointer;
+}
+.gww-ack-label input { opacity: 0; position: absolute; }
+.gww-ack-label .glo-check-box { flex-shrink: 0; margin-top: 2px; }
+.gww-ack-label input:checked + .glo-check-box { background: var(--blue); border-color: var(--blue); }
+.gww-ack-label input:checked + .glo-check-box::after { content: ''; display: block; width: 5px; height: 8px; border: 2px solid #000; border-top: none; border-left: none; transform: rotate(45deg) translate(1px,-1px); }
+.gww-ack-text { font-size: 0.8rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+.gww-sig-input {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 9px; padding: 0.7rem 0.9rem;
+  color: #fff; font-size: 0.9rem; font-family: inherit; width: 100%; box-sizing: border-box;
+}
+.gww-sig-input:focus { outline: none; border-color: var(--blue); }
+.gww-sig-input::placeholder { color: rgba(255,255,255,0.22); }
+
+/* ── Step 7: Review ────────────────────────────────────────── */
+.gwr-summary { display: -webkit-flex; display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 1.25rem; }
+.gwr-block {
+  background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; overflow: hidden;
+}
+.gwr-block-hd {
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: space-between; justify-content: space-between;
+  padding: 0.65rem 1rem;
+  background: rgba(0,195,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue);
+}
+.gwr-edit-btn {
+  background: transparent; border: 1px solid rgba(0,195,255,0.25);
+  color: var(--blue); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; border-radius: 5px; padding: 0.2rem 0.6rem; cursor: pointer;
+  -webkit-transition: all 0.2s; transition: all 0.2s;
+}
+.gwr-edit-btn:hover { background: rgba(0,195,255,0.12); }
+.gwr-row {
+  display: -webkit-flex; display: flex; align-items: flex-start;
+  -webkit-justify-content: space-between; justify-content: space-between;
+  padding: 0.55rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);
+  gap: 1rem;
+}
+.gwr-row:last-child { border-bottom: none; }
+.gwr-k { font-size: 0.78rem; color: rgba(255,255,255,0.4); flex-shrink: 0; }
+.gwr-v { font-size: 0.82rem; color: rgba(255,255,255,0.8); text-align: right; }
+.gwr-rider-row {
+  display: -webkit-flex; display: flex;
+  -webkit-justify-content: space-between; justify-content: space-between;
+  -webkit-align-items: center; align-items: center;
+  padding: 0.5rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 0.8rem; color: rgba(255,255,255,0.7); gap: 1rem;
+}
+.gwr-rider-row:last-child { border-bottom: none; }
+.gwr-minor-tag {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  background: rgba(255,150,0,0.15); color: #ffab40;
+  border-radius: 50px; padding: 0.1rem 0.45rem; margin-left: 0.35rem;
+}
+.gwr-waiver-ok   { font-size: 0.75rem; font-weight: 700; color: var(--blue); white-space: nowrap; }
+.gwr-waiver-pend { font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.3); white-space: nowrap; }
+.gwr-policies-ack { margin-bottom: 0.5rem; }
+
+/* ── Step 8: Confirmation ──────────────────────────────────── */
+.glo-wiz-step[data-step="8"].active {
+  display: -webkit-flex; display: flex;
+  flex-direction: column; align-items: center; text-align: center;
+  padding: 2rem 1.6rem 1.5rem;
+}
+.gwconf-icon {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: rgba(0,195,255,0.15); border: 2px solid var(--blue);
+  font-size: 1.6rem; color: var(--blue); margin-bottom: 1.2rem;
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+  box-shadow: 0 0 24px rgba(0,195,255,0.25);
+}
+.gwconf-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.5rem, 4vw, 2rem); letter-spacing: 0.04em; color: #fff; margin-bottom: 0.4rem;
+}
+.gwconf-sub { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 1.4rem; line-height: 1.6; }
+.gwconf-id-wrap {
+  display: -webkit-flex; display: flex;
+  -webkit-flex-direction: column; flex-direction: column;
+  -webkit-align-items: center; align-items: center;
+  gap: 0.25rem; margin-bottom: 1.4rem;
+  padding: 0.85rem 2rem;
+  background: rgba(0,195,255,0.08); border: 1px solid rgba(0,195,255,0.25); border-radius: 12px;
+}
+.gwconf-id-label { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(0,195,255,0.6); }
+.gwconf-id { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.1em; color: #fff; }
+.gwconf-details {
+  width: 100%; background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
+  margin-bottom: 1rem; text-align: left; overflow: hidden;
+}
+.gwconf-notice {
+  font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.7;
+  padding: 0.85rem 1rem;
+  background: rgba(255,200,0,0.06); border: 1px solid rgba(255,200,0,0.15);
+  border-radius: 10px; width: 100%; box-sizing: border-box; margin-bottom: 1.2rem;
+}
+.gwconf-notice strong { color: rgba(255,255,255,0.75); }
+.gwconf-waivers {
+  width: 100%; background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
+  margin-bottom: 1.2rem; overflow: hidden; text-align: left;
+}
+.gwconf-waiv-title { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); padding: 0.65rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.gwconf-waiv-row { display: -webkit-flex; display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; color: rgba(255,255,255,0.65); gap: 1rem; }
+.gwconf-waiv-row:last-of-type { border-bottom: none; }
+.gwconf-waiv-note { font-size: 0.72rem; color: rgba(255,255,255,0.3); padding: 0.65rem 1rem; border-top: 1px solid rgba(255,255,255,0.06); }
+.gwconf-sms { margin-top: 0.25rem; }
+
+/* ── Wizard nav footer ─────────────────────────────────────── */
+.glo-wiz-nav {
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: space-between; justify-content: space-between;
+  padding: 1rem 1.6rem 1.1rem;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  background: rgba(0,0,0,0.5);
+  -webkit-flex-shrink: 0; flex-shrink: 0;
+  gap: 1rem;
+}
+.gwn-back {
+  background: transparent; border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.5); padding: 0.7rem 1.2rem;
+  border-radius: 9px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  -webkit-transition: all 0.2s; transition: all 0.2s;
+}
+.gwn-back:hover { border-color: rgba(255,255,255,0.35); color: rgba(255,255,255,0.8); }
+.gwn-right { display: -webkit-flex; display: flex; gap: 0.65rem; }
+.gwn-next {
+  background: var(--blue); color: #000; border: none;
+  padding: 0.72rem 1.8rem; border-radius: 9px;
+  font-size: 0.88rem; font-weight: 700; letter-spacing: 0.04em;
+  cursor: pointer; -webkit-transition: opacity 0.2s; transition: opacity 0.2s;
+}
+.gwn-next:hover { opacity: 0.88; }
+.gwn-submit {
+  background: var(--blue); color: #000; border: none;
+  padding: 0.72rem 1.5rem; border-radius: 9px;
+  font-size: 0.88rem; font-weight: 700; letter-spacing: 0.02em;
+  cursor: pointer; -webkit-transition: opacity 0.2s; transition: opacity 0.2s;
+}
+.gwn-submit:hover:not(:disabled) { opacity: 0.88; }
+.gwn-submit:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ── Submit error ──────────────────────────────────────────── */
+.bk-form-error {
+  font-size: 0.8rem; color: rgba(255,100,100,0.9);
+  background: rgba(255,50,50,0.08); border: 1px solid rgba(255,50,50,0.2);
+  border-radius: 8px; padding: 0.65rem 0.85rem; margin-bottom: 0.75rem;
+}
+
+/* ── Mobile tweaks ─────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .glo-wiz-header { flex-direction: column; align-items: stretch; }
+  .glo-wiz-brand { display: none; }
+  .gwt-card-img { width: 80px; min-height: 90px; }
+  .gwc-row { flex-direction: column; }
+  .gwn-next, .gwn-submit { padding: 0.72rem 1.2rem; }
+}

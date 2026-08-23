@@ -148,543 +148,242 @@
 </div><!-- /#site-content -->
 
 
-<!-- ── Booking Modal ──────────────────────────────────────── -->
+<!-- ── Booking Wizard Modal ──────────────────────────────── -->
 <div id="booking-modal" class="glo-modal" role="dialog" aria-modal="true" aria-label="Book a Tour">
   <div class="glo-modal-backdrop"></div>
-  <div class="glo-modal-card">
-    <button class="glo-modal-close" type="button" aria-label="Close">&#x2715;</button>
+  <div class="glo-modal-card glo-wiz-card">
 
-    <div class="glo-modal-header">
-      <div class="gmh-bg"></div>
-      <div class="gmh-inner">
-        <p class="gmh-eyebrow">RIDE THE GLO</p>
-        <h2 class="gmh-title">BOOK YOUR<br>GLO KARTS EXPERIENCE</h2>
-        <div class="gmh-strip">
-          <div class="gmh-strip-item">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span>DOWNTOWN<br>CHICAGO</span>
+    <!-- Wizard Header -->
+    <div class="glo-wiz-header">
+      <div class="gwb-brand">
+        <span class="gwb-name">GLO KARTS</span>
+        <span class="gwb-sub">Chicago</span>
+      </div>
+      <button class="glo-modal-close" type="button" aria-label="Close booking wizard">&#x2715;</button>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="glo-wiz-progress" id="wiz-progress">
+      <div class="gwp-step" data-wstep="1" aria-label="Step 1: Tour"></div>
+      <div class="gwp-line"></div>
+      <div class="gwp-step" data-wstep="2" aria-label="Step 2: Date &amp; Time"></div>
+      <div class="gwp-line"></div>
+      <div class="gwp-step" data-wstep="3" aria-label="Step 3: Riders"></div>
+      <div class="gwp-line"></div>
+      <div class="gwp-step" data-wstep="4" aria-label="Step 4: Contact"></div>
+      <div class="gwp-line"></div>
+      <div class="gwp-step" data-wstep="5" aria-label="Step 5: Rider Info"></div>
+      <div class="gwp-line"></div>
+      <div class="gwp-step" data-wstep="6" aria-label="Step 6: Waiver"></div>
+      <div class="gwp-line"></div>
+      <div class="gwp-step" data-wstep="7" aria-label="Step 7: Review"></div>
+    </div>
+
+    <!-- Wizard Body -->
+    <div class="glo-wiz-body">
+
+      <!-- Step 1: Choose Tour -->
+      <div class="glo-wiz-step" data-step="1">
+        <p class="glo-wiz-step-title">Choose Your Experience</p>
+        <div class="gwt-grid">
+          <div class="gwt-card" data-tour="Downtown Chicago Tour" tabindex="0" role="button" aria-pressed="false">
+            <div class="gwt-card-img gwt-img-downtown" aria-hidden="true"></div>
+            <div class="gwt-card-body">
+              <h3 class="gwt-card-name">DOWNTOWN CHICAGO TOUR</h3>
+              <p class="gwt-card-tagline">See Chicago like never before.</p>
+              <div class="gwt-card-meta">
+                <span>1 Hour</span><span>•</span><span>2–10 Riders</span><span>•</span><span>$49.99/person</span>
+              </div>
+            </div>
+            <div class="gwt-check" aria-hidden="true">&#10003;</div>
           </div>
-          <span class="gmh-sep" aria-hidden="true"></span>
-          <div class="gmh-strip-item">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span>1-HOUR<br>TOUR</span>
-          </div>
-          <span class="gmh-sep" aria-hidden="true"></span>
-          <div class="gmh-strip-item">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            <span>2–10<br>GUESTS</span>
-          </div>
-          <span class="gmh-sep" aria-hidden="true"></span>
-          <div class="gmh-strip-item">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            <span>$49.99<br>PER GUEST</span>
+          <div class="gwt-card" data-tour="R&amp;B Ladies Night Tour" tabindex="0" role="button" aria-pressed="false">
+            <div class="gwt-card-img gwt-img-ladies" aria-hidden="true"></div>
+            <div class="gwt-card-body">
+              <h3 class="gwt-card-name">R&amp;B LADIES NIGHT TOUR</h3>
+              <p class="gwt-card-tagline">Good music. Good vibes. Good company.</p>
+              <div class="gwt-card-meta">
+                <span>1 Hour</span><span>•</span><span>2–10 Riders</span><span>•</span><span>$49.99/person</span>
+              </div>
+            </div>
+            <div class="gwt-check" aria-hidden="true">&#10003;</div>
           </div>
         </div>
       </div>
+
+      <!-- Step 2: Date & Time -->
+      <div class="glo-wiz-step" data-step="2">
+        <p class="glo-wiz-step-title">Select a Date &amp; Time</p>
+        <div class="gwdt-calendar">
+          <div class="gwdt-cal-nav">
+            <button type="button" class="gwdt-nav-btn" id="wiz-cal-prev" aria-label="Previous month">&#8592;</button>
+            <span class="gwdt-cal-title" id="wiz-cal-title"></span>
+            <button type="button" class="gwdt-nav-btn" id="wiz-cal-next" aria-label="Next month">&#8594;</button>
+          </div>
+          <div class="gwdt-weekdays" aria-hidden="true">
+            <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+          </div>
+          <div class="gwdt-grid" id="wiz-cal-grid"></div>
+          <div class="gwdt-legend">
+            <span class="gwdt-leg-item"><span class="gwdt-leg-dot gwdt-leg-avail"></span>Available</span>
+            <span class="gwdt-leg-item"><span class="gwdt-leg-dot gwdt-leg-booked"></span>Booked</span>
+            <span class="gwdt-leg-item"><span class="gwdt-leg-dot gwdt-leg-closed"></span>Closed</span>
+          </div>
+        </div>
+        <p class="gwdt-note">Tours available Thursday – Sunday only.</p>
+        <p class="glo-wiz-step-title" style="margin-top:1.5rem;">Choose a Time</p>
+        <div class="gwdt-times">
+          <button type="button" class="gwdt-time-chip" data-time="8:00 PM">8:00 PM</button>
+          <button type="button" class="gwdt-time-chip" data-time="9:15 PM">9:15 PM</button>
+          <button type="button" class="gwdt-time-chip" data-time="10:30 PM">10:30 PM</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Number of Riders -->
+      <div class="glo-wiz-step" data-step="3">
+        <p class="glo-wiz-step-title">How Many Riders?</p>
+        <div class="gwr-stepper">
+          <button type="button" class="gwr-step-btn" id="wiz-rider-dec" aria-label="Decrease rider count">&#8722;</button>
+          <div class="gwr-count-wrap">
+            <span class="gwr-count" id="wiz-rider-count">2</span>
+            <span class="gwr-count-label">Riders</span>
+          </div>
+          <button type="button" class="gwr-step-btn" id="wiz-rider-inc" aria-label="Increase rider count">&#43;</button>
+        </div>
+        <p class="gwr-count-range">Min 2 &nbsp;&middot;&nbsp; Max 10 riders</p>
+        <div class="gwr-est-total">
+          <span class="gwr-est-label">Estimated Total</span>
+          <span class="gwr-est-val" id="wiz-est-total">$99.98</span>
+        </div>
+        <p class="gwr-est-note">$49.99 per person &nbsp;&middot;&nbsp; No payment collected today</p>
+      </div>
+
+      <!-- Step 4: Contact Info -->
+      <div class="glo-wiz-step" data-step="4">
+        <p class="glo-wiz-step-title">Your Contact Info</p>
+        <div class="gwc-row">
+          <div class="gwc-group">
+            <label for="wiz-first">First Name <span class="req">*</span></label>
+            <input type="text" id="wiz-first" placeholder="First name" autocomplete="given-name" />
+          </div>
+          <div class="gwc-group">
+            <label for="wiz-last">Last Name <span class="req">*</span></label>
+            <input type="text" id="wiz-last" placeholder="Last name" autocomplete="family-name" />
+          </div>
+        </div>
+        <div class="gwc-group">
+          <label for="wiz-phone">Mobile Phone <span class="req">*</span></label>
+          <input type="tel" id="wiz-phone" placeholder="(000) 000-0000" autocomplete="tel" />
+          <p class="gwc-note">We'll use this number to confirm your booking.</p>
+        </div>
+        <div class="gwc-group">
+          <label for="wiz-email">Email Address <span class="req">*</span></label>
+          <input type="email" id="wiz-email" placeholder="you@example.com" autocomplete="email" />
+        </div>
+        <div class="gwc-group">
+          <label class="gwc-label-row">Will you be riding?</label>
+          <div class="gwc-riding-toggle">
+            <button type="button" class="gwc-riding-btn active" data-riding="yes">Yes, I'm riding</button>
+            <button type="button" class="gwc-riding-btn" data-riding="no">No, I'm not riding</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5: Rider Info -->
+      <div class="glo-wiz-step" data-step="5">
+        <p class="glo-wiz-step-title">Rider Information</p>
+        <p class="gwri-intro">Enter info for each rider. You can add details later for riders who aren't present.</p>
+        <div id="wiz-rider-cards"></div>
+      </div>
+
+      <!-- Step 6: Waiver & Signature -->
+      <div class="glo-wiz-step" data-step="6">
+        <p class="glo-wiz-step-title">Liability Waiver &amp; E-Signature</p>
+        <div id="gww-signing-for"></div>
+        <div class="gww-waiver-text">
+          <p><strong>GLO KARTS CHICAGO — LIABILITY WAIVER &amp; RELEASE</strong></p>
+          <p>By signing below, I voluntarily agree to participate in the Glo Karts Chicago electric golf cart tour experience. I acknowledge and assume all risks associated with participation, including but not limited to personal injury, property damage, and accidents.</p>
+          <p>I agree to follow all safety instructions provided by Glo Karts Chicago staff at all times during the experience.</p>
+          <p>I hereby release and discharge Glo Karts Chicago, LLC, its owners, employees, agents and representatives from any and all claims, demands, damages, causes of action, and liabilities arising from or related to my participation.</p>
+          <p>I confirm that I am 18 years of age or older, or, if a minor, that a parent or legal guardian has completed this waiver on my behalf.</p>
+          <p>I understand that failure to comply with safety guidelines may result in immediate removal from the experience without refund.</p>
+        </div>
+        <div class="gww-sig-block">
+          <div class="gww-sig-field-row">
+            <div class="gwc-group">
+              <label for="wiz-printed-name">Printed Full Name <span class="req">*</span></label>
+              <input type="text" id="wiz-printed-name" placeholder="Your full legal name" autocomplete="name" />
+            </div>
+            <div class="gww-sig-date-wrap">
+              <span class="gww-sig-date-label">Date</span>
+              <span class="gww-sig-date" id="wiz-sig-date"></span>
+            </div>
+          </div>
+          <label class="gww-canvas-label">Signature <span class="req">*</span></label>
+          <div class="gww-canvas-wrap">
+            <canvas id="wiz-sig-canvas" class="gww-canvas" aria-label="Signature pad"></canvas>
+            <button type="button" class="gww-clear-btn" id="wiz-sig-clear" aria-label="Clear signature">Clear</button>
+          </div>
+          <div class="glo-check-group" style="margin-top:1.25rem;">
+            <label class="glo-check-label">
+              <input type="checkbox" id="wiz-sig-ack" />
+              <span class="glo-check-box" aria-hidden="true"></span>
+              <span class="glo-check-text">I agree that this electronic signature is the legal equivalent of my handwritten signature, and I accept the terms of the Glo Karts liability waiver above. <span class="req">*</span></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 7: Review & Submit -->
+      <div class="glo-wiz-step" data-step="7">
+        <p class="glo-wiz-step-title">Review Your Request</p>
+        <div id="wiz-review-body"></div>
+        <div class="glo-check-group" style="margin-top:1.25rem;">
+          <label class="glo-check-label">
+            <input type="checkbox" id="wiz-policies-ack" />
+            <span class="glo-check-box" aria-hidden="true"></span>
+            <span class="glo-check-text">I understand that eating, alcohol, and smoking are prohibited during the Glo Karts experience, and I agree to the <a href="./policies.html" target="_blank" rel="noopener" class="glo-check-link">Ride Policies</a>. <span class="req">*</span></span>
+          </label>
+        </div>
+        <p id="wiz-submit-error" class="bk-form-error" style="display:none;" role="alert"></p>
+        <p class="gwr-submit-note">Your tour is not confirmed until a Glo Karts team member contacts you by phone.</p>
+      </div>
+
+      <!-- Step 8: Confirmation -->
+      <div class="glo-wiz-step" data-step="8">
+        <div class="gwconf-wrap">
+          <div class="gwconf-icon" aria-hidden="true">&#10003;</div>
+          <h2 class="gwconf-heading">Booking Request Received!</h2>
+          <p class="gwconf-sub">A Glo Karts team member will contact you by phone to confirm availability.</p>
+          <div class="gwconf-id-block">
+            <span class="gwconf-id-label">Booking Reference</span>
+            <span class="gwconf-id" id="wiz-conf-id">—</span>
+          </div>
+          <div class="gwconf-details" id="wiz-conf-details"></div>
+          <div class="gwconf-waivers" id="wiz-conf-waivers"></div>
+          <p class="gwconf-notice">Your tour is <strong>not confirmed</strong> until you receive direct confirmation from Glo Karts.</p>
+          <a href="sms:6303290885" class="gcb-btn gcb-btn-sms gwconf-sms">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Text Glo Karts
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /.glo-wiz-body -->
+
+    <!-- Wizard Nav -->
+    <div class="glo-wiz-nav" id="wiz-nav">
+      <button type="button" class="gwn-back" id="wiz-back">&#8592; Back</button>
+      <button type="button" class="gwn-next" id="wiz-next">Continue &#8594;</button>
+      <button type="button" class="gwn-submit" id="wiz-submit" style="display:none;">Submit Booking Request &#8594;</button>
     </div>
 
-    <div id="booking-success" class="glo-modal-success" role="alert">
-      <div class="bks-icon">&#10003;</div>
-      <h2 class="bks-heading">Booking Request Received</h2>
-      <p class="bks-thank">Thank you for choosing Glo Karts.</p>
-      <p class="bks-msg">We received your requested date, time, and party information.</p>
-      <p class="bks-msg">A Glo Karts representative will contact you within 24 hours by text, phone, or email.</p>
-      <div class="bks-summary">
-        <div class="bks-row"><span class="bks-label">Experience</span><span class="bks-value" id="bks-exp">—</span></div>
-        <div class="bks-row"><span class="bks-label">Date</span><span class="bks-value" id="bks-date">—</span></div>
-        <div class="bks-row"><span class="bks-label">Time</span><span class="bks-value" id="bks-time">—</span></div>
-        <div class="bks-row"><span class="bks-label">Guests</span><span class="bks-value" id="bks-guests">—</span></div>
-        <div class="bks-divider"></div>
-        <div class="bks-row bks-total-row"><span class="bks-label">Estimated Total</span><span class="bks-value bks-total" id="bks-total">—</span></div>
-      </div>
-      <p class="bks-notice">Your tour is not confirmed until you receive direct confirmation from Glo Karts.</p>
-      <a href="sms:6303290885" class="gcb-btn gcb-btn-sms bks-sms-btn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Text Glo Karts
-      </a>
-    </div>
-
-    <form id="booking-form" class="glo-form" method="POST" action="https://formspree.io/f/xzepbjeb" novalidate>
-      <input type="hidden" name="_subject"   value="New Glo Karts Booking Request" />
-      <input type="hidden" id="hf-replyto"   name="_replyto"        value="" />
-      <input type="hidden" id="hf-price"     name="price_per_guest" value="$49.99" />
-      <input type="hidden" id="hf-total"     name="estimated_total" value="" />
-
-      <div class="glo-form-body">
-
-        <div class="glo-form-left">
-          <div class="glo-form-section">Your Details</div>
-          <div class="form-group">
-            <label for="bk-first-name">First Name <span class="req">*</span></label>
-            <input id="bk-first-name" name="first_name" type="text" placeholder="First name" required autocomplete="given-name" />
-          </div>
-          <div class="form-group">
-            <label for="bk-last-name">Last Name <span class="req">*</span></label>
-            <input id="bk-last-name" name="last_name" type="text" placeholder="Last name" required autocomplete="family-name" />
-          </div>
-          <div class="form-group">
-            <label for="bk-email">Email Address <span class="req">*</span></label>
-            <input id="bk-email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
-          </div>
-          <div class="form-group">
-            <label for="bk-phone">Mobile Phone Number <span class="req">*</span></label>
-            <input id="bk-phone" name="phone" type="tel" placeholder="(000) 000-0000" required autocomplete="tel" />
-            <p id="bk-phone-error" class="form-field-error" style="display:none;" role="alert">Please enter a valid 10-digit US phone number.</p>
-            <p class="form-field-note">We'll use this number to contact you regarding availability and booking confirmation.</p>
-          </div>
-
-          <div class="glo-form-section">Your Tour</div>
-          <div class="form-group">
-            <label for="bk-experience">Select Your Experience <span class="req">*</span></label>
-            <select id="bk-experience" name="experience" required>
-              <option value="" disabled selected>Choose an experience</option>
-              <option>Ladies Night Tour</option>
-              <option>Downtown Chicago Tour</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Preferred Booking Date <span class="req">*</span></label>
-            <div class="cal-wrapper" id="cal-wrapper">
-              <button type="button" class="cal-trigger" id="bk-date-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="cal-popup">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                <span id="cal-display">Select a date</span>
-              </button>
-              <div class="cal-popup" id="cal-popup" role="region" aria-label="Date picker">
-                <div class="cal-nav">
-                  <button type="button" class="cal-nav-btn" id="cal-prev" aria-label="Previous month">&#8592;</button>
-                  <span class="cal-month-year" id="cal-month-year"></span>
-                  <button type="button" class="cal-nav-btn" id="cal-next" aria-label="Next month">&#8594;</button>
-                </div>
-                <div class="cal-weekdays" aria-hidden="true">
-                  <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
-                </div>
-                <div class="cal-grid" id="cal-grid"></div>
-                <div class="cal-legend">
-                  <span class="cal-legend-item"><span class="cal-leg-dot cal-leg-avail"></span>Available</span>
-                  <span class="cal-legend-item"><span class="cal-leg-dot cal-leg-full"></span>Booked</span>
-                  <span class="cal-legend-item"><span class="cal-leg-dot cal-leg-closed"></span>Closed</span>
-                </div>
-              </div>
-            </div>
-            <input type="hidden" id="bk-date-m" name="booking_date" />
-            <p class="form-field-note">Tours available Thursday – Sunday only.</p>
-          </div>
-
-          <div class="glo-form-row">
-            <div class="form-group">
-              <label for="bk-time-m">Preferred Tour Time <span class="req">*</span></label>
-              <select id="bk-time-m" name="booking_time" required>
-                <option value="" disabled selected>Select a time</option>
-                <option>8:00 PM</option>
-                <option>9:15 PM</option>
-                <option>10:30 PM</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="bk-guests-m">Number of Guests <span class="req">*</span></label>
-              <select id="bk-guests-m" name="guest_count" required>
-                <option value="" disabled selected>Select guests</option>
-                <option value="2">2 Guests</option>
-                <option value="3">3 Guests</option>
-                <option value="4">4 Guests</option>
-                <option value="5">5 Guests</option>
-                <option value="6">6 Guests</option>
-                <option value="7">7 Guests</option>
-                <option value="8">8 Guests</option>
-                <option value="9">9 Guests</option>
-                <option value="10">10 Guests</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="bk-occasion">Special Occasion</label>
-            <input id="bk-occasion" name="special_occasion" type="text" placeholder="e.g. Birthday, Anniversary, Date Night…" autocomplete="off" />
-          </div>
-          <div class="form-group">
-            <label for="bk-notes">Additional Details</label>
-            <textarea id="bk-notes" name="additional_details" placeholder="Questions, special requests, or anything else we should know…"></textarea>
-          </div>
-        </div><!-- /.glo-form-left -->
-
-        <div class="glo-form-right">
-          <div class="booking-summary" id="booking-summary">
-            <div class="bs-header">
-              <svg class="bs-cart-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-              Your Ride
-            </div>
-            <div class="bs-rows">
-              <div class="bs-row"><span class="bs-label">Experience</span><span class="bs-value" id="bs-exp-val">—</span></div>
-              <div class="bs-row"><span class="bs-label">Date</span><span class="bs-value" id="bs-date-val">—</span></div>
-              <div class="bs-row"><span class="bs-label">Time</span><span class="bs-value" id="bs-time-val">—</span></div>
-              <div class="bs-row"><span class="bs-label">Duration</span><span class="bs-value">1 Hour</span></div>
-              <div class="bs-row"><span class="bs-label">Guests</span><span class="bs-value" id="bs-guests-val">—</span></div>
-              <div class="bs-divider"></div>
-              <div class="bs-row"><span class="bs-label">Price Per Person</span><span class="bs-value">$49.99</span></div>
-              <div class="bs-row bs-total-row"><span class="bs-label">Estimated Total</span><span class="bs-total-val" id="bs-total-val">—</span></div>
-            </div>
-            <p class="bs-notice">This is a booking request and does not guarantee availability.</p>
-            <p class="bs-payment-note">No payment is collected through this form. Payment instructions will be provided after availability is confirmed.</p>
-          </div>
-
-          <div class="glo-check-group">
-            <label class="glo-check-label">
-              <input type="checkbox" id="bk-waiver" name="waiver_acknowledged" value="yes" required />
-              <span class="glo-check-box" aria-hidden="true"></span>
-              <span class="glo-check-text">
-                I understand that every guest must complete a Glo Karts liability waiver before participating in the tour. <span class="req">*</span>
-                <span class="glo-check-helper">Waiver instructions will be sent after the booking is confirmed.</span>
-              </span>
-            </label>
-          </div>
-
-          <div class="glo-check-group">
-            <label class="glo-check-label">
-              <input type="checkbox" id="bk-consent" name="contact_consent" value="yes" required />
-              <span class="glo-check-box" aria-hidden="true"></span>
-              <span class="glo-check-text">
-                I agree that Glo Karts may contact me by phone, text, or email regarding this booking request. <span class="req">*</span>
-              </span>
-            </label>
-          </div>
-
-          <div class="glo-check-group">
-            <label class="glo-check-label">
-              <input type="checkbox" id="bk-policies" name="policies_acknowledged" value="yes" required />
-              <span class="glo-check-box" aria-hidden="true"></span>
-              <span class="glo-check-text">
-                I understand that eating, alcohol, and smoking are prohibited during the Glo Karts experience, and I agree to the <a href="./policies.html" target="_blank" rel="noopener" class="glo-check-link">Ride Policies</a>. <span class="req">*</span>
-              </span>
-            </label>
-          </div>
-
-          <div class="glo-contact-box">
-            <div class="gcb-header">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Questions or Need Help?
-            </div>
-            <p class="gcb-text">Text Glo Karts at 630-329-0885 to ask questions, learn more, or discuss your booking request.</p>
-            <div class="gcb-btns">
-              <a href="sms:6303290885" class="gcb-btn gcb-btn-sms">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                Text Glo Karts
-              </a>
-              <a href="tel:6303290885" class="gcb-btn gcb-btn-call">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 4.9 2 2 0 0 1 3.59 2.72h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.34a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                Call 630-329-0885
-              </a>
-            </div>
-          </div>
-        </div><!-- /.glo-form-right -->
-
-      </div><!-- /.glo-form-body -->
-
-      <div class="glo-submit-wrap">
-        <p id="bk-form-error" class="bk-form-error" style="display:none;" role="alert">
-          We couldn't submit your request. Please try again or text Glo Karts at 630-329-0885.
-        </p>
-        <button type="submit" id="bk-submit" class="glo-form-submit">Request My Tour &nbsp;&#8594;</button>
-        <p class="glo-submit-note">Glo Karts will contact you within 24 hours to confirm availability.</p>
-      </div>
-      <p class="glo-brand-footer">✦ Ride the city differently.</p>
-    </form>
-  </div>
+  </div><!-- /.glo-modal-card.glo-wiz-card -->
 </div>
 
 
 <script src="./main.js?v=aug22a"></script>
-<script>
-  /* ── BOOKING CALENDAR ─────────────────────────────────────
-     ADMIN: Add fully-booked dates below in 'YYYY-MM-DD' format.
-     Tours run THURSDAY – SUNDAY. Time slots: 8:00 PM · 9:15 PM · 10:30 PM
-  ─────────────────────────────────────────────────────────── */
-  (function () {
-    var BOOKED_DATES = [
-      '2026-08-08'
-      /* Add more booked dates below, one per line: */
-      /* '2026-08-22', '2026-09-05' */
-    ];
-
-    var ALLOWED_DAYS  = [0, 4, 5, 6]; /* Sun=0, Thu=4, Fri=5, Sat=6 */
-    var MONTHS_LONG   = ['January','February','March','April','May','June',
-                         'July','August','September','October','November','December'];
-
-    var todayRaw = new Date();
-    todayRaw.setHours(0, 0, 0, 0);
-
-    var calState = { year: todayRaw.getFullYear(), month: todayRaw.getMonth(), selected: null };
-
-    var hiddenInput  = document.getElementById('bk-date-m');
-    var calTrigger   = document.getElementById('bk-date-trigger');
-    var calDisplay   = document.getElementById('cal-display');
-    var calPopup     = document.getElementById('cal-popup');
-    var calGrid      = document.getElementById('cal-grid');
-    var calMonthYear = document.getElementById('cal-month-year');
-    var calPrev      = document.getElementById('cal-prev');
-    var calNext      = document.getElementById('cal-next');
-
-    if (!hiddenInput || !calTrigger || !calPopup) return;
-
-    function pad(n)     { return String(n).padStart(2, '0'); }
-    function toYMD(d)   { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
-    function todayYMD() { return toYMD(todayRaw); }
-    function isBooked(ymd)     { return BOOKED_DATES.indexOf(ymd) !== -1; }
-    function isAllowedDay(dow) { return ALLOWED_DAYS.indexOf(dow) !== -1; }
-
-    function renderCalendar() {
-      var yr = calState.year, mo = calState.month;
-      calMonthYear.textContent = MONTHS_LONG[mo] + ' ' + yr;
-      var firstDOW = new Date(yr, mo, 1).getDay();
-      var daysInMo = new Date(yr, mo + 1, 0).getDate();
-      var todayStr = todayYMD();
-      var html = '';
-      for (var i = 0; i < firstDOW; i++) html += '<div class="cal-day cal-day-empty"></div>';
-      for (var day = 1; day <= daysInMo; day++) {
-        var d   = new Date(yr, mo, day);
-        var ymd = toYMD(d);
-        var dow = d.getDay();
-        var cls = 'cal-day';
-        var attr = '', tip = '';
-        if (ymd === todayStr) cls += ' cal-day-today';
-        if (ymd < todayStr) {
-          cls += ' cal-day-past'; tip = 'Date has passed';
-        } else if (!isAllowedDay(dow)) {
-          cls += ' cal-day-closed'; tip = 'Closed — tours run Thu–Sun';
-        } else if (isBooked(ymd)) {
-          cls += ' cal-day-booked'; tip = 'Fully booked';
-        } else {
-          cls += ' cal-day-avail';
-          attr = 'data-date="' + ymd + '" tabindex="0" role="button"';
-        }
-        if (calState.selected === ymd) cls += ' cal-day-sel';
-        html += '<div class="' + cls + '" ' + attr + (tip ? ' title="' + tip + '"' : '') + '>' + day + '</div>';
-      }
-      calGrid.innerHTML = html;
-      calGrid.querySelectorAll('.cal-day-avail[data-date]').forEach(function (el) {
-        el.addEventListener('click', function () { pickDate(el.getAttribute('data-date')); });
-        el.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickDate(el.getAttribute('data-date')); }
-        });
-      });
-    }
-
-    function fmt(ymd) {
-      var p = ymd.split('-');
-      return MONTHS_LONG[parseInt(p[1], 10) - 1] + ' ' + parseInt(p[2], 10) + ', ' + p[0];
-    }
-    function pickDate(ymd) {
-      calState.selected = ymd;
-      hiddenInput.value = ymd;
-      calDisplay.textContent = fmt(ymd);
-      calTrigger.classList.add('cal-has-date');
-      calTrigger.classList.remove('cal-trigger-err');
-      closeCalendar();
-      hiddenInput.dispatchEvent(new Event('change'));
-      renderCalendar();
-    }
-    function openCalendar()  { calPopup.classList.add('open');    calTrigger.setAttribute('aria-expanded', 'true');  renderCalendar(); }
-    function closeCalendar() { calPopup.classList.remove('open'); calTrigger.setAttribute('aria-expanded', 'false'); }
-
-    calTrigger.addEventListener('click', function () {
-      calPopup.classList.contains('open') ? closeCalendar() : openCalendar();
-    });
-    calPrev.addEventListener('click', function () {
-      if (calState.month === 0) { calState.month = 11; calState.year--; } else calState.month--;
-      if (calState.year < todayRaw.getFullYear() ||
-          (calState.year === todayRaw.getFullYear() && calState.month < todayRaw.getMonth())) {
-        calState.year = todayRaw.getFullYear(); calState.month = todayRaw.getMonth();
-      }
-      renderCalendar();
-    });
-    calNext.addEventListener('click', function () {
-      if (calState.month === 11) { calState.month = 0; calState.year++; } else calState.month++;
-      renderCalendar();
-    });
-    document.addEventListener('click', function (e) {
-      var wrapper = document.getElementById('cal-wrapper');
-      if (wrapper && !wrapper.contains(e.target) && calPopup.classList.contains('open')) closeCalendar();
-    });
-    renderCalendar();
-  })();
-
-  /* Phone number validation — real-time */
-  (function () {
-    var ph  = document.getElementById('bk-phone');
-    var err = document.getElementById('bk-phone-error');
-    if (!ph || !err) return;
-    ph.addEventListener('input', function () {
-      var digits = ph.value.replace(/\D/g, '');
-      err.style.display = digits.length > 10 ? 'block' : 'none';
-    });
-  })();
-
-  /* Live booking summary + price calculation */
-  (function () {
-    var PRICE_PER_PERSON = 49.99;
-    var MONTHS = ['January','February','March','April','May','June',
-                  'July','August','September','October','November','December'];
-    var fExp    = document.getElementById('bk-experience');
-    var fDate   = document.getElementById('bk-date-m');
-    var fTime   = document.getElementById('bk-time-m');
-    var fGuests = document.getElementById('bk-guests-m');
-    var dExp    = document.getElementById('bs-exp-val');
-    var dDate   = document.getElementById('bs-date-val');
-    var dTime   = document.getElementById('bs-time-val');
-    var dGuests = document.getElementById('bs-guests-val');
-    var dTotal  = document.getElementById('bs-total-val');
-    if (!fExp || !dExp) return;
-    function formatDate(val) {
-      if (!val) return '—';
-      var p = val.split('-');
-      return MONTHS[parseInt(p[1], 10) - 1] + ' ' + parseInt(p[2], 10) + ', ' + p[0];
-    }
-    function update() {
-      var exp    = fExp.value;
-      var date   = fDate ? fDate.value : '';
-      var time   = fTime ? fTime.value : '';
-      var guests = fGuests ? parseInt(fGuests.value, 10) : NaN;
-      dExp.textContent    = exp    || '—';
-      dDate.textContent   = formatDate(date);
-      dTime.textContent   = time   || '—';
-      dGuests.textContent = (!isNaN(guests) && guests > 0) ? guests + ' Guest' + (guests > 1 ? 's' : '') : '—';
-      if (!isNaN(guests) && guests > 0) {
-        dTotal.textContent = '$' + (guests * PRICE_PER_PERSON).toFixed(2);
-      } else {
-        dTotal.textContent = '—';
-      }
-    }
-    [fExp, fDate, fTime, fGuests].forEach(function (el) {
-      if (el) { el.addEventListener('change', update); el.addEventListener('input', update); }
-    });
-    update();
-  })();
-
-  /* ── Booking Modal ──────────────────────────────────────── */
-  (function () {
-    var modal    = document.getElementById('booking-modal');
-    var backdrop = modal && modal.querySelector('.glo-modal-backdrop');
-    var closeBtn = modal && modal.querySelector('.glo-modal-close');
-    var form     = document.getElementById('booking-form');
-    var success  = document.getElementById('booking-success');
-    var submitBtn = document.getElementById('bk-submit');
-
-    function resetModalForm() {
-      if (form)      form.style.display = '';
-      if (success)   success.classList.remove('visible');
-      if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = 'Request My Tour &nbsp;&#8594;'; }
-      var errEl = document.getElementById('bk-form-error');
-      if (errEl) errEl.style.display = 'none';
-    }
-    function openModal() {
-      if (!modal) return;
-      resetModalForm();
-      modal.classList.add('open');
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow            = 'hidden';
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () { modal.classList.add('visible'); });
-      });
-      setTimeout(function () {
-        var first = modal.querySelector('input, select, textarea');
-        if (first) first.focus();
-      }, 380);
-    }
-    function closeModal() {
-      if (!modal) return;
-      modal.classList.remove('visible');
-      setTimeout(function () {
-        modal.classList.remove('open');
-        document.documentElement.style.overflow = '';
-        document.body.style.overflow            = '';
-        resetModalForm();
-      }, 330);
-    }
-
-    ['btn-book-header','btn-book-mobile','btn-plan-event-cp'].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) el.addEventListener('click', openModal);
-    });
-
-    if (backdrop) backdrop.addEventListener('click', closeModal);
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
-
-    if (form && submitBtn) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var firstName   = document.getElementById('bk-first-name');
-        var email       = document.getElementById('bk-email');
-        var dateInput   = document.getElementById('bk-date-m');
-        var dateTrigger = document.getElementById('bk-date-trigger');
-        if (firstName && !firstName.value.trim()) { firstName.focus(); return; }
-        if (email     && !email.value.trim())      { email.focus();     return; }
-        var phoneInput = document.getElementById('bk-phone');
-        var phoneErrEl = document.getElementById('bk-phone-error');
-        if (phoneInput) {
-          var digits = phoneInput.value.replace(/\D/g, '');
-          if (digits.length > 10) {
-            phoneInput.focus();
-            if (phoneErrEl) phoneErrEl.style.display = 'block';
-            return;
-          }
-          if (phoneErrEl) phoneErrEl.style.display = 'none';
-        }
-        if (!dateInput || !dateInput.value) {
-          if (dateTrigger) { dateTrigger.focus(); dateTrigger.classList.add('cal-trigger-err'); }
-          return;
-        }
-        /* Checkboxes — waiver, consent, policies */
-        var waiverCheck   = document.getElementById('bk-waiver');
-        var consentCheck  = document.getElementById('bk-consent');
-        var policiesCheck = document.getElementById('bk-policies');
-        if (waiverCheck   && !waiverCheck.checked)   { waiverCheck.focus();   return; }
-        if (consentCheck  && !consentCheck.checked)   { consentCheck.focus();  return; }
-        if (policiesCheck && !policiesCheck.checked)  { policiesCheck.focus(); return; }
-        var hfReplyto = document.getElementById('hf-replyto');
-        if (hfReplyto && email) hfReplyto.value = email.value.trim();
-        var hfTotal = document.getElementById('hf-total');
-        var totalEl = document.getElementById('bs-total-val');
-        if (hfTotal && totalEl) hfTotal.value = totalEl.textContent.trim();
-        submitBtn.disabled    = true;
-        submitBtn.textContent = 'Sending…';
-        fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { Accept: 'application/json' }
-        })
-        .then(function (res) {
-          return res.json().then(function (data) {
-            if (res.ok && data.ok !== false) {
-              var copyText = function (srcId, destId) {
-                var src = document.getElementById(srcId), dest = document.getElementById(destId);
-                if (src && dest) dest.textContent = src.textContent;
-              };
-              copyText('bs-exp-val','bks-exp'); copyText('bs-date-val','bks-date');
-              copyText('bs-time-val','bks-time'); copyText('bs-guests-val','bks-guests');
-              copyText('bs-total-val','bks-total');
-              form.style.display = 'none';
-              if (success) success.classList.add('visible');
-              var card = modal && modal.querySelector('.glo-modal-card');
-              if (card) card.scrollTop = 0;
-            } else {
-              submitBtn.disabled = false;
-              submitBtn.innerHTML = 'Request My Tour &nbsp;&#8594;';
-              var errEl = document.getElementById('bk-form-error');
-              if (errEl) errEl.style.display = 'block';
-            }
-          });
-        })
-        .catch(function () {
-          submitBtn.disabled  = false;
-          submitBtn.innerHTML = 'Request My Tour &nbsp;&#8594;';
-          var errEl = document.getElementById('bk-form-error');
-          if (errEl) errEl.style.display = 'block';
-        });
-      });
-    }
-  })();
-</script>
+<script src="./booking-wizard.js?v=aug22b"></script>
 
 </body>
 </html>
