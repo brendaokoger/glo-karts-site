@@ -131,8 +131,6 @@ export default async function handler(req, res) {
   /* ── Pushover notification ──────────────────────────────── */
   const poToken   = process.env.PUSHOVER_APP_TOKEN;
   const poUserKey = process.env.PUSHOVER_USER_KEY;
-
-  /* ── Pushover notification ──────────────────────────────── */
   let poDiag = { attempted: false, ok: null, status: null, error: null };
 
   if (poToken && poUserKey) {
