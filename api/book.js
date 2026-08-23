@@ -132,6 +132,9 @@ export default async function handler(req, res) {
   const poToken   = process.env.PUSHOVER_APP_TOKEN;
   const poUserKey = process.env.PUSHOVER_USER_KEY;
 
+  /* ── Pushover notification ──────────────────────────────── */
+  let poDiag = { attempted: false, ok: null, status: null, error: null };
+
   if (poToken && poUserKey) {
     const riderNames = (riders || [])
       .map((r, i) => {
@@ -141,12 +144,12 @@ export default async function handler(req, res) {
       .join('\n');
 
     const message = [
-      `🚨 NEW GLO KARTS BOOKING REQUEST`,
+      `NEW GLO KARTS BOOKING REQUEST`,
       ``,
       `Booking ID: ${bookingId}`,
       `Customer: ${contact.first} ${contact.last}`,
       `Phone: ${contact.phone}`,
-      `Email: ${contact.email || '—'}`,
+      `Email: ${contact.email || 'not provided'}`,
       ``,
       `Tour: ${tour}`,
       `Date: ${date}`,
@@ -154,37 +157,45 @@ export default async function handler(req, res) {
       `Riders: ${totalRiders}`,
       ``,
       `Waivers: ${waiversDone} of ${totalRiders} complete`,
-      ``,
-      `Riders:`,
-      riderNames,
+      riderNames ? `\nRiders:\n${riderNames}` : '',
       ``,
       `Status: NEEDS PHONE CONFIRMATION`,
-    ].join('\n');
+    ].filter(l => l !== undefined).join('\n');
+
+    poDiag.attempted = true;
 
     try {
       const poRes = await fetch('https://api.pushover.net/1/messages.json', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          token:   poToken,
-          user:    poUserKey,
-          title:   `🚨 New Booking — ${contact.first} ${contact.last}`,
-          message,
-          priority: 1,   /* high priority — bypasses quiet hours */
-          sound:   'siren',
+          token:    poToken,
+          user:     poUserKey,
+          title:    `New Booking: ${contact.first} ${contact.last}`,
+          message:  message.slice(0, 1024),   /* Pushover hard limit */
+          priority: 1,
+          sound:    'siren',
         }),
       });
 
-      if (!poRes.ok) {
-        const err = await poRes.text();
-        console.error('[Glo Karts] Pushover error:', err);
+      const poData = await poRes.json();
+      poDiag.ok     = poData.status === 1;
+      poDiag.status = poData.status;
+      if (!poDiag.ok) {
+        poDiag.error = poData.errors || poRes.status;
+        console.error('[Glo Karts] Pushover error:', JSON.stringify(poData));
       }
     } catch (pushErr) {
-      /* Push failures never block the booking response */
-      console.error('[Glo Karts] Pushover fetch error:', pushErr);
+      poDiag.ok    = false;
+      poDiag.error = pushErr.message;
+      console.error('[Glo Karts] Pushover fetch error:', pushErr.message);
     }
   } else {
-    console.warn('[Glo Karts] Pushover not configured. Set PUSHOVER_APP_TOKEN and PUSHOVER_USER_KEY in Vercel environment variables.');
+    poDiag.error = 'env vars missing: ' + [
+      !poToken   && 'PUSHOVER_APP_TOKEN',
+      !poUserKey && 'PUSHOVER_USER_KEY',
+    ].filter(Boolean).join(', ');
+    console.warn('[Glo Karts] Pushover not configured —', poDiag.error);
   }
 
   /* ── Success response ───────────────────────────────────── */
@@ -193,5 +204,6 @@ export default async function handler(req, res) {
     bookingId,
     status:    'PENDING_CONFIRMATION',
     message:   'Booking request received. A Glo Karts team member will contact you by phone.',
+    _pushover: poDiag,   /* temporary diagnostic — remove after Pushover confirmed */
   });
 }
