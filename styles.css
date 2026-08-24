@@ -3179,7 +3179,8 @@ a   { color: inherit; text-decoration: none; }
   border-color: var(--blue) !important; font-weight: 700;
 }
 .gwdt-today { border: 1px solid rgba(255,255,255,0.22); }
-.gwdt-past, .gwdt-closed, .gwdt-booked { opacity: 0.25; }
+.gwdt-past  { opacity: 0.18; pointer-events: none; cursor: not-allowed; }
+.gwdt-closed, .gwdt-booked { opacity: 0.25; }
 .gwdt-closed { color: rgba(255,255,255,0.3); }
 
 .gwdt-times { margin-bottom: 1.2rem; }

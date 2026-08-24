@@ -33,6 +33,17 @@
   /* ── Helpers ────────────────────────────────────────────── */
   function pad(n) { return String(n).padStart(2, '0'); }
   function toYMD(d) { return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+
+  /* Returns today's date string (YYYY-MM-DD) in America/Chicago time.
+     This is the business timezone. Never uses browser local time for
+     determining what counts as "past". */
+  function getTodayChicago() {
+    return new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Chicago',
+      year: 'numeric', month: '2-digit', day: '2-digit'
+    }).format(new Date());
+  }
+
   function fmtDate(ymd) {
     if (!ymd) return '—';
     var p = ymd.split('-');
@@ -124,12 +135,12 @@
   }
 
   function resetWizard() {
-    var now = new Date(); now.setHours(0,0,0,0);
+    var todayStr=getTodayChicago(), tp=todayStr.split('-');
     S.step=1; S.tour=''; S.date=''; S.time=''; S.riders=2;
     S.contact={ first:'', last:'', phone:'', email:'', isRiding:true };
     S.riderList=[]; S.sig={ printedName:'', dataUrl:'', ack:false, timestamp:'' };
     S.policiesAck=false; S.bookingId='';
-    S.calYear=now.getFullYear(); S.calMonth=now.getMonth();
+    S.calYear=parseInt(tp[0],10); S.calMonth=parseInt(tp[1],10)-1;
     /* Clear inputs */
     ['wiz-first','wiz-last','wiz-phone','wiz-email','wiz-printed-name'].forEach(function(id){
       var inp=el(id); if(inp) inp.value='';
@@ -240,9 +251,9 @@
     var prev=el('wiz-cal-prev'), next=el('wiz-cal-next');
     if (prev) prev.addEventListener('click', function(){
       if(S.calMonth===0){S.calMonth=11;S.calYear--;}else S.calMonth--;
-      var t=new Date();t.setHours(0,0,0,0);
-      if(S.calYear<t.getFullYear()||(S.calYear===t.getFullYear()&&S.calMonth<t.getMonth())){
-        S.calYear=t.getFullYear();S.calMonth=t.getMonth();
+      var tp=getTodayChicago().split('-'), ty=parseInt(tp[0],10), tm=parseInt(tp[1],10)-1;
+      if(S.calYear<ty||(S.calYear===ty&&S.calMonth<tm)){
+        S.calYear=ty; S.calMonth=tm;
       }
       renderCalendar();
     });
@@ -256,8 +267,7 @@
     if (!grid||!title) return;
     var yr=S.calYear, mo=S.calMonth;
     title.textContent=MONTHS_LONG[mo]+' '+yr;
-    var t=new Date();t.setHours(0,0,0,0);
-    var todayStr=toYMD(t);
+    var todayStr=getTodayChicago(); /* always America/Chicago — rolls forward automatically */
     var firstDOW=new Date(yr,mo,1).getDay();
     var daysInMo=new Date(yr,mo+1,0).getDate();
     var html='';

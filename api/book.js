@@ -73,6 +73,15 @@ export default async function handler(req, res) {
     return res.status(400).json({ ok: false, error: 'Missing required fields' });
   }
 
+  /* ── Past-date guard (America/Chicago) ─────────────────── */
+  const todayChicago = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Chicago',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+  }).format(new Date());
+  if (date < todayChicago) {
+    return res.status(400).json({ ok: false, error: 'Cannot book a date that has already passed.' });
+  }
+
   /* ── Waiver summary ────────────────────────────────────── */
   const totalRiders = Number(riderCount) || (riders || []).length;
   const waiversDone = (riders || []).filter(r => r.waiverStatus === 'COMPLETE').length;
