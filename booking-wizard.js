@@ -10,8 +10,10 @@
   var PRICE      = 49.99;
   var MIN_RIDERS = 2;
   var MAX_RIDERS = 10;
-  var BOOKED_DATES = ['2026-08-08']; /* ADMIN: add booked dates here */
-  var ALLOWED_DAYS = [0, 4, 5, 6];  /* Sun=0, Thu=4, Fri=5, Sat=6 */
+  var BOOKED_DATES = ['2026-08-08', '2026-08-29']; /* ADMIN: add fully-booked dates here */
+  var ALLOWED_DAYS = [0, 4, 5, 6];  /* Sun=0, Thu=4, Fri=5, Sat=6 — default for all tours */
+  var LADIES_NIGHT_TOUR = 'R&B Ladies Night Tour'; /* exact data-tour value */
+  var LADIES_NIGHT_DAYS = [4];       /* R&B Ladies Night: Thursdays only */
   var MONTHS_LONG  = ['January','February','March','April','May','June',
                       'July','August','September','October','November','December'];
 
@@ -54,7 +56,11 @@
     for (var i=0; i<8; i++) h += chars[Math.floor(Math.random()*chars.length)];
     return 'GLO-'+h;
   }
-  function isAllowedDay(dow) { return ALLOWED_DAYS.indexOf(dow) !== -1; }
+  /* Returns allowed days for the currently selected tour */
+  function allowedDays() {
+    return (S.tour === LADIES_NIGHT_TOUR) ? LADIES_NIGHT_DAYS : ALLOWED_DAYS;
+  }
+  function isAllowedDay(dow) { return allowedDays().indexOf(dow) !== -1; }
   function isBooked(ymd)     { return BOOKED_DATES.indexOf(ymd) !== -1; }
   function el(id)            { return document.getElementById(id); }
   function qsa(sel, ctx)     { return (ctx||document).querySelectorAll(sel); }
@@ -238,7 +244,12 @@
     card.addEventListener('click', function(){
       qsa('.gwt-card').forEach(function(c){ c.classList.remove('selected'); });
       card.classList.add('selected');
-      S.tour=card.getAttribute('data-tour');
+      var newTour = card.getAttribute('data-tour');
+      /* If switching tours, clear the selected date so an incompatible
+         date (e.g. a Friday picked for Downtown) doesn't carry over
+         when switching to R&B Ladies Night (Thursdays only). */
+      if (newTour !== S.tour) { S.date = ''; }
+      S.tour = newTour;
     });
   });
 
