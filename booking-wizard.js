@@ -289,11 +289,12 @@
       if(ymd===todayStr) cls+=' gwdt-today';
       if(ymd===S.date)   cls+=' gwdt-sel';
       if(ymd<todayStr){ cls+=' gwdt-past'; }
+      else if(!isAllowedDay(dow)){ cls+=' gwdt-closed'; }
       else if(isBooked(ymd)){
+        /* Only show BOOKED on days that are allowed for the current tour */
         cls+=' gwdt-booked';
         inner='<span class="gwdt-day-num">'+day+'</span><span class="gwdt-booked-lbl">BOOKED</span>';
       }
-      else if(!isAllowedDay(dow)){ cls+=' gwdt-closed'; }
       else{ cls+=' gwdt-avail'; attr='data-d="'+ymd+'" tabindex="0" role="button" aria-label="'+fmtDate(ymd)+'"'; }
       html+='<div class="'+cls+'" '+attr+'>'+inner+'</div>';
     }
