@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./styles.css?v=aug24a" />
+  <link rel="stylesheet" href="./styles.css?v=aug24b" />
 </head>
 
 <body>
@@ -220,17 +220,9 @@
             <span class="gwdt-cal-title" id="wiz-cal-title"></span>
             <button type="button" class="gwdt-nav-btn" id="wiz-cal-next" aria-label="Next month">&#8594;</button>
           </div>
-          <div class="gwdt-weekdays" aria-hidden="true">
-            <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
-          </div>
           <div class="gwdt-grid" id="wiz-cal-grid"></div>
-          <div class="gwdt-legend">
-            <span class="gwdt-leg-item"><span class="gwdt-leg-dot gwdt-leg-avail"></span>Available</span>
-            <span class="gwdt-leg-item"><span class="gwdt-leg-dot gwdt-leg-booked"></span>Booked</span>
-            <span class="gwdt-leg-item"><span class="gwdt-leg-dot gwdt-leg-closed"></span>Closed</span>
-          </div>
         </div>
-        <p class="gwdt-note">Tours available Thursday – Sunday only.</p>
+        <p class="gwdt-note" id="gwdt-avail-note"></p>
         <p class="glo-wiz-step-title" style="margin-top:1.5rem;">Choose a Time</p>
         <div class="gwdt-times">
           <button type="button" class="gwdt-time-chip" data-time="8:00 PM">8:00 PM</button>
@@ -383,7 +375,7 @@
 
 
 <script src="./main.js?v=aug22a"></script>
-<script src="./booking-wizard.js?v=aug24b"></script>
+<script src="./booking-wizard.js?v=aug24c"></script>
 
 </body>
 </html>

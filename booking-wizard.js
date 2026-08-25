@@ -285,16 +285,26 @@
     for(var i=0;i<firstDOW;i++) html+='<div class="gwdt-day gwdt-empty"></div>';
     for(var day=1;day<=daysInMo;day++){
       var d=new Date(yr,mo,day), ymd=toYMD(d), dow=d.getDay();
-      var cls='gwdt-day', attr='';
+      var cls='gwdt-day', attr='', inner=String(day);
       if(ymd===todayStr) cls+=' gwdt-today';
       if(ymd===S.date)   cls+=' gwdt-sel';
       if(ymd<todayStr){ cls+=' gwdt-past'; }
+      else if(isBooked(ymd)){
+        cls+=' gwdt-booked';
+        inner='<span class="gwdt-day-num">'+day+'</span><span class="gwdt-booked-lbl">BOOKED</span>';
+      }
       else if(!isAllowedDay(dow)){ cls+=' gwdt-closed'; }
-      else if(isBooked(ymd)){ cls+=' gwdt-booked'; }
       else{ cls+=' gwdt-avail'; attr='data-d="'+ymd+'" tabindex="0" role="button" aria-label="'+fmtDate(ymd)+'"'; }
-      html+='<div class="'+cls+'" '+attr+'>'+day+'</div>';
+      html+='<div class="'+cls+'" '+attr+'>'+inner+'</div>';
     }
     grid.innerHTML=html;
+    /* Update availability note */
+    var noteEl=el('gwdt-avail-note');
+    if(noteEl){
+      noteEl.textContent=(S.tour===LADIES_NIGHT_TOUR)
+        ? 'Tours available Thursday only.'
+        : 'Tours available Thursday – Sunday only.';
+    }
     qsa('.gwdt-avail[data-d]',grid).forEach(function(cell){
       cell.addEventListener('click',function(){ pickDate(cell.getAttribute('data-d')); });
       cell.addEventListener('keydown',function(e){

@@ -3179,9 +3179,20 @@ a   { color: inherit; text-decoration: none; }
   border-color: var(--blue) !important; font-weight: 700;
 }
 .gwdt-today { border: 1px solid rgba(255,255,255,0.22); }
-.gwdt-past  { opacity: 0.18; pointer-events: none; cursor: not-allowed; }
-.gwdt-closed, .gwdt-booked { opacity: 0.25; }
-.gwdt-closed { color: rgba(255,255,255,0.3); }
+.gwdt-past   { opacity: 0.18; pointer-events: none; cursor: not-allowed; }
+.gwdt-closed { opacity: 0.22; color: rgba(255,255,255,0.3); }
+.gwdt-booked {
+  flex-direction: column; gap: 1px;
+  opacity: 1; pointer-events: none; cursor: not-allowed;
+  background: rgba(255,30,30,0.07);
+  border: 1px solid rgba(255,30,30,0.18);
+}
+.gwdt-day-num  { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1; }
+.gwdt-booked-lbl {
+  font-size: 0.42rem; font-weight: 900; letter-spacing: 0.06em;
+  color: #ff2222; line-height: 1; white-space: nowrap;
+  transform: rotate(-14deg); display: block;
+}
 
 .gwdt-times { margin-bottom: 1.2rem; }
 .gwdt-time-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.65rem; }
