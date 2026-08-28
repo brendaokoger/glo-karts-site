@@ -5,10 +5,28 @@
   "cleanUrls": true,
   "headers": [
     {
-      "source": "/(index\\.html|contact\\.html|styles\\.css|main\\.js|booking-wizard\\.js)",
+      "source": "/(index\\.html|contact\\.html|policies\\.html|styles\\.css|main\\.js|booking-wizard\\.js)",
       "headers": [
         { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },
-        { "key": "Pragma", "value": "no-cache" }
+        { "key": "Pragma",        "value": "no-cache" }
+      ]
+    },
+    {
+      "source": "/videos/(.*\\.mp4)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/public/videos/(.*\\.mp4)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*\\.(png|jpg|jpeg|ico|webp|svg))",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=604800" }
       ]
     },
     {

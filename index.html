@@ -28,8 +28,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css?v=aug24b" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
   <style>
     /* ── Glo Karts Cinematic Intro ──────────────────────────── */
     #cinematic-intro {
@@ -180,7 +178,7 @@
 
     <!-- Full-bleed video — above the cards, edge to edge, always live -->
     <div class="cad-video-wrap">
-      <video class="cad-feat-video" muted playsinline webkit-playsinline autoplay loop preload="auto" aria-hidden="true" disablepictureinpicture>
+      <video class="cad-feat-video" muted playsinline webkit-playsinline autoplay loop preload="metadata" aria-hidden="true" disablepictureinpicture>
         <source src="./videos/glo-ladies-night.mp4" type="video/mp4">
       </video>
     </div>
@@ -240,7 +238,7 @@
 
     <!-- Video below MADE FOR THE NIGHT — always live, no play button -->
     <div class="cad-bottom-video-wrap">
-      <video class="cad-bottom-video" muted playsinline webkit-playsinline autoplay loop preload="auto" aria-hidden="true" disablepictureinpicture>
+      <video class="cad-bottom-video" muted playsinline webkit-playsinline autoplay loop preload="metadata" aria-hidden="true" disablepictureinpicture>
         <source src="./videos/glo-cad-bottom.mp4" type="video/mp4">
       </video>
     </div>
@@ -334,7 +332,7 @@
 
     <!-- ── Featured / Cinematic Video — full-bleed ───────── -->
     <div class="gia-feat-wrap" id="featured-video" data-src="./videos/glo-featured.mp4">
-      <video class="gia-feat-video" muted playsinline autoplay preload="auto" loop>
+      <video class="gia-feat-video" muted playsinline autoplay preload="metadata" loop>
         <source src="./videos/glo-featured.mp4" type="video/mp4">
       </video>
       <div class="gia-vid-overlay"></div>
@@ -355,8 +353,8 @@
 
         <!-- Slide 1: Downtown Chicago -->
         <div class="gia-slide" data-src="./videos/glo-01.mp4" role="listitem">
-          <video class="gia-video" muted playsinline autoplay loop preload="auto">
-            <source src="./videos/glo-01.mp4" type="video/mp4">
+          <video class="gia-video" muted playsinline autoplay loop preload="none">
+            <source src="" data-src="./videos/glo-01.mp4" type="video/mp4">
           </video>
           <div class="gia-vid-overlay"></div>
           <button class="gia-play-btn" type="button" aria-label="Watch Downtown Chicago">
@@ -367,8 +365,8 @@
 
         <!-- Slide 2: R&B Ladies Night -->
         <div class="gia-slide" data-src="./videos/glo-02.mp4" role="listitem">
-          <video class="gia-video" muted playsinline autoplay loop preload="auto">
-            <source src="./videos/glo-02.mp4" type="video/mp4">
+          <video class="gia-video" muted playsinline autoplay loop preload="none">
+            <source src="" data-src="./videos/glo-02.mp4" type="video/mp4">
           </video>
           <div class="gia-vid-overlay"></div>
           <button class="gia-play-btn" type="button" aria-label="Watch R&B Ladies Night">
@@ -379,8 +377,8 @@
 
         <!-- Slide 3: Birthday With Glo -->
         <div class="gia-slide" data-src="./videos/glo-03.mp4" role="listitem">
-          <video class="gia-video" muted playsinline autoplay loop preload="auto">
-            <source src="./videos/glo-03.mp4" type="video/mp4">
+          <video class="gia-video" muted playsinline autoplay loop preload="none">
+            <source src="" data-src="./videos/glo-03.mp4" type="video/mp4">
           </video>
           <div class="gia-vid-overlay"></div>
           <button class="gia-play-btn" type="button" aria-label="Watch Birthday With Glo">
@@ -391,8 +389,8 @@
 
         <!-- Slide 4: Girls' Night Out -->
         <div class="gia-slide" data-src="./videos/glo-04.mp4" role="listitem">
-          <video class="gia-video" muted playsinline autoplay loop preload="auto">
-            <source src="./videos/glo-04.mp4" type="video/mp4">
+          <video class="gia-video" muted playsinline autoplay loop preload="none">
+            <source src="" data-src="./videos/glo-04.mp4" type="video/mp4">
           </video>
           <div class="gia-vid-overlay"></div>
           <button class="gia-play-btn" type="button" aria-label="Watch Girls' Night Out">
@@ -403,8 +401,8 @@
 
         <!-- Slide 5: Chicago After Dark -->
         <div class="gia-slide" data-src="./videos/glo-05.mp4" role="listitem">
-          <video class="gia-video" muted playsinline autoplay loop preload="auto">
-            <source src="./videos/glo-05.mp4" type="video/mp4">
+          <video class="gia-video" muted playsinline autoplay loop preload="none">
+            <source src="" data-src="./videos/glo-05.mp4" type="video/mp4">
           </video>
           <div class="gia-vid-overlay"></div>
           <button class="gia-play-btn" type="button" aria-label="Watch Chicago After Dark">
@@ -1129,6 +1127,46 @@
       if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
     });
   })();
+</script>
+
+<script>
+/* ── Carousel video lazy loader ────────────────────────────────
+   Carousel slides start with preload="none" and an empty src so
+   they consume zero bandwidth until the carousel scrolls into view.
+   IntersectionObserver sets the real src 200 px before viewport
+   entry, giving the browser enough lead time to buffer a first frame
+   before the user reaches the section.
+──────────────────────────────────────────────────────────────── */
+(function () {
+  var carouselWrap = document.querySelector('.gia-carousel-wrap');
+  if (!carouselWrap) return;
+
+  function loadCarouselVideos() {
+    document.querySelectorAll('.gia-video').forEach(function (v) {
+      var s = v.querySelector('source[data-src]');
+      if (!s || s.src) return;          /* skip if already loaded */
+      s.src = s.getAttribute('data-src');
+      v.load();
+      v.play().catch(function () {});   /* iOS needs explicit play() */
+    });
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    /* Fallback for very old browsers — load immediately */
+    loadCarouselVideos();
+    return;
+  }
+
+  var observed = false;
+  var io = new IntersectionObserver(function (entries) {
+    if (observed || !entries[0].isIntersecting) return;
+    observed = true;
+    io.disconnect();
+    loadCarouselVideos();
+  }, { rootMargin: '200px 0px' });
+
+  io.observe(carouselWrap);
+})();
 </script>
 
 </body>

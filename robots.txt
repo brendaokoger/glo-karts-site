@@ -1,0 +1,9 @@
+# Glo Karts — robots.txt
+# Allow all legitimate crawlers to index public pages.
+# Block API routes and video directories to reduce unnecessary bandwidth.
+
+User-agent: *
+Disallow: /api/
+Disallow: /videos/
+Disallow: /public/
+Allow: /
