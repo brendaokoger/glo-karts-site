@@ -1,6 +1,6 @@
 /* ── Glo Karts Booking Wizard ─────────────────────────────────
    Multi-step booking experience.
-   v1.0 — aug24f
+   v1.0 — sep20a
    No external dependencies. Attaches on DOMContentLoaded.
 ──────────────────────────────────────────────────────────────── */
 (function () {
@@ -10,7 +10,7 @@
   var PRICE      = 49.99;
   var MIN_RIDERS = 2;
   var MAX_RIDERS = 10;
-  var BOOKED_DATES = ['2026-08-08', '2026-08-28', '2026-08-29', '2026-08-30', '2026-09-05', '2026-09-06']; /* ADMIN: add fully-booked dates here */
+  var BOOKED_DATES = ['2026-08-08', '2026-08-28', '2026-08-29', '2026-08-30', '2026-09-05', '2026-09-06', '2026-09-19']; /* ADMIN: add fully-booked dates here */
   var ALLOWED_DAYS = [0, 4, 5, 6];  /* Sun=0, Thu=4, Fri=5, Sat=6 — default for all tours */
   var LADIES_NIGHT_TOUR = 'R&B Ladies Night Tour'; /* exact data-tour value */
   var LADIES_NIGHT_DAYS = [4];       /* R&B Ladies Night: Thursdays only */
@@ -288,13 +288,13 @@
       var cls='gwdt-day', attr='', inner=String(day);
       if(ymd===todayStr) cls+=' gwdt-today';
       if(ymd===S.date)   cls+=' gwdt-sel';
-      if(ymd<todayStr){ cls+=' gwdt-past'; }
-      else if(!isAllowedDay(dow)){ cls+=' gwdt-closed'; }
-      else if(isBooked(ymd)){
-        /* Only show BOOKED on days that are allowed for the current tour */
+      if(isBooked(ymd) && isAllowedDay(dow)){
+        /* BOOKED wins over past/closed — shows red label on any allowed day */
         cls+=' gwdt-booked';
         inner='<span class="gwdt-day-num">'+day+'</span><span class="gwdt-booked-lbl">BOOKED</span>';
       }
+      else if(ymd<todayStr){ cls+=' gwdt-past'; }
+      else if(!isAllowedDay(dow)){ cls+=' gwdt-closed'; }
       else{ cls+=' gwdt-avail'; attr='data-d="'+ymd+'" tabindex="0" role="button" aria-label="'+fmtDate(ymd)+'"'; }
       html+='<div class="'+cls+'" '+attr+'>'+inner+'</div>';
     }
