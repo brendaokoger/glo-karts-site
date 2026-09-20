@@ -1,6 +1,6 @@
 /* ── Glo Karts Booking Wizard ─────────────────────────────────
    Multi-step booking experience.
-   v1.0 — sep20a
+   v1.0 — sep20b
    No external dependencies. Attaches on DOMContentLoaded.
 ──────────────────────────────────────────────────────────────── */
 (function () {
@@ -10,7 +10,8 @@
   var PRICE      = 49.99;
   var MIN_RIDERS = 2;
   var MAX_RIDERS = 10;
-  var BOOKED_DATES = ['2026-08-08', '2026-08-28', '2026-08-29', '2026-08-30', '2026-09-05', '2026-09-06', '2026-09-19']; /* ADMIN: add fully-booked dates here */
+  var BOOKED_DATES  = ['2026-08-08', '2026-08-28', '2026-08-29', '2026-08-30', '2026-09-05', '2026-09-06']; /* ADMIN: add fully-booked dates here */
+  var NO_APPT_DATES = ['2026-09-19']; /* ADMIN: dates with no tours (weather, etc.) */
   var ALLOWED_DAYS = [0, 4, 5, 6];  /* Sun=0, Thu=4, Fri=5, Sat=6 — default for all tours */
   var LADIES_NIGHT_TOUR = 'R&B Ladies Night Tour'; /* exact data-tour value */
   var LADIES_NIGHT_DAYS = [4];       /* R&B Ladies Night: Thursdays only */
@@ -61,7 +62,8 @@
     return (S.tour === LADIES_NIGHT_TOUR) ? LADIES_NIGHT_DAYS : ALLOWED_DAYS;
   }
   function isAllowedDay(dow) { return allowedDays().indexOf(dow) !== -1; }
-  function isBooked(ymd)     { return BOOKED_DATES.indexOf(ymd) !== -1; }
+  function isBooked(ymd)     { return BOOKED_DATES.indexOf(ymd)  !== -1; }
+  function isNoAppt(ymd)    { return NO_APPT_DATES.indexOf(ymd) !== -1; }
   function el(id)            { return document.getElementById(id); }
   function qsa(sel, ctx)     { return (ctx||document).querySelectorAll(sel); }
   function esc(str)          { return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -288,8 +290,11 @@
       var cls='gwdt-day', attr='', inner=String(day);
       if(ymd===todayStr) cls+=' gwdt-today';
       if(ymd===S.date)   cls+=' gwdt-sel';
-      if(isBooked(ymd) && isAllowedDay(dow)){
-        /* BOOKED wins over past/closed — shows red label on any allowed day */
+      if(isNoAppt(ymd) && isAllowedDay(dow)){
+        cls+=' gwdt-booked';
+        inner='<span class="gwdt-day-num">'+day+'</span><span class="gwdt-booked-lbl">NO APPTS</span>';
+      }
+      else if(isBooked(ymd) && isAllowedDay(dow)){
         cls+=' gwdt-booked';
         inner='<span class="gwdt-day-num">'+day+'</span><span class="gwdt-booked-lbl">BOOKED</span>';
       }
