@@ -1,6 +1,6 @@
 /* ── Glo Karts Booking Wizard ─────────────────────────────────
    Multi-step booking experience.
-   v1.0 — sep20c
+   v1.0 — sep25a
    No external dependencies. Attaches on DOMContentLoaded.
 ──────────────────────────────────────────────────────────────── */
 (function () {
