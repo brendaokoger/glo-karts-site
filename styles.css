@@ -879,7 +879,7 @@ a   { color: inherit; text-decoration: none; }
   #chicago-after-dark { padding: 4rem 0; }
   .cad-cards { gap: 0.85rem; }
   .cad-card  { padding: 1.75rem 1.5rem; }
-  .cad-feat-video { max-height: 55vh; }
+  .cad-feat-video { min-height: 55vh; max-height: 75vh; }
 }
 
 /* ── Video below last card — full-width, always live ─────── */
@@ -912,14 +912,15 @@ a   { color: inherit; text-decoration: none; }
   margin: 3rem 0;
   overflow: hidden;
   position: relative;
+  min-height: 60vh;
   border-top: 1px solid rgba(0,195,255,0.22);
   border-bottom: 1px solid rgba(0,195,255,0.22);
   -webkit-animation: cad-vid-glow 3s ease-in-out infinite;
   animation: cad-vid-glow 3s ease-in-out infinite;
 }
 .cad-feat-video {
-  width: 100%; display: block;
-  max-height: 65vh; object-fit: cover;
+  width: 100%; height: 100%; display: block;
+  min-height: 60vh; max-height: 80vh; object-fit: cover;
   background: #07020f;
   pointer-events: none;
 }
@@ -2759,7 +2760,7 @@ a   { color: inherit; text-decoration: none; }
   .glo-brand-footer { padding: 0 1rem 1rem; }
   .glo-modal-success { padding: 1.5rem 1rem; }
   .exp-grid          { grid-template-columns: 1fr; gap: 1rem; }
-  .cad-feat-video    { max-height: 300px; }
+  .cad-feat-video    { min-height: 55vh; max-height: 75vh; }
   .exp-card          { min-height: 400px; }
   .ec-body    { padding: 1.4rem 1.4rem 1.6rem; }
   .ec-desc    { max-width: 100%; }
