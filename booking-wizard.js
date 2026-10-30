@@ -12,6 +12,7 @@
   var MAX_RIDERS = 10;
   var BOOKED_DATES  = ['2026-08-08', '2026-08-28', '2026-08-29', '2026-08-30', '2026-09-05', '2026-09-06', '2026-09-26']; /* ADMIN: add fully-booked dates here */
   var NO_APPT_DATES = ['2026-09-19']; /* ADMIN: dates with no tours (weather, etc.) */
+  var BOOKED_TIMES  = {'2026-09-26': ['8:00 PM', '9:00 PM']}; /* ADMIN: per-date blocked time slots */
   var ALLOWED_DAYS = [0, 4, 5, 6];  /* Sun=0, Thu=4, Fri=5, Sat=6 — default for all tours */
   var LADIES_NIGHT_TOUR = 'R&B Ladies Night Tour'; /* exact data-tour value */
   var LADIES_NIGHT_DAYS = [4];       /* R&B Ladies Night: Thursdays only */
@@ -318,10 +319,24 @@
       });
     });
   }
-  function pickDate(ymd){ S.date=ymd; renderCalendar(); }
+  function updateTimeChips() {
+    var blocked = (S.date && BOOKED_TIMES[S.date]) ? BOOKED_TIMES[S.date] : [];
+    qsa('.gwdt-time-chip').forEach(function(chip){
+      var t = chip.getAttribute('data-time');
+      var isBlocked = blocked.indexOf(t) !== -1;
+      chip.disabled = isBlocked;
+      chip.classList.toggle('gwdt-time-blocked', isBlocked);
+      if (isBlocked && chip.classList.contains('selected')) {
+        chip.classList.remove('selected');
+        S.time = '';
+      }
+    });
+  }
+  function pickDate(ymd){ S.date=ymd; renderCalendar(); updateTimeChips(); }
 
   qsa('.gwdt-time-chip').forEach(function(chip){
     chip.addEventListener('click',function(){
+      if (chip.disabled) return;
       qsa('.gwdt-time-chip').forEach(function(c){ c.classList.remove('selected'); });
       chip.classList.add('selected');
       S.time=chip.getAttribute('data-time');
