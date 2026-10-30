@@ -12,7 +12,7 @@
   var MAX_RIDERS = 10;
   var BOOKED_DATES  = ['2026-08-08', '2026-08-28', '2026-08-29', '2026-08-30', '2026-09-05', '2026-09-06', '2026-09-26', '2026-10-30']; /* ADMIN: add fully-booked dates here */
   var NO_APPT_DATES = ['2026-09-19']; /* ADMIN: dates with no tours (weather, etc.) */
-  var BOOKED_TIMES  = {'2026-09-26': ['8:00 PM', '9:00 PM']}; /* ADMIN: per-date blocked time slots */
+  var BOOKED_TIMES  = {'2026-09-26': ['8:00 PM', '9:00 PM'], '2026-10-30': ['8:00 PM', '9:00 PM']}; /* ADMIN: per-date blocked time slots */
   var ALLOWED_DAYS = [0, 4, 5, 6];  /* Sun=0, Thu=4, Fri=5, Sat=6 — default for all tours */
   var LADIES_NIGHT_TOUR = 'R&B Ladies Night Tour'; /* exact data-tour value */
   var LADIES_NIGHT_DAYS = [4];       /* R&B Ladies Night: Thursdays only */
