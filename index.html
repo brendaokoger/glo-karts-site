@@ -56,29 +56,6 @@
     #door-left.open  { transform: translateX(-100%); }
     #door-right.open { transform: translateX(100%); }
 
-    /* ── Hero image fix ── show full portrait, not cropped center */
-    #hero {
-      background-size: auto 100vh !important;
-      background-position: 100% 0% !important;
-    }
-    .hero-inner {
-      box-sizing: border-box;
-      padding: 120px 7% 3rem !important;
-    }
-    @media (max-width: 900px) {
-      #hero {
-        background-size: auto 100vh !important;
-        background-position: 75% 0% !important;
-      }
-      .hero-inner { padding: 80px 5% 2rem !important; }
-    }
-    @media (max-width: 640px) {
-      #hero {
-        background-size: auto 100vh !important;
-        background-position: 65% 0% !important;
-      }
-      .hero-inner { padding: 72px 5% 1rem !important; }
-    }
     /* ── 2026 season closed: hide all booking entry points ───── */
     #btn-book-header, #btn-book-mobile, #btn-book-tour,
     #btn-book-sticky, #btn-reserve, #btn-check-avail,
@@ -94,6 +71,11 @@
 <div id="cinematic-intro" role="presentation" aria-hidden="true">
   <div id="door-left"></div>
   <div id="door-right"></div>
+</div>
+
+<!-- ── Season Announcement Banner ──────────────────────── -->
+<div id="season-banner" role="status" aria-label="Season status">
+  2026 SEASON CLOSED &bull; SEE YOU IN 2027
 </div>
 
 <div id="site-content">
@@ -143,11 +125,17 @@
 
     <div class="hero-inner">
       <div class="hero-text">
+        <p class="hero-kicker">Thank you for an unforgettable season</p>
         <h1 class="hero-headline" id="hero-headline">
           THE <span class="glo-blue">GLO</span><br>
           RETURNS IN<br>
           <span class="glo-blue glo-2027">2027</span>
         </h1>
+        <p class="hero-sub">Our 2026 season has wrapped up. Be the first to hear when 2027 bookings open.</p>
+        <div class="hero-ctas">
+          <a href="#updates-2027" class="hero-cta-primary">NOTIFY ME WHEN BOOKINGS OPEN</a>
+          <a href="#experiences" class="hero-cta-link">Explore the Experiences &#8594;</a>
+        </div>
       </div>
     </div>
   </section>
@@ -164,26 +152,6 @@
       </div>
     </div>
   </div>
-
-  <!-- ── 2027 Season Updates Signup ──────────────────────── -->
-  <section id="updates-2027" aria-labelledby="updates-heading">
-    <div class="updates-inner">
-      <div class="updates-box reveal">
-        <h2 class="updates-heading" id="updates-heading">GET FIRST ACCESS TO 2027 DATES</h2>
-        <p class="updates-sub">Be the first to know when booking opens for the 2027 season.</p>
-        <form class="updates-form" id="updates-form" novalidate>
-          <div class="updates-fields">
-            <input class="updates-input" type="text"  id="upd-name"  name="name"  placeholder="Your Name"         autocomplete="name"  required />
-            <input class="updates-input" type="email" id="upd-email" name="email" placeholder="Email Address"     autocomplete="email" required />
-            <input class="updates-input" type="tel"   id="upd-phone" name="phone" placeholder="Phone Number"      autocomplete="tel"   required />
-          </div>
-          <p class="updates-consent">By submitting, you agree to receive updates from Glo Karts Chicago. We won't share your information.</p>
-          <button class="updates-btn" type="submit" id="upd-submit">KEEP ME IN THE GLO</button>
-          <p class="updates-msg" id="updates-msg" aria-live="polite"></p>
-        </form>
-      </div>
-    </div>
-  </section>
 
   <!-- ── Chicago After Dark ──────────────────────────────── -->
   <section id="chicago-after-dark" aria-labelledby="cad-heading">
@@ -269,33 +237,58 @@
   <!-- ── Our Experiences ──────────────────────────────────── -->
   <section id="experiences" class="section" aria-labelledby="experiences-title">
     <div class="section-inner">
-      <h2 class="section-title ec-season-head reveal" id="experiences-title">NEXT SEASON. SAME UNFORGETTABLE ENERGY.</h2>
+      <div class="season-layout">
 
-      <div class="exp-grid">
+        <!-- Left: heading + tour cards -->
+        <div class="season-tours">
+          <h2 class="section-title ec-season-head reveal" id="experiences-title">NEXT SEASON. SAME UNFORGETTABLE ENERGY.</h2>
 
-        <!-- Downtown Chicago Tour -->
-        <article class="exp-card ec-downtown reveal" role="button" tabindex="0"
-                 aria-haspopup="dialog" data-tour-panel="panel-downtown">
-          <div class="ec-img ec-img-downtown"></div>
-          <div class="ec-overlay"></div>
-          <div class="ec-label">
-            <span class="ec-label-title">DOWNTOWN CHICAGO TOUR</span>
-            <span class="ec-label-arrow">&#8594;</span>
+          <div class="exp-grid">
+
+            <!-- Downtown Chicago Tour -->
+            <article class="exp-card ec-downtown reveal" role="button" tabindex="0"
+                     aria-haspopup="dialog" data-tour-panel="panel-downtown">
+              <div class="ec-img ec-img-downtown"></div>
+              <div class="ec-overlay"></div>
+              <div class="ec-label">
+                <span class="ec-label-title">DOWNTOWN CHICAGO TOUR</span>
+                <span class="ec-label-arrow">&#8594;</span>
+              </div>
+            </article>
+
+            <!-- R&B Ladies Night -->
+            <article class="exp-card ec-ladies reveal" role="button" tabindex="0"
+                     aria-haspopup="dialog" data-tour-panel="panel-ladies">
+              <div class="ec-img ec-img-ladies"></div>
+              <div class="ec-overlay"></div>
+              <div class="ec-label">
+                <span class="ec-label-title">R&amp;B LADIES NIGHT</span>
+                <span class="ec-label-arrow">&#8594;</span>
+              </div>
+            </article>
+
           </div>
-        </article>
+        </div><!-- /.season-tours -->
 
-        <!-- R&B Ladies Night -->
-        <article class="exp-card ec-ladies reveal" role="button" tabindex="0"
-                 aria-haspopup="dialog" data-tour-panel="panel-ladies">
-          <div class="ec-img ec-img-ladies"></div>
-          <div class="ec-overlay"></div>
-          <div class="ec-label">
-            <span class="ec-label-title">R&amp;B LADIES NIGHT</span>
-            <span class="ec-label-arrow">&#8594;</span>
+        <!-- Right: 2027 signup box -->
+        <div class="season-signup" id="updates-2027" aria-labelledby="updates-heading">
+          <div class="updates-box">
+            <h2 class="updates-heading" id="updates-heading">GET FIRST ACCESS TO 2027 DATES</h2>
+            <p class="updates-sub">Be the first to know when 2027 bookings open.</p>
+            <form class="updates-form" id="updates-form" novalidate>
+              <div class="updates-fields">
+                <input class="updates-input" type="text"  id="upd-name"  name="name"  placeholder="Name"         autocomplete="name"  required />
+                <input class="updates-input" type="email" id="upd-email" name="email" placeholder="Email address" autocomplete="email" required />
+                <input class="updates-input" type="tel"   id="upd-phone" name="phone" placeholder="Phone number"  autocomplete="tel"   required />
+              </div>
+              <p class="updates-consent">Email me about Glo Karts&rsquo; 2027 season. Unsubscribe anytime. Providing a phone number does not authorize promotional text messages.</p>
+              <button class="updates-btn" type="submit" id="upd-submit">KEEP ME IN THE GLO</button>
+              <p class="updates-msg" id="updates-msg" aria-live="polite"></p>
+            </form>
           </div>
-        </article>
+        </div><!-- /.season-signup -->
 
-      </div>
+      </div><!-- /.season-layout -->
     </div>
   </section>
 
