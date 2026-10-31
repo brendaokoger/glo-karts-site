@@ -82,30 +82,10 @@ a   { color: inherit; text-decoration: none; }
   box-shadow: 0 0 18px rgba(0,195,255,0.15);
 }
 
-/* ── Season announcement banner ───────────────────────── */
-#season-banner {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 1001;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #020c14;
-  border-bottom: 1px solid rgba(0,195,255,0.18);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(0,195,255,0.85);
-  white-space: nowrap;
-}
-
 /* ── Header ───────────────────────────────────────────── */
 #site-header {
   position: fixed;
-  top: 28px; left: 0; right: 0;
+  top: 46px; left: 0; right: 0;
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -248,7 +228,7 @@ a   { color: inherit; text-decoration: none; }
 /* Mobile nav drawer — always flex, shown/hidden via opacity+visibility */
 .mobile-nav {
   position: fixed;
-  top: calc(28px + 80px); left: 0; right: 0;
+  top: calc(46px + 80px); left: 0; right: 0;
   z-index: 999;
   display: flex;
   flex-direction: column;
@@ -384,7 +364,7 @@ a   { color: inherit; text-decoration: none; }
   max-width: 1320px;
   margin: 0 auto;
   box-sizing: border-box;
-  padding: 128px 6% 4rem;
+  padding: 140px 6% 4rem;
 }
 
 .hero-text {
@@ -673,13 +653,14 @@ a   { color: inherit; text-decoration: none; }
 
 /* ── Marquee Bar ──────────────────────────────────────── */
 #marquee-bar {
-  position: relative;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1001;
   overflow: hidden;
   background:
     radial-gradient(ellipse 60% 200% at 50% 50%, rgba(0,195,255,0.055) 0%, transparent 70%),
-    #000;
-  border-top:    1px solid rgba(0,195,255,0.22);
-  border-bottom: 1px solid rgba(232,35,58,0.28);
+    #020c14;
+  border-bottom: 1px solid rgba(0,195,255,0.18);
   height: 46px;
   display: -webkit-flex;
   display: flex;
@@ -1971,7 +1952,8 @@ a   { color: inherit; text-decoration: none; }
 
 /* ── Site content ─────────────────────────────────────── */
 /* Always visible — the two black door panels cover it during the intro */
-#site-content { opacity: 1; }
+/* Push content below the fixed marquee bar */
+#site-content { opacity: 1; padding-top: 46px; }
 #site-content.revealed { opacity: 1; }
 
 /* ── Modals ───────────────────────────────────────────── */
@@ -2858,10 +2840,10 @@ a   { color: inherit; text-decoration: none; }
 
 /* ── Responsive ───────────────────────────────────────── */
 @media (max-width: 900px) {
-  #site-header { padding: 0 4%; height: 64px; top: 28px; }
+  #site-header { padding: 0 4%; height: 64px; top: 46px; }
   .header-nav, .hd-only { display: none; }
   .hamburger { display: -webkit-flex; display: flex; }
-  .mobile-nav { top: calc(28px + 64px); }
+  .mobile-nav { top: calc(46px + 64px); }
   .nav-wm-name { font-size: 1.55rem; }
 
   #hero {
@@ -2869,7 +2851,7 @@ a   { color: inherit; text-decoration: none; }
     background-position: 68% 0%;
   }
   .hero-inner {
-    padding: 108px 5% 3rem;
+    padding: 122px 5% 3rem;
   }
   /* Stack at tablet: signin box below tours */
   .season-layout { flex-direction: column; gap: 2rem; }
@@ -2896,16 +2878,16 @@ a   { color: inherit; text-decoration: none; }
 }
 
 @media (max-width: 640px) {
-  #site-header { height: 60px; top: 28px; }
-  .mobile-nav  { top: calc(28px + 60px); }
+  #site-header { height: 60px; top: 46px; }
+  .mobile-nav  { top: calc(46px + 60px); }
   .nav-wm-name { font-size: 1.42rem; }
   #hero {
-    min-height: 85vh;
+    min-height: 82vh;
     background-size: cover;
     background-position: 70% 0%;
   }
   .hero-inner {
-    padding: 96px 5% 2.5rem;
+    padding: 110px 5% 2.5rem;
     text-align: left;
     -webkit-align-items: flex-start; align-items: flex-start;
     -webkit-justify-content: flex-start; justify-content: flex-start;
