@@ -1269,10 +1269,12 @@
       .then(function (r) { return r.json(); })
       .then(function (data) {
         if (data.ok) {
-          msgEl.textContent = data.message;
-          msgEl.className = 'updates-msg success';
-          form.reset();
-          btn.textContent = 'YOU\'RE IN THE GLO ✓';
+          /* Replace form content with personalized confirmation */
+          var box = form.closest('.updates-box') || form.parentElement;
+          box.innerHTML =
+            '<div class="updates-success-wrap" role="status" aria-live="polite">' +
+            '<p class="updates-success-msg">' + (data.message || 'You\'re in the GLO!') + '</p>' +
+            '</div>';
         } else {
           msgEl.textContent = data.error || 'Something went wrong. Please try again.';
           msgEl.className = 'updates-msg error';
