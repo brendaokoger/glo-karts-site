@@ -317,22 +317,29 @@ a   { color: inherit; text-decoration: none; }
   background:
     /* Left column — fully opaque behind form/headline */
     linear-gradient(to right,
+      rgba(0,0,0,0.98) 0%,
+      rgba(0,0,0,0.97) 36%,
+      rgba(0,0,0,0.88) 50%,
+      rgba(0,0,0,0.36) 64%,
+      rgba(0,0,0,0.00) 76%),
+    /* Right edge — hide baked-in UI text */
+    linear-gradient(to left,
       rgba(0,0,0,0.97) 0%,
-      rgba(0,0,0,0.94) 30%,
-      rgba(0,0,0,0.72) 46%,
-      rgba(0,0,0,0.20) 60%,
-      rgba(0,0,0,0.00) 72%),
-    /* Top edge darken for nav legibility */
+      rgba(0,0,0,0.82) 6%,
+      rgba(0,0,0,0.40) 14%,
+      rgba(0,0,0,0.00) 24%),
+    /* Top edge darken — cover baked-in nav + banner */
     linear-gradient(to bottom,
-      rgba(0,0,0,0.60) 0%,
-      transparent 18%),
+      rgba(0,0,0,0.88) 0%,
+      rgba(0,0,0,0.62) 8%,
+      transparent 22%),
     /* Bottom fade */
     linear-gradient(to top,
       rgba(0,0,0,0.95) 0%,
       rgba(0,0,0,0.50) 14%,
       transparent 30%),
-    /* Cover baked-in form panel (lower-right of reference image ~78-88% x, 52-80% y) */
-    radial-gradient(ellipse 16% 32% at 83% 68%, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.90) 35%, transparent 70%);
+    /* Cover baked-in form panel area */
+    radial-gradient(ellipse 22% 36% at 86% 66%, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.85) 40%, transparent 72%);
   z-index: 0;
 }
 
@@ -368,7 +375,7 @@ a   { color: inherit; text-decoration: none; }
   max-width: 1320px;
   margin: 0 auto;
   box-sizing: border-box;
-  padding: 148px 6% 5rem;
+  padding: 76px 6% 3rem;
   min-height: 100svh;
 }
 
@@ -493,7 +500,7 @@ a   { color: inherit; text-decoration: none; }
 
 .hero-headline {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(5.2rem, 10.5vw, 9.8rem);
+  font-size: clamp(5.2rem, 9.4vw, 8.6rem);
   letter-spacing: 0.04em;
   line-height: 0.88;
   color: #fff;
