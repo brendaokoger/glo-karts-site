@@ -298,16 +298,16 @@ a   { color: inherit; text-decoration: none; }
 /* ── Hero ─────────────────────────────────────────────── */
 #hero {
   position: relative;
-  min-height: 92vh;
+  min-height: 100svh;
   display: -webkit-flex;
   display: flex;
   -webkit-align-items: flex-start;
   align-items: flex-start;
   overflow: hidden;
-  background-color: #000;
-  background-image: url('./glo-karts-hero.png');
+  background-color: #020810;
+  background-image: url('./chicago-river-bg.png');
   background-size: cover;
-  background-position: 70% 30%;
+  background-position: 62% center;
   padding-top: 0;
 }
 
@@ -315,62 +315,119 @@ a   { color: inherit; text-decoration: none; }
   position: absolute;
   inset: 0;
   background:
+    /* Left column — fully opaque behind form/headline */
     linear-gradient(to right,
       rgba(0,0,0,0.97) 0%,
-      rgba(0,0,0,0.92) 28%,
-      rgba(0,0,0,0.68) 44%,
-      rgba(0,0,0,0.18) 60%,
-      rgba(0,0,0,0.00) 75%),
-    linear-gradient(to top,
-      rgba(0,0,0,0.85) 0%,
-      rgba(0,0,0,0.30) 8%,
-      transparent 22%),
+      rgba(0,0,0,0.94) 30%,
+      rgba(0,0,0,0.72) 46%,
+      rgba(0,0,0,0.20) 60%,
+      rgba(0,0,0,0.00) 72%),
+    /* Top edge darken for nav legibility */
     linear-gradient(to bottom,
-      rgba(0,0,0,0.55) 0%,
-      transparent 18%);
+      rgba(0,0,0,0.60) 0%,
+      transparent 18%),
+    /* Bottom fade */
+    linear-gradient(to top,
+      rgba(0,0,0,0.95) 0%,
+      rgba(0,0,0,0.50) 14%,
+      transparent 30%),
+    /* Cover baked-in form panel (lower-right of reference image ~78-88% x, 52-80% y) */
+    radial-gradient(ellipse 16% 32% at 83% 68%, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.90) 35%, transparent 70%);
   z-index: 0;
 }
 
-/* Skyline drawn by CSS — hidden when hero uses the photo as bg */
-.hero-skyline  { display: none; }
+/* Skyline / city-light layers — hidden (background image provides the scene) */
+.hero-skyline    { display: none; }
 .hero-city-light { display: none; }
 
-/* Dark bottom fade + subtle red warm glow echoing the kart's red wheels */
+/* Dark bottom vignette */
 .hero-horizon {
   position: absolute;
   left: 0; right: 0; bottom: 0;
-  height: 42%;
+  height: 38%;
   background:
-    radial-gradient(ellipse 38% 55% at 62% 100%, rgba(232,35,58,0.07) 0%, transparent 58%),
     linear-gradient(to top,
       rgba(0,0,0,0.96) 0%,
-      rgba(0,0,0,0.60) 28%,
-      transparent 65%);
+      rgba(0,0,0,0.55) 28%,
+      transparent 60%);
   pointer-events: none;
   z-index: 2;
 }
 
-/* Hero content */
+/* Hero content wrapper */
 .hero-inner {
   position: relative;
   z-index: 3;
   display: -webkit-flex;
   display: flex;
-  -webkit-align-items: flex-start;
-  align-items: flex-start;
+  -webkit-align-items: center;
+  align-items: center;
   -webkit-justify-content: flex-start;
   justify-content: flex-start;
   width: 100%;
   max-width: 1320px;
   margin: 0 auto;
   box-sizing: border-box;
-  padding: 140px 6% 4rem;
+  padding: 148px 6% 5rem;
+  min-height: 100svh;
 }
 
+/* Left text column: headline + form */
 .hero-text {
+  -webkit-flex: 0 0 auto;
   flex: 0 0 auto;
   width: 100%;
-  max-width: 520px;
+  max-width: 470px;
+}
+
+/* ── Hero inline signup box ──────────────────────────── */
+.hero-signup-wrap {
+  margin-top: 1.4rem;
+}
+.hero-signup-wrap .updates-box {
+  background: rgba(0, 10, 22, 0.82);
+  border: 1px solid rgba(0, 195, 255, 0.32);
+  border-radius: 10px;
+  padding: 1.2rem 1.35rem 1.4rem;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+.hero-signup-wrap .updates-heading {
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  margin-bottom: 0.65rem;
+}
+.hero-signup-wrap .updates-sub { display: none; }
+.hero-signup-wrap .updates-fields {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-bottom: 0.7rem;
+}
+.hero-signup-wrap .updates-input {
+  padding: 0.6rem 0.85rem;
+  font-size: 0.85rem;
+}
+.hero-signup-wrap .updates-consent {
+  font-size: 0.68rem;
+  margin-bottom: 0.7rem;
+}
+.hero-signup-wrap .updates-btn {
+  width: 100%;
+  padding: 0.72rem;
+  font-size: 0.78rem;
+}
+.hero-signup-wrap .updates-msg {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+}
+/* Success state inside hero */
+.hero-signup-wrap .updates-success-wrap {
+  min-height: 120px;
+}
+.hero-signup-wrap .updates-success-msg {
+  font-size: clamp(1rem, 1.8vw, 1.3rem);
 }
 
 /* Hero kicker line above headline */
@@ -1064,28 +1121,7 @@ a   { color: inherit; text-decoration: none; }
 
 /* ── Our Experiences ─────────────────────────────────────── */
 #experiences { background: #000; }
-
-/* Two-column season layout: tours LEFT, signup RIGHT */
-.season-layout {
-  display: -webkit-flex;
-  display: flex;
-  gap: 2.5rem;
-  -webkit-align-items: flex-start;
-  align-items: flex-start;
-}
-.season-tours {
-  flex: 1 1 0;
-  min-width: 0;
-}
-.season-signup {
-  flex: 0 0 300px;
-  width: 300px;
-  -webkit-align-self: flex-start;
-  align-self: flex-start;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 134px; /* banner 46 + header 80 + 8 gap */
-}
+#experiences .section-title { text-align: left; margin-bottom: 1.5rem; }
 
 .exp-grid {
   display: grid;
@@ -2934,16 +2970,16 @@ a   { color: inherit; text-decoration: none; }
 
   #hero {
     background-size: cover;
-    background-position: 68% 0%;
+    background-position: 68% center;
+    min-height: 100svh;
   }
   .hero-inner {
-    padding: 122px 5% 3rem;
+    padding: 122px 5% 3.5rem;
+    min-height: 100svh;
   }
-  /* Stack at tablet: signin box below tours */
-  .season-layout { flex-direction: column; gap: 2rem; }
-  .season-signup { width: 100%; max-width: 480px; position: static; }
-  .hero-text { max-width: 460px; }
+  .hero-text { max-width: 420px; }
   .hero-support { max-width: 100%; }
+  .hero-signup-wrap .updates-box { padding: 1rem 1.1rem 1.2rem; }
 
   .exp-grid { gap: 1rem; }
   .ec-body  { padding: 1.6rem 1.6rem 1.8rem; }
@@ -2967,13 +3003,13 @@ a   { color: inherit; text-decoration: none; }
   .mobile-nav  { top: calc(46px + 60px); }
   .nav-wm-name { font-size: 1.42rem; }
   #hero {
-    min-height: 82vh;
+    min-height: 100svh;
     background-size: cover;
-    background-position: 70% 0%;
+    background-position: 72% center;
   }
   .hero-inner {
-    padding: 110px 5% 2.5rem;
-    text-align: left;
+    padding: 108px 5% 2.5rem;
+    min-height: 100svh;
     -webkit-align-items: flex-start; align-items: flex-start;
     -webkit-justify-content: flex-start; justify-content: flex-start;
   }
@@ -2981,11 +3017,10 @@ a   { color: inherit; text-decoration: none; }
   .hero-text  { max-width: 100%; }
   .hero-support { max-width: 90%; }
   .section     { padding: 72px 4%; }
-  .hero-headline { font-size: clamp(4rem, 16vw, 6rem); }
-  .hero-sub { font-size: 0.88rem; max-width: 85%; }
-  .hero-ctas { flex-direction: column; align-items: flex-start; gap: 1rem; }
-  .season-layout { flex-direction: column; gap: 1.5rem; }
-  .season-signup { width: 100%; max-width: 100%; position: static; }
+  .hero-headline { font-size: clamp(3.8rem, 15vw, 6rem); }
+  .hero-signup-wrap .updates-box { padding: 1.1rem 1rem 1.2rem; }
+  .hero-signup-wrap .updates-heading { font-size: 0.88rem; }
+  .hero-signup-wrap .updates-consent { font-size: 0.64rem; }
   .updates-box { padding: 1.5rem 1.25rem; }
   .glo-modal-header { min-height: 210px; }
   .gmh-strip { flex-wrap: wrap; justify-content: center; border-radius: 14px; }

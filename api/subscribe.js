@@ -3,15 +3,19 @@
    Saves 2027 season updates signup, checks past bookings,
    sends Pushover notification, prevents duplicates.
 
-   Required env vars (Vercel dashboard):
-     KV_REST_API_URL        — Vercel KV REST API URL
-     KV_REST_API_TOKEN      — Vercel KV REST API token
-     PUSHOVER_APP_TOKEN     — Pushover application token
-     PUSHOVER_USER_KEY      — Pushover user/group key
+   Storage (in priority order):
+     1. Vercel KV (Upstash Redis REST) — if KV_REST_API_URL + KV_REST_API_TOKEN set
+     2. Supabase — if SUPABASE_URL + SUPABASE_SERVICE_KEY set
+        Requires table: subscribe_2027 (name, email, phone, subscribed_at)
+        with UNIQUE constraint on email
 
-   Optional (for past-booking lookup):
-     SUPABASE_URL           — Supabase project URL
-     SUPABASE_SERVICE_KEY   — Supabase service role key
+   Required env vars (Vercel dashboard):
+     KV_REST_API_URL        — Vercel KV REST API URL         (option 1)
+     KV_REST_API_TOKEN      — Vercel KV REST API token       (option 1)
+     SUPABASE_URL           — Supabase project URL           (option 2)
+     SUPABASE_SERVICE_KEY   — Supabase service role key      (option 2)
+     PUSHOVER_APP_TOKEN     — Pushover application token     (required)
+     PUSHOVER_USER_KEY      — Pushover user/group key        (required)
 ──────────────────────────────────────────────────────────────── */
 
 import https from 'https';
@@ -51,7 +55,6 @@ function kvBase()    { return (process.env.KV_REST_API_URL || '').replace(/\/$/,
 function kvHeaders() { return { Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}` }; }
 function kvOk()      { return !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN); }
 
-/* Pipeline: run multiple Redis commands in one HTTP call */
 async function kvPipeline(commands) {
   if (!kvOk()) return null;
   try {
@@ -60,7 +63,6 @@ async function kvPipeline(commands) {
   } catch { return null; }
 }
 
-/* GET a single key — returns the stored value or null */
 async function kvGet(key) {
   if (!kvOk()) return null;
   try {
@@ -77,34 +79,77 @@ async function kvSetNX(key, value) {
   return results[0]?.result === 'OK' ? 'new' : 'exists';
 }
 
-/* SET key value (unconditional, for secondary index) */
 async function kvSet(key, value) {
   const results = await kvPipeline([['SET', key, value]]);
   if (!results) return false;
   return results[0]?.result === 'OK';
 }
 
-/* DEL key — used to rollback if phone key is duplicate */
-async function kvDel(key) {
-  if (!kvOk()) return;
-  try { await httpGet(`${kvBase()}/del/${encodeURIComponent(key)}`, kvHeaders()); }
-  catch { /* ignore rollback errors */ }
+/* ── Supabase storage (fallback when KV not configured) ─────── */
+function sbOk() { return !!(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_KEY); }
+function sbHdrs() {
+  return {
+    apikey:        process.env.SUPABASE_SERVICE_KEY,
+    Authorization: `Bearer ${process.env.SUPABASE_SERVICE_KEY}`,
+  };
+}
+
+/* Returns: 'new' | 'exists' | 'error' | 'unavailable' */
+async function sbSave(name, email, phone) {
+  if (!sbOk()) return 'unavailable';
+  const url = process.env.SUPABASE_URL.replace(/\/$/, '');
+  const hdrs = sbHdrs();
+
+  try {
+    /* Check email duplicate */
+    const emailChk = await httpGet(
+      `${url}/rest/v1/subscribe_2027?email=eq.${encodeURIComponent(email)}&select=email&limit=1`,
+      hdrs
+    );
+    if (emailChk.status === 200 && Array.isArray(emailChk.data) && emailChk.data.length > 0) {
+      return 'exists';
+    }
+
+    /* Check phone duplicate */
+    if (phone) {
+      const phoneChk = await httpGet(
+        `${url}/rest/v1/subscribe_2027?phone=eq.${encodeURIComponent(phone)}&select=phone&limit=1`,
+        hdrs
+      );
+      if (phoneChk.status === 200 && Array.isArray(phoneChk.data) && phoneChk.data.length > 0) {
+        return 'exists';
+      }
+    }
+
+    /* Insert new record */
+    const ins = await httpPost(
+      `${url}/rest/v1/subscribe_2027`,
+      { name, email, phone: phone || null, subscribed_at: new Date().toISOString() },
+      { ...hdrs, 'Content-Type': 'application/json', Prefer: 'return=minimal' }
+    );
+
+    if (ins.status === 201) return 'new';
+    /* 409 = unique constraint (shouldn't reach here after the SELECT, but handle it) */
+    if (ins.status === 409) return 'exists';
+
+    console.error('[Glo Karts] Supabase insert error:', ins.status, JSON.stringify(ins.data));
+    return 'error';
+  } catch (e) {
+    console.error('[Glo Karts] Supabase exception:', e.message);
+    return 'error';
+  }
 }
 
 /* ── Past-booking lookup via Supabase ──────────────────────── */
 async function findPastBooking(email, normalizedPhone) {
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_KEY;
-  if (!url || !key) return 'unavailable';
+  if (!sbOk()) return 'unavailable';
+  const url = process.env.SUPABASE_URL.replace(/\/$/, '');
   try {
-    const hdrs = { apikey: key, Authorization: `Bearer ${key}` };
-
-    /* Try email first */
+    const hdrs = sbHdrs();
     const byEmail = `${url}/rest/v1/bookings?contact_email=eq.${encodeURIComponent(email)}&select=id&limit=1`;
     const r1 = await httpGet(byEmail, hdrs);
     if (r1.status === 200 && Array.isArray(r1.data) && r1.data.length > 0) return 'found';
 
-    /* Try normalized phone if provided */
     if (normalizedPhone) {
       const byPhone = `${url}/rest/v1/bookings?contact_phone=eq.${encodeURIComponent(normalizedPhone)}&select=id&limit=1`;
       const r2 = await httpGet(byPhone, hdrs);
@@ -125,7 +170,7 @@ async function pushover(title, message) {
   try {
     await httpPost('https://api.pushover.net/1/messages.json',
       { token, user, title, message: message.slice(0, 1024), priority: 0 });
-  } catch (e) { console.error('[Glo Karts] Pushover subscribe error:', e.message); }
+  } catch (e) { console.error('[Glo Karts] Pushover error:', e.message); }
 }
 
 /* ── Safe first-name escape ─────────────────────────────────── */
@@ -155,74 +200,114 @@ export default async function handler(req, res) {
   const normalizedPhone = rawPhone.replace(/\D/g, '');
   const firstName       = safeFirst(rawName);
 
-  const emailKey = `sub:2027:${email}`;
-  const phoneKey = normalizedPhone ? `sub:2027:phone:${normalizedPhone}` : null;
-  const record   = JSON.stringify({ name: rawName, email, phone: rawPhone, subscribedAt: new Date().toISOString() });
+  /* ── Determine which storage backend is available ─────────── */
+  const hasKV  = kvOk();
+  const hasSB  = sbOk();
 
-  /* ── Duplicate check: email ─────────────────────────────── */
-  if (!kvOk()) {
-    console.error('[Glo Karts] KV not configured — missing KV_REST_API_URL or KV_REST_API_TOKEN');
+  if (!hasKV && !hasSB) {
+    console.error('[Glo Karts] No storage configured — set KV_REST_API_URL+KV_REST_API_TOKEN or SUPABASE_URL+SUPABASE_SERVICE_KEY');
     return res.status(503).json({
       ok: false,
-      error: "We couldn't save your signup right now. Please try again in a moment.",
+      error: "We couldn’t save your signup right now. Please try again in a moment.",
     });
   }
 
-  /* Check phone index first (GET) so we can detect cross-email phone dups cheaply */
-  if (phoneKey) {
-    const existingPhone = await kvGet(phoneKey);
-    if (existingPhone !== null) {
+  /* ──────────────────────────────────────────────────────────
+     PATH A: Vercel KV
+  ─────────────────────────────────────────────────────────── */
+  if (hasKV) {
+    const emailKey = `sub:2027:${email}`;
+    const phoneKey = normalizedPhone ? `sub:2027:phone:${normalizedPhone}` : null;
+    const record   = JSON.stringify({ name: rawName, email, phone: rawPhone, subscribedAt: new Date().toISOString() });
+
+    /* Phone duplicate check (GET, cheap) */
+    if (phoneKey) {
+      const existingPhone = await kvGet(phoneKey);
+      if (existingPhone !== null) {
+        return res.status(200).json({
+          ok: true, duplicate: true,
+          message: `Hi, ${firstName}! You’re already in the GLO! We’ll email you when 2027 bookings open.`,
+        });
+      }
+    }
+
+    /* Atomic email SET NX */
+    const saveResult = await kvSetNX(emailKey, record);
+
+    if (saveResult === 'exists') {
       return res.status(200).json({
         ok: true, duplicate: true,
-        message: `Hi, ${firstName}! You're already in the GLO! We'll email you when 2027 bookings open.`,
+        message: `Hi, ${firstName}! You’re already in the GLO! We’ll email you when 2027 bookings open.`,
+      });
+    }
+
+    if (saveResult === false) {
+      /* KV returned an unexpected error — try Supabase fallback if available */
+      console.error('[Glo Karts] KV save failed for email:', email);
+      if (hasSB) {
+        /* Fall through to Supabase path below */
+      } else {
+        return res.status(503).json({
+          ok: false,
+          error: "We couldn’t save your signup right now. Please try again in a moment.",
+        });
+      }
+    } else {
+      /* KV save succeeded */
+      if (phoneKey) await kvSet(phoneKey, emailKey);
+
+      const past = await findPastBooking(email, normalizedPhone);
+      const statusMap = {
+        found:       ['2027 Updates — Past Customer',       'Past booking found'],
+        not_found:   ['2027 Updates — New Customer',        'No past booking found'],
+        unavailable: ['2027 Updates — History Unavailable', 'Booking history unavailable'],
+      };
+      const [poTitle, customerStatus] = statusMap[past] || statusMap.unavailable;
+
+      await pushover(poTitle,
+        `Name: ${rawName}\nPhone: ${rawPhone}\nEmail: ${email}\nCustomer status: ${customerStatus}\nSource: 2027 Season Updates`);
+
+      return res.status(200).json({
+        ok: true,
+        message: `Hi, ${firstName}! You’re in the GLO! We’ll email you when 2027 bookings open.`,
       });
     }
   }
 
-  /* Atomic SET email key NX — also catches same-email duplicates */
-  const saveResult = await kvSetNX(emailKey, record);
+  /* ──────────────────────────────────────────────────────────
+     PATH B: Supabase (no KV, or KV failed)
+  ─────────────────────────────────────────────────────────── */
+  const sbResult = await sbSave(rawName, email, normalizedPhone);
 
-  if (saveResult === 'exists') {
+  if (sbResult === 'exists') {
     return res.status(200).json({
       ok: true, duplicate: true,
-      message: `Hi, ${firstName}! You're already in the GLO! We'll email you when 2027 bookings open.`,
+      message: `Hi, ${firstName}! You’re already in the GLO! We’ll email you when 2027 bookings open.`,
     });
   }
 
-  if (saveResult === false) {
-    /* KV returned an error — do NOT fire notification; tell customer to retry */
-    console.error('[Glo Karts] KV save failed for email:', email);
+  if (sbResult === 'unavailable' || sbResult === 'error') {
+    console.error('[Glo Karts] All storage paths failed. KV:', hasKV, '| SB:', hasSB, '| sbResult:', sbResult);
     return res.status(503).json({
       ok: false,
-      error: "We couldn't save your signup right now. Please try again in a moment.",
+      error: "We couldn’t save your signup right now. Please try again in a moment.",
     });
   }
 
-  /* ── Save succeeded — now write phone index ─────────────── */
-  if (phoneKey) {
-    const phoneSet = await kvSet(phoneKey, emailKey);
-    if (!phoneSet) {
-      console.warn('[Glo Karts] Phone index save failed for:', normalizedPhone, '— record still saved under email key');
-    }
-  }
-
-  /* ── Past booking check ──────────────────────────────────── */
+  /* Supabase save succeeded ('new') */
   const past = await findPastBooking(email, normalizedPhone);
-
-  /* ── Pushover notification (only fires after confirmed save) */
   const statusMap = {
-    found:       ['2027 Updates — Past Customer',        'Past booking request found'],
-    not_found:   ['2027 Updates — New Customer',         'No past booking request found'],
-    unavailable: ['2027 Updates — History Unavailable',  'Booking history unavailable'],
+    found:       ['2027 Updates — Past Customer',       'Past booking found'],
+    not_found:   ['2027 Updates — New Customer',        'No past booking found'],
+    unavailable: ['2027 Updates — History Unavailable', 'Booking history unavailable'],
   };
   const [poTitle, customerStatus] = statusMap[past] || statusMap.unavailable;
 
   await pushover(poTitle,
     `Name: ${rawName}\nPhone: ${rawPhone}\nEmail: ${email}\nCustomer status: ${customerStatus}\nSource: 2027 Season Updates`);
 
-  /* ── Success ─────────────────────────────────────────────── */
   return res.status(200).json({
     ok: true,
-    message: `Hi, ${firstName}! You're in the GLO! We'll email you when 2027 bookings open.`,
+    message: `Hi, ${firstName}! You’re in the GLO! We’ll email you when 2027 bookings open.`,
   });
 }
