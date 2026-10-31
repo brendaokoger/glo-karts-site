@@ -75,7 +75,7 @@
     @media (max-width: 640px) {
       #hero {
         background-size: auto 100vh !important;
-        background-position: 22% 0% !important;
+        background-position: 65% 0% !important;
       }
       .hero-inner { padding: 72px 5% 1rem !important; }
     }
@@ -108,10 +108,11 @@
     </a>
 
     <nav class="header-nav" aria-label="Primary navigation">
-      <a href="#hero">Home</a>
-      <a href="#experiences">Tours</a>
-      <a href="#">Events</a>
-      <a href="#">Shop</a>
+      <a href="/#hero">Home</a>
+      <a href="/#experiences">Tours</a>
+      <a href="#" class="nav-link-hidden">Events</a>
+      <a href="#" class="nav-link-hidden">Shop</a>
+      <a href="/#updates-2027" class="nav-link-updates">2027 Season Updates</a>
       <a href="./contact.html">Contact</a>
     </nav>
 
@@ -125,11 +126,10 @@
 
   <!-- Mobile nav drawer -->
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
-    <a href="#hero"        class="mobile-link">Home</a>
-    <a href="#experiences" class="mobile-link">Tours</a>
-    <a href="#"            class="mobile-link">Events</a>
-    <a href="#"            class="mobile-link">Shop</a>
-    <a href="./contact.html" class="mobile-link">Contact</a>
+    <a href="/#hero"          class="mobile-link">Home</a>
+    <a href="/#experiences"   class="mobile-link">Tours</a>
+    <a href="/#updates-2027"  class="mobile-link mobile-link-updates">2027 Season Updates</a>
+    <a href="./contact.html"  class="mobile-link">Contact</a>
     <button class="btn-book-mobile mobile-link" id="btn-book-mobile" type="button">Book Now</button>
   </nav>
 
@@ -164,6 +164,26 @@
       </div>
     </div>
   </div>
+
+  <!-- ── 2027 Season Updates Signup ──────────────────────── -->
+  <section id="updates-2027" aria-labelledby="updates-heading">
+    <div class="updates-inner">
+      <div class="updates-box reveal">
+        <h2 class="updates-heading" id="updates-heading">GET FIRST ACCESS TO 2027 DATES</h2>
+        <p class="updates-sub">Be the first to know when booking opens for the 2027 season.</p>
+        <form class="updates-form" id="updates-form" novalidate>
+          <div class="updates-fields">
+            <input class="updates-input" type="text"  id="upd-name"  name="name"  placeholder="Your Name"         autocomplete="name"  required />
+            <input class="updates-input" type="email" id="upd-email" name="email" placeholder="Email Address"     autocomplete="email" required />
+            <input class="updates-input" type="tel"   id="upd-phone" name="phone" placeholder="Phone Number"      autocomplete="tel"   required />
+          </div>
+          <p class="updates-consent">By submitting, you agree to receive updates from Glo Karts Chicago. We won't share your information.</p>
+          <button class="updates-btn" type="submit" id="upd-submit">KEEP ME IN THE GLO</button>
+          <p class="updates-msg" id="updates-msg" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
 
   <!-- ── Chicago After Dark ──────────────────────────────── -->
   <section id="chicago-after-dark" aria-labelledby="cad-heading">
@@ -254,7 +274,8 @@
       <div class="exp-grid">
 
         <!-- Downtown Chicago Tour -->
-        <article class="exp-card ec-downtown reveal">
+        <article class="exp-card ec-downtown reveal" role="button" tabindex="0"
+                 aria-haspopup="dialog" data-tour-panel="panel-downtown">
           <div class="ec-img ec-img-downtown"></div>
           <div class="ec-overlay"></div>
           <div class="ec-label">
@@ -264,7 +285,8 @@
         </article>
 
         <!-- R&B Ladies Night -->
-        <article class="exp-card ec-ladies reveal">
+        <article class="exp-card ec-ladies reveal" role="button" tabindex="0"
+                 aria-haspopup="dialog" data-tour-panel="panel-ladies">
           <div class="ec-img ec-img-ladies"></div>
           <div class="ec-overlay"></div>
           <div class="ec-label">
@@ -499,6 +521,43 @@
 
 </div><!-- /#site-content -->
 
+
+<!-- ── Tour Detail Panels ────────────────────────────────── -->
+<div class="tour-panel" id="panel-downtown" role="dialog" aria-modal="true" aria-labelledby="pd-title" aria-hidden="true">
+  <div class="tour-panel-backdrop"></div>
+  <div class="tour-panel-card">
+    <button class="tour-panel-close" type="button" aria-label="Close tour details">&#x2715;</button>
+    <div class="tour-panel-img ec-img-downtown"></div>
+    <div class="tour-panel-body">
+      <span class="tour-panel-tag">Returning in 2027.</span>
+      <h3 class="tour-panel-title" id="pd-title">DOWNTOWN CHICAGO TOUR</h3>
+      <p class="tour-panel-desc">Cruise iconic Chicago streets and bridges at night in a glowing electric kart. Landmarks, lights, and pure energy.</p>
+      <ul class="tour-panel-details">
+        <li>1 Hour of ride time</li>
+        <li>2–10 Riders per group</li>
+        <li>$49.99 per person</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="tour-panel" id="panel-ladies" role="dialog" aria-modal="true" aria-labelledby="pl-title" aria-hidden="true">
+  <div class="tour-panel-backdrop"></div>
+  <div class="tour-panel-card">
+    <button class="tour-panel-close" type="button" aria-label="Close tour details">&#x2715;</button>
+    <div class="tour-panel-img ec-img-ladies"></div>
+    <div class="tour-panel-body">
+      <span class="tour-panel-tag">Returning in 2027.</span>
+      <h3 class="tour-panel-title" id="pl-title">R&amp;B LADIES NIGHT</h3>
+      <p class="tour-panel-desc">A ladies-only night tour set to an R&amp;B soundtrack. Thursdays only — the ultimate girls' night out on wheels.</p>
+      <ul class="tour-panel-details">
+        <li>1 Hour of ride time</li>
+        <li>2–10 Riders per group</li>
+        <li>$49.99 per person</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
 <!-- ── Booking Wizard Modal ──────────────────────────────── -->
 <div id="booking-modal" class="glo-modal" role="dialog" aria-modal="true" aria-label="Book a Tour">
@@ -1124,6 +1183,122 @@
   }, { rootMargin: '200px 0px' });
 
   io.observe(carouselWrap);
+})();
+</script>
+
+<!-- ── Smooth scroll with fixed-header offset ──────────── -->
+<script>
+(function () {
+  var HEADER_H = 72;
+  document.querySelectorAll('a[href^="/#"], a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var raw = a.getAttribute('href');
+      var hash = raw.startsWith('/#') ? raw.slice(1) : raw;
+      if (!hash || hash === '#') return;
+      var target = document.querySelector(hash);
+      if (!target) return;
+      e.preventDefault();
+      var top = target.getBoundingClientRect().top + window.scrollY - HEADER_H;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+      history.pushState(null, '', hash);
+    });
+  });
+})();
+</script>
+
+<!-- ── Tour panels ──────────────────────────────────────── -->
+<script>
+(function () {
+  var panels = {};
+  document.querySelectorAll('.tour-panel').forEach(function (p) { panels[p.id] = p; });
+  var lastFocus = null;
+
+  function openPanel(id) {
+    var panel = panels[id];
+    if (!panel) return;
+    lastFocus = document.activeElement;
+    panel.setAttribute('aria-hidden', 'false');
+    panel.classList.add('open');
+    document.body.classList.add('panel-open');
+    var closeBtn = panel.querySelector('.tour-panel-close');
+    if (closeBtn) closeBtn.focus();
+  }
+
+  function closePanel(panel) {
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('panel-open');
+    if (lastFocus) { lastFocus.focus(); lastFocus = null; }
+  }
+
+  document.querySelectorAll('[data-tour-panel]').forEach(function (card) {
+    card.addEventListener('click', function () { openPanel(card.getAttribute('data-tour-panel')); });
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPanel(card.getAttribute('data-tour-panel')); }
+    });
+  });
+
+  document.querySelectorAll('.tour-panel').forEach(function (panel) {
+    panel.querySelector('.tour-panel-close').addEventListener('click', function () { closePanel(panel); });
+    panel.querySelector('.tour-panel-backdrop').addEventListener('click', function () { closePanel(panel); });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll('.tour-panel.open').forEach(closePanel);
+  });
+})();
+</script>
+
+<!-- ── 2027 Subscribe form ──────────────────────────────── -->
+<script>
+(function () {
+  var form    = document.getElementById('updates-form');
+  var btn     = document.getElementById('upd-submit');
+  var msgEl   = document.getElementById('updates-msg');
+  if (!form) return;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name  = document.getElementById('upd-name').value.trim();
+    var email = document.getElementById('upd-email').value.trim();
+    var phone = document.getElementById('upd-phone').value.trim();
+    if (!name || !email || !phone) {
+      msgEl.textContent = 'Please fill in all fields.';
+      msgEl.className = 'updates-msg error';
+      return;
+    }
+    btn.disabled = true;
+    btn.textContent = 'SENDING…';
+    msgEl.textContent = '';
+    msgEl.className = 'updates-msg';
+
+    fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, email: email, phone: phone }),
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.ok) {
+          msgEl.textContent = data.message;
+          msgEl.className = 'updates-msg success';
+          form.reset();
+          btn.textContent = 'YOU\'RE IN THE GLO ✓';
+        } else {
+          msgEl.textContent = data.error || 'Something went wrong. Please try again.';
+          msgEl.className = 'updates-msg error';
+          btn.disabled = false;
+          btn.textContent = 'KEEP ME IN THE GLO';
+        }
+      })
+      .catch(function () {
+        msgEl.textContent = 'Connection error. Please try again.';
+        msgEl.className = 'updates-msg error';
+        btn.disabled = false;
+        btn.textContent = 'KEEP ME IN THE GLO';
+      });
+  });
 })();
 </script>
 
