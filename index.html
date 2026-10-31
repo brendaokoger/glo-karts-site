@@ -79,6 +79,11 @@
       }
       .hero-inner { padding: 72px 5% 1rem !important; }
     }
+    /* ── 2026 season closed: hide all booking entry points ───── */
+    #btn-book-header, #btn-book-mobile, #btn-book-tour,
+    #btn-book-sticky, #btn-reserve, #btn-check-avail,
+    #btn-exp-1, #btn-exp-2, #btn-plan-event-cp,
+    .btn-book-mobile, .btn-book-header, .btn-book-sticky { display: none !important; }
   </style>
 
 </head>
@@ -139,15 +144,10 @@
     <div class="hero-inner">
       <div class="hero-text">
         <h1 class="hero-headline" id="hero-headline">
-          RIDE<br>THE <span class="glo-blue">GLO</span>
+          THE <span class="glo-blue">GLO</span><br>
+          RETURNS IN<br>
+          <span class="glo-blue glo-2027">2027</span>
         </h1>
-
-        <p class="hero-sub">Chicago Hits Different <span class="hero-sub-blue">After Dark.</span></p>
-        <p class="hero-support">Experience the city lights, music and energy of Downtown Chicago from a whole new point of view.</p>
-
-        <div class="hero-cta">
-          <button class="btn btn-primary" id="btn-book-tour" type="button">BOOK YOUR RIDE</button>
-        </div>
       </div>
     </div>
   </section>
@@ -249,72 +249,29 @@
   <!-- ── Our Experiences ──────────────────────────────────── -->
   <section id="experiences" class="section" aria-labelledby="experiences-title">
     <div class="section-inner">
-      <h2 class="section-title reveal" id="experiences-title">Two Ways to Ride. One Unforgettable Night.</h2>
-
-      <!-- Before You Ride notice -->
-      <div class="before-you-ride reveal">
-        <p class="byr-label">Before You Ride</p>
-        <div class="byr-rules">
-          <span class="byr-rule">
-            <svg class="byr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-            No Eating
-          </span>
-          <span class="byr-sep" aria-hidden="true">•</span>
-          <span class="byr-rule">
-            <svg class="byr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-            No Alcohol
-          </span>
-          <span class="byr-sep" aria-hidden="true">•</span>
-          <span class="byr-rule">
-            <svg class="byr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-            No Smoking
-          </span>
-        </div>
-        <p class="byr-text">By booking a Glo Karts experience, you agree to our <a href="./policies.html" class="byr-link">Ride Policies</a>.</p>
-      </div>
+      <h2 class="section-title ec-season-head reveal" id="experiences-title">NEXT SEASON. SAME UNFORGETTABLE ENERGY.</h2>
 
       <div class="exp-grid">
 
-        <!-- Experience 1: Downtown Chicago Tour -->
+        <!-- Downtown Chicago Tour -->
         <article class="exp-card ec-downtown reveal">
           <div class="ec-img ec-img-downtown"></div>
           <div class="ec-overlay"></div>
-          <div class="ec-body">
-            <h3 class="ec-title">DOWNTOWN<br>CHICAGO TOUR</h3>
-            <p class="ec-accent">SEE CHICAGO LIKE NEVER BEFORE.</p>
-            <p class="ec-desc">Cruise through the heart of Downtown Chicago and take in iconic landmarks, city lights and unforgettable views from a whole new point of view.</p>
-            <div class="ec-footer">
-              <div class="ec-pricing">
-                <span class="ec-starting">STARTING AT</span>
-                <span class="ec-price">$49.99</span>
-              </div>
-              <button class="ec-cta" type="button" id="btn-exp-1">
-                BOOK THE EXPERIENCE &nbsp;&#8594;
-              </button>
-            </div>
+          <div class="ec-label">
+            <span class="ec-label-title">DOWNTOWN CHICAGO TOUR</span>
+            <span class="ec-label-arrow">&#8594;</span>
           </div>
         </article>
 
-        <!-- Experience 2: R&B Ladies Night Tour -->
+        <!-- R&B Ladies Night -->
         <article class="exp-card ec-ladies reveal">
           <div class="ec-img ec-img-ladies"></div>
           <div class="ec-overlay"></div>
-          <div class="ec-body">
-            <h3 class="ec-title">R&amp;B LADIES<br>NIGHT TOUR</h3>
-            <p class="ec-accent">GOOD MUSIC. GOOD VIBES. GOOD COMPANY.</p>
-            <p class="ec-desc">Turn up the R&amp;B, take in the city lights and enjoy a Glo Karts night out made for you and your crew.</p>
-            <div class="ec-footer">
-              <div class="ec-pricing">
-                <span class="ec-starting">STARTING AT</span>
-                <span class="ec-price">$49.99</span>
-              </div>
-              <button class="ec-cta" type="button" id="btn-exp-2">
-                BOOK THE EXPERIENCE &nbsp;&#8594;
-              </button>
-            </div>
+          <div class="ec-label">
+            <span class="ec-label-title">R&amp;B LADIES NIGHT</span>
+            <span class="ec-label-arrow">&#8594;</span>
           </div>
         </article>
-
 
       </div>
     </div>

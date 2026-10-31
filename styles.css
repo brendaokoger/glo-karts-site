@@ -432,6 +432,25 @@ a   { color: inherit; text-decoration: none; }
   }
 }
 
+/* 2027 flickers slightly offset from GLO */
+.hero-headline .glo-2027 {
+  animation-delay: 0.35s;
+}
+
+/* Reduced-motion: steady glow, no flicker */
+@media (prefers-reduced-motion: reduce) {
+  .hero-headline .glo-blue {
+    -webkit-animation: none !important;
+    animation: none !important;
+    color: var(--blue);
+    text-shadow:
+      0 0 4px  rgba(0,195,255,0.65),
+      0 0 14px rgba(0,190,255,0.38),
+      0 0 36px rgba(0,180,255,0.18),
+      0 0 72px rgba(0,160,255,0.08);
+  }
+}
+
 .hero-sub {
   font-family: 'Inter', sans-serif;
   font-size: clamp(1.05rem, 1.75vw, 1.35rem);
@@ -957,6 +976,44 @@ a   { color: inherit; text-decoration: none; }
   will-change: transform;
 }
 .exp-card:hover .ec-img { transform: scale(1.04); }
+
+/* ── Season-closed experiences heading ───────────────────── */
+.ec-season-head {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3.8rem);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  color: #fff;
+  text-align: left;
+}
+
+/* ── Tour card label (replaces ec-body for 2027 teaser) ──── */
+.ec-label {
+  position: relative;
+  z-index: 2;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-align-items: flex-end;
+  align-items: flex-end;
+  padding: 2rem 2rem 2.2rem;
+}
+.ec-label-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+  color: #fff;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.90), 0 1px 4px rgba(0,0,0,0.95);
+}
+.ec-label-arrow {
+  font-size: 1.6rem;
+  color: rgba(255,255,255,0.65);
+  padding-bottom: 0.1rem;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  flex-shrink: 0;
+}
 
 /* Downtown: use the hero photo — kart + Chicago neon at night */
 .ec-img-downtown {
