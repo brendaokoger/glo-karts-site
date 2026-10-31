@@ -7,6 +7,10 @@
   'use strict';
 
   /* ── Config ─────────────────────────────────────────────── */
+  /* ADMIN: reopen explicitly for the 2027 season; do not reopen automatically on Jan 1.
+     Also update SEASON_CLOSED in api/book.js when reopening. */
+  var SEASON_CLOSED = true;
+  var SEASON_MESSAGE = 'Our 2026 season has ended. See you in 2027! Booking dates will be announced.';
   var PRICE      = 49.99;
   var MIN_RIDERS = 2;
   var MAX_RIDERS = 10;
@@ -128,6 +132,7 @@
     var wizNav    = el('wiz-nav');
     var wizProg   = el('wiz-progress');
     if (backBtn)   backBtn.style.display   = (n === 1 || n === 8) ? 'none' : '';
+    if (nextBtn)   nextBtn.disabled = SEASON_CLOSED && n === 2;
     if (nextBtn)   nextBtn.style.display   = (n >= 7  || n === 8) ? 'none' : '';
     if (submitBtn) submitBtn.style.display = (n === 7) ? '' : 'none';
     if (wizNav)    wizNav.style.display    = (n === 8) ? 'none' : '';
@@ -179,6 +184,7 @@
       if (!S.tour) { showErr('Please select a tour.'); return false; }
     }
     if (n===2) {
+      if (SEASON_CLOSED) { showErr(SEASON_MESSAGE); return false; }
       if (!S.date) { showErr('Please select a date.'); return false; }
       if (!S.time) { showErr('Please select a time slot.'); return false; }
     }
@@ -260,6 +266,7 @@
   var calInited = false;
   function initCalendar() {
     renderCalendar();
+    updateTimeChips();
     if (calInited) return;
     calInited = true;
     var prev=el('wiz-cal-prev'), next=el('wiz-cal-next');
@@ -291,7 +298,11 @@
       var cls='gwdt-day', attr='', inner=String(day);
       if(ymd===todayStr) cls+=' gwdt-today';
       if(ymd===S.date)   cls+=' gwdt-sel';
-      if(isNoAppt(ymd) && isAllowedDay(dow)){
+      if(SEASON_CLOSED){
+        cls+=' gwdt-closed';
+        attr='aria-disabled="true" aria-label="'+fmtDate(ymd)+': Season closed"';
+      }
+      else if(isNoAppt(ymd) && isAllowedDay(dow)){
         cls+=' gwdt-booked';
         inner='<span class="gwdt-day-num">'+day+'</span><span class="gwdt-booked-lbl">NO APPTS</span>';
       }
@@ -308,7 +319,8 @@
     /* Update availability note */
     var noteEl=el('gwdt-avail-note');
     if(noteEl){
-      noteEl.textContent=(S.tour===LADIES_NIGHT_TOUR)
+      noteEl.setAttribute('role', 'status');
+      noteEl.textContent=SEASON_CLOSED ? SEASON_MESSAGE : (S.tour===LADIES_NIGHT_TOUR)
         ? 'Tours available Thursday only.'
         : 'Tours available Thursday – Sunday only.';
     }
@@ -323,7 +335,7 @@
     var blocked = (S.date && BOOKED_TIMES[S.date]) ? BOOKED_TIMES[S.date] : [];
     qsa('.gwdt-time-chip').forEach(function(chip){
       var t = chip.getAttribute('data-time');
-      var isBlocked = blocked.indexOf(t) !== -1;
+      var isBlocked = SEASON_CLOSED || blocked.indexOf(t) !== -1;
       chip.disabled = isBlocked;
       chip.classList.toggle('gwdt-time-blocked', isBlocked);
       if (isBlocked && chip.classList.contains('selected')) {
@@ -332,11 +344,11 @@
       }
     });
   }
-  function pickDate(ymd){ S.date=ymd; renderCalendar(); updateTimeChips(); }
+  function pickDate(ymd){ if (SEASON_CLOSED) return; S.date=ymd; renderCalendar(); updateTimeChips(); }
 
   qsa('.gwdt-time-chip').forEach(function(chip){
     chip.addEventListener('click',function(){
-      if (chip.disabled) return;
+      if (SEASON_CLOSED || chip.disabled) return;
       qsa('.gwdt-time-chip').forEach(function(c){ c.classList.remove('selected'); });
       chip.classList.add('selected');
       S.time=chip.getAttribute('data-time');
@@ -558,6 +570,7 @@
 
   /* ── Submit ─────────────────────────────────────────────── */
   function submitBooking(){
+    if (SEASON_CLOSED) { showStepErr(SEASON_MESSAGE); return; }
     var sb=el('wiz-submit'), err=el('wiz-submit-error');
     if(sb){ sb.disabled=true; sb.textContent='Submitting…'; }
     if(err) err.style.display='none';

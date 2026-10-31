@@ -16,6 +16,9 @@
 
 import https from 'https';
 
+/* ADMIN: reopen explicitly with SEASON_CLOSED in booking-wizard.js. */
+const SEASON_CLOSED = true;
+
 /* Tiny https POST helper — no dependency on global fetch */
 function httpsPost(url, payload) {
   return new Promise((resolve, reject) => {
@@ -48,6 +51,15 @@ export default async function handler(req, res) {
   /* Only accept POST */
   if (req.method !== 'POST') {
     return res.status(405).json({ ok: false, error: 'Method not allowed' });
+  }
+
+  /* Reject stale forms and direct requests before any storage or notifications. */
+  if (SEASON_CLOSED) {
+    return res.status(409).json({
+      ok: false,
+      code: 'SEASON_CLOSED',
+      error: 'Our 2026 season has ended. See you in 2027! Booking dates will be announced.',
+    });
   }
 
   let body;
