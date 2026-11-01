@@ -205,7 +205,11 @@ export default async function handler(req, res) {
   const hasSB  = sbOk();
 
   if (!hasKV && !hasSB) {
-    console.error('[Glo Karts] No storage configured — set KV_REST_API_URL+KV_REST_API_TOKEN or SUPABASE_URL+SUPABASE_SERVICE_KEY');
+    console.error('[Glo Karts] FATAL: no storage configured.',
+      'KV_REST_API_URL:', !!process.env.KV_REST_API_URL,
+      'KV_REST_API_TOKEN:', !!process.env.KV_REST_API_TOKEN,
+      'SUPABASE_URL:', !!process.env.SUPABASE_URL,
+      'SUPABASE_SERVICE_KEY:', !!process.env.SUPABASE_SERVICE_KEY);
     return res.status(503).json({
       ok: false,
       error: "We couldn’t save your signup right now. Please try again in a moment.",
