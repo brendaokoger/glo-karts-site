@@ -1267,10 +1267,16 @@
         if (data.ok) {
           /* Replace form content with personalized confirmation */
           var box = form.closest('.updates-box') || form.parentElement;
-          box.innerHTML =
-            '<div class="updates-success-wrap" role="status" aria-live="polite">' +
-            '<p class="updates-success-msg">' + (data.message || 'You\'re in the GLO!') + '</p>' +
-            '</div>';
+          var wrap = document.createElement('div');
+          wrap.className = 'updates-success-wrap';
+          wrap.setAttribute('role', 'status');
+          wrap.setAttribute('aria-live', 'polite');
+          var p = document.createElement('p');
+          p.className = 'updates-success-msg';
+          p.textContent = data.message || "You're in the GLO!";
+          wrap.appendChild(p);
+          box.textContent = '';
+          box.appendChild(wrap);
         } else {
           msgEl.textContent = data.error || 'Something went wrong. Please try again.';
           msgEl.className = 'updates-msg error';

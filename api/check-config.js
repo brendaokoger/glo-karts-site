@@ -1,6 +1,6 @@
 /* ── /api/check-config — production diagnostic (GET only) ──────
-   Reports which env vars are present and whether each backend
-   is actually reachable. Never exposes credential values or
+   Reports which env vars are present/valid and whether each
+   backend is reachable. Never exposes credential values or
    raw provider error messages.
 ───────────────────────────────────────────────────────────── */
 import https from 'https';
@@ -40,7 +40,6 @@ function httpsRequest(method, url, payload, extraHeaders, timeoutMs = 6000) {
   });
 }
 
-/* Sanitize Supabase status — never expose raw error bodies */
 function sbStatusLabel(status, data) {
   if (status === 200)        return 'reachable';
   if (status === 401 || status === 403) return 'auth_error';
@@ -52,22 +51,52 @@ function sbStatusLabel(status, data) {
   return `http_${status}`;
 }
 
+/* Validate GLO_PAST_CUSTOMERS_JSON without logging values */
+function checkPastCustomers() {
+  const raw = process.env.GLO_PAST_CUSTOMERS_JSON;
+  if (!raw) return { present: false, valid: false, count: 0 };
+  try {
+    const list = JSON.parse(raw);
+    if (!Array.isArray(list)) return { present: true, valid: false, count: 0 };
+    return { present: true, valid: true, count: list.length };
+  } catch {
+    return { present: true, valid: false, count: 0 };
+  }
+}
+
+function checkSignupOnly() {
+  const raw = process.env.GLO_SIGNUP_ONLY_JSON;
+  if (!raw) return { present: false, valid: false, count: 0 };
+  try {
+    const list = JSON.parse(raw);
+    if (!Array.isArray(list)) return { present: true, valid: false, count: 0 };
+    return { present: true, valid: true, count: list.length };
+  } catch {
+    return { present: true, valid: false, count: 0 };
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).json({ ok: false });
 
   /* ── Env var presence (true/false only) ─────────────────────── */
   const vars = {
-    KV_REST_API_URL:    !!process.env.KV_REST_API_URL,
-    KV_REST_API_TOKEN:  !!process.env.KV_REST_API_TOKEN,
-    SUPABASE_URL:       !!process.env.SUPABASE_URL,
-    SUPABASE_SERVICE_KEY: !!process.env.SUPABASE_SERVICE_KEY,
-    PUSHOVER_APP_TOKEN: !!process.env.PUSHOVER_APP_TOKEN,
-    PUSHOVER_USER_KEY:  !!process.env.PUSHOVER_USER_KEY,
+    KV_REST_API_URL:          !!process.env.KV_REST_API_URL,
+    KV_REST_API_TOKEN:        !!process.env.KV_REST_API_TOKEN,
+    SUPABASE_URL:             !!process.env.SUPABASE_URL,
+    SUPABASE_SERVICE_KEY:     !!process.env.SUPABASE_SERVICE_KEY,
+    PUSHOVER_APP_TOKEN:       !!process.env.PUSHOVER_APP_TOKEN,
+    PUSHOVER_USER_KEY:        !!process.env.PUSHOVER_USER_KEY,
+    GLO_PAST_CUSTOMERS_JSON:  !!process.env.GLO_PAST_CUSTOMERS_JSON,
+    GLO_SIGNUP_ONLY_JSON:     !!process.env.GLO_SIGNUP_ONLY_JSON,
   };
 
   const kvVars = vars.KV_REST_API_URL && vars.KV_REST_API_TOKEN;
   const sbVars = vars.SUPABASE_URL && vars.SUPABASE_SERVICE_KEY;
   const poVars = vars.PUSHOVER_APP_TOKEN && vars.PUSHOVER_USER_KEY;
+
+  const pastCustomersCheck = checkPastCustomers();
+  const signupOnlyCheck    = checkSignupOnly();
 
   const probes = {};
 
@@ -89,22 +118,13 @@ export default async function handler(req, res) {
       Authorization: `Bearer ${process.env.SUPABASE_SERVICE_KEY}`,
     };
 
-    /* Auth probe — hit a known safe endpoint */
     const authR = await httpsRequest('GET', `${url}/rest/v1/`, null, hdrs);
     probes.supabase_auth = sbStatusLabel(authR.status, authR.data);
 
-    /* subscribe_2027 table probe */
     if (probes.supabase_auth !== 'auth_error' && probes.supabase_auth !== 'network_error') {
       const tblR = await httpsRequest('GET',
         `${url}/rest/v1/subscribe_2027?select=email&limit=0`, null, hdrs);
       probes.supabase_subscribe_2027 = sbStatusLabel(tblR.status, tblR.data);
-    }
-
-    /* bookings table probe (for past-booking lookup) */
-    if (probes.supabase_auth !== 'auth_error' && probes.supabase_auth !== 'network_error') {
-      const bkR = await httpsRequest('GET',
-        `${url}/rest/v1/bookings?select=id&limit=0`, null, hdrs);
-      probes.supabase_bookings = sbStatusLabel(bkR.status, bkR.data);
     }
   }
 
@@ -121,27 +141,36 @@ export default async function handler(req, res) {
       : `http_${r.status}`;
   }
 
-  /* ── Storage readiness ───────────────────────────────────────── */
-  const kvReady = kvVars && probes.kv === 'ok';
-  const sbReady = sbVars
+  /* ── Readiness ───────────────────────────────────────────────── */
+  const kvReady      = kvVars && probes.kv === 'ok';
+  const sbReady      = sbVars
     && probes.supabase_auth === 'reachable'
     && probes.supabase_subscribe_2027 === 'reachable';
   const storageReady = kvReady || sbReady;
+  const notifyReady  = poVars && probes.pushover === 'valid';
+  const lookupReady  = pastCustomersCheck.valid;
 
   /* ── Diagnosis ───────────────────────────────────────────────── */
   const issues = [];
-  if (!kvVars && !sbVars) issues.push('No storage env vars set — add SUPABASE_URL + SUPABASE_SERVICE_KEY in Vercel dashboard');
+  if (!kvVars && !sbVars) issues.push('No storage env vars set — signups recorded via Pushover only; add SUPABASE_URL + SUPABASE_SERVICE_KEY or KV vars for durable storage');
   if (sbVars && probes.supabase_auth === 'auth_error') issues.push('Supabase credentials rejected — verify SUPABASE_SERVICE_KEY is the service-role key');
   if (sbVars && probes.supabase_subscribe_2027 === 'table_not_found') issues.push('subscribe_2027 table does not exist — run the CREATE TABLE SQL in Supabase dashboard');
-  if (sbVars && probes.supabase_bookings === 'table_not_found') issues.push('bookings table not found — past-booking lookup will report History Unavailable');
-  if (!poVars) issues.push('Pushover env vars missing');
+  if (!poVars) issues.push('Pushover env vars missing — notifications will not be sent');
   if (poVars && probes.pushover === 'invalid_credentials') issues.push('Pushover credentials invalid');
   if (kvVars && probes.kv !== 'ok') issues.push('KV env vars present but ping failed');
+  if (!pastCustomersCheck.present) issues.push('GLO_PAST_CUSTOMERS_JSON not set — all contacts will be classified as History Unavailable');
+  if (pastCustomersCheck.present && !pastCustomersCheck.valid) issues.push('GLO_PAST_CUSTOMERS_JSON is set but failed to parse — check JSON format');
+  if (signupOnlyCheck.present && !signupOnlyCheck.valid) issues.push('GLO_SIGNUP_ONLY_JSON is set but failed to parse — check JSON format');
 
   return res.status(200).json({
-    storage_ready: storageReady,
-    notifications_ready: poVars && probes.pushover === 'valid',
+    storage_ready:       storageReady,
+    notifications_ready: notifyReady,
+    lookup_ready:        lookupReady,
     vars,
+    lookup: {
+      past_customers: pastCustomersCheck,
+      signup_only:    signupOnlyCheck,
+    },
     probes,
     issues: issues.length ? issues : ['none — all systems operational'],
   });

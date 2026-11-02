@@ -1,60 +1,124 @@
 /* ── Glo Karts 2027 Updates Subscribe API ──────────────────────
    POST /api/subscribe
 
-   Storage priority:
+   Contact classification (server-side only):
+     GLO_PAST_CUSTOMERS_JSON — compact [{email,phone}] from booking history
+     GLO_SIGNUP_ONLY_JSON    — [{emails:[],phone}] signup-only contacts
+       (always classified 'unavailable')
+
+   Notifications (primary):
+     PUSHOVER_APP_TOKEN + PUSHOVER_USER_KEY
+
+   Storage (secondary, optional):
      1. Vercel KV (Upstash Redis REST) — KV_REST_API_URL + KV_REST_API_TOKEN
      2. Supabase                       — SUPABASE_URL + SUPABASE_SERVICE_KEY
-        Table: subscribe_2027 (name TEXT, email TEXT UNIQUE, phone TEXT,
-                               subscribed_at TIMESTAMPTZ DEFAULT now())
-
-   Notifications:
-     PUSHOVER_APP_TOKEN + PUSHOVER_USER_KEY (required, server-side only)
-     One alert per new signup; retried once on failure.
-     A notification failure never invalidates a saved record.
 ──────────────────────────────────────────────────────────────── */
 import https from 'https';
 
-/* ── HTTP helper with per-request timeout ───────────────────── */
+/* ── HTTP helper ─────────────────────────────────────────────── */
 function httpsRequest(method, url, payload, extraHeaders, timeoutMs = 8000) {
   return new Promise((resolve, reject) => {
-    const u    = new URL(url);
-    const data = payload ? JSON.stringify(payload) : null;
-    let done   = false;
-
-    const req = https.request({
-      hostname: u.hostname,
-      path:     u.pathname + (u.search || ''),
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-        ...(data ? { 'Content-Length': Buffer.byteLength(data) } : {}),
-        ...(extraHeaders || {}),
-      },
-    }, (res) => {
-      let body = '';
-      res.on('data', c => { body += c; });
-      res.on('end', () => {
-        if (done) return;
-        done = true;
-        try { resolve({ status: res.statusCode, data: JSON.parse(body) }); }
-        catch { resolve({ status: res.statusCode, data: body }); }
+    let done = false;
+    try {
+      const u    = new URL(url);
+      const data = payload ? JSON.stringify(payload) : null;
+      const req  = https.request({
+        hostname: u.hostname,
+        path:     u.pathname + (u.search || ''),
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          ...(data ? { 'Content-Length': Buffer.byteLength(data) } : {}),
+          ...(extraHeaders || {}),
+        },
+      }, (res) => {
+        let body = '';
+        res.on('data', c => { body += c; });
+        res.on('end', () => {
+          if (done) return;
+          done = true;
+          try { resolve({ status: res.statusCode, data: JSON.parse(body) }); }
+          catch { resolve({ status: res.statusCode, data: body }); }
+        });
       });
-    });
-
-    req.setTimeout(timeoutMs, () => {
-      if (!done) { done = true; req.destroy(); reject(new Error(`Timeout ${timeoutMs}ms`)); }
-    });
-    req.on('error', e => { if (!done) { done = true; reject(e); } });
-
-    if (data) req.write(data);
-    req.end();
+      req.setTimeout(timeoutMs, () => {
+        if (!done) { done = true; req.destroy(); reject(new Error(`Timeout ${timeoutMs}ms`)); }
+      });
+      req.on('error', e => { if (!done) { done = true; reject(e); } });
+      if (data) req.write(data);
+      req.end();
+    } catch (e) { reject(e); }
   });
 }
 
 const httpPost = (url, payload, hdrs, ms) => httpsRequest('POST', url, payload, hdrs, ms);
 const httpGet  = (url, hdrs, ms)           => httpsRequest('GET',  url, null,    hdrs, ms);
 
-/* ── Vercel KV (Upstash Redis REST) ────────────────────────── */
+/* ── Contact classification helpers (exported for tests) ──────── */
+
+export function normalizeEmail(e) {
+  return String(e || '').trim().toLowerCase();
+}
+
+/* Strip non-digits, strip leading '1' from 11-digit, require 10 digits → null if malformed */
+export function normalizePhone(p) {
+  let digits = String(p || '').replace(/\D/g, '');
+  if (digits.length === 11 && digits[0] === '1') digits = digits.slice(1);
+  return digits.length === 10 ? digits : null;
+}
+
+export function loadPastCustomers() {
+  const raw = process.env.GLO_PAST_CUSTOMERS_JSON;
+  if (!raw) return null;
+  try {
+    const list = JSON.parse(raw);
+    if (!Array.isArray(list)) {
+      console.error('[Glo Karts] GLO_PAST_CUSTOMERS_JSON is not an array');
+      return null;
+    }
+    return list;
+  } catch {
+    console.error('[Glo Karts] GLO_PAST_CUSTOMERS_JSON parse error');
+    return null;
+  }
+}
+
+export function loadSignupOnly() {
+  const raw = process.env.GLO_SIGNUP_ONLY_JSON;
+  if (!raw) return [];
+  try {
+    const list = JSON.parse(raw);
+    return Array.isArray(list) ? list : [];
+  } catch {
+    console.error('[Glo Karts] GLO_SIGNUP_ONLY_JSON parse error');
+    return [];
+  }
+}
+
+/* Returns: 'returning' | 'new' | 'unavailable' */
+export function classifyContact(email, normPhone, pastCustomers, signupOnly) {
+  if (!Array.isArray(pastCustomers)) return 'unavailable';
+  const normEmail = normalizeEmail(email);
+
+  /* Signup-only contacts are always unavailable regardless of match */
+  for (const entry of (signupOnly || [])) {
+    const emailMatch = Array.isArray(entry.emails)
+      && entry.emails.some(e => normalizeEmail(e) === normEmail);
+    const phoneMatch = entry.phone && normPhone && entry.phone === normPhone;
+    if (emailMatch || phoneMatch) return 'unavailable';
+  }
+
+  /* Check booking history */
+  for (const entry of pastCustomers) {
+    const emailMatch = entry.email && normalizeEmail(entry.email) === normEmail;
+    const phoneMatch = entry.phone && normPhone && entry.phone === normPhone;
+    if (emailMatch || phoneMatch) return 'returning';
+  }
+
+  return 'new';
+}
+
+/* ── Vercel KV ───────────────────────────────────────────────── */
 const kvBase    = () => (process.env.KV_REST_API_URL || '').replace(/\/$/, '');
 const kvHeaders = () => ({ Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}` });
 const kvOk      = () => !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
@@ -88,11 +152,9 @@ async function kvSetNX(key, value) {
   if (!results) return false;
   const r = results[0];
   if (!r || r.error) {
-    /* Upstash returned an error object — treat as write failure, never as 'exists' */
     console.error('[Glo Karts] KV SET NX error:', r?.error);
     return false;
   }
-  /* result='OK' → key written (new); result=null → NX blocked because key exists */
   return r.result === 'OK' ? 'new' : 'exists';
 }
 
@@ -117,7 +179,6 @@ async function sbSave(name, email, phone) {
   const hdrs = sbHdrs();
 
   try {
-    /* Duplicate email check */
     const emailChk = await httpGet(
       `${url}/rest/v1/subscribe_2027?email=eq.${encodeURIComponent(email)}&select=email&limit=1`,
       hdrs
@@ -129,7 +190,6 @@ async function sbSave(name, email, phone) {
       return 'error';
     }
 
-    /* Duplicate phone check */
     if (phone) {
       const phoneChk = await httpGet(
         `${url}/rest/v1/subscribe_2027?phone=eq.${encodeURIComponent(phone)}&select=phone&limit=1`,
@@ -143,14 +203,13 @@ async function sbSave(name, email, phone) {
       }
     }
 
-    /* Insert */
     const ins = await httpPost(
       `${url}/rest/v1/subscribe_2027`,
       { name, email, phone: phone || null, subscribed_at: new Date().toISOString() },
       { ...hdrs, 'Content-Type': 'application/json', Prefer: 'return=minimal' }
     );
     if (ins.status === 201) return 'new';
-    if (ins.status === 409) return 'exists'; /* UNIQUE constraint race */
+    if (ins.status === 409) return 'exists';
 
     console.error('[Glo Karts] Supabase insert HTTP', ins.status);
     return 'error';
@@ -160,64 +219,28 @@ async function sbSave(name, email, phone) {
   }
 }
 
-/* ── Past-booking lookup ─────────────────────────────────────── */
-async function findPastBooking(email, normalizedPhone) {
-  if (!sbOk()) return 'unavailable';
-  const url  = sbBase();
-  const hdrs = sbHdrs();
-  try {
-    /* Email lookup */
-    const r1 = await httpGet(
-      `${url}/rest/v1/bookings?contact_email=eq.${encodeURIComponent(email)}&select=id&limit=1`,
-      hdrs
-    );
-    if (r1.status === 200 && Array.isArray(r1.data) && r1.data.length > 0) return 'found';
-    if (r1.status !== 200) {
-      console.error('[Glo Karts] Booking email lookup HTTP', r1.status);
-      return 'unavailable';
-    }
-
-    /* Phone lookup — only when email clean-miss */
-    if (normalizedPhone) {
-      const r2 = await httpGet(
-        `${url}/rest/v1/bookings?contact_phone=eq.${encodeURIComponent(normalizedPhone)}&select=id&limit=1`,
-        hdrs
-      );
-      if (r2.status === 200 && Array.isArray(r2.data) && r2.data.length > 0) return 'found';
-      if (r2.status !== 200) {
-        console.error('[Glo Karts] Booking phone lookup HTTP', r2.status);
-        return 'unavailable';
-      }
-    }
-
-    return 'not_found';
-  } catch (e) {
-    console.error('[Glo Karts] Booking lookup exception:', e.message);
-    return 'unavailable';
-  }
-}
-
-/* ── Pushover — retried once, failure is non-fatal ──────────── */
+/* ── Pushover — retried once, non-fatal ──────────────────────── */
 async function sendPushover(title, message) {
   const token = process.env.PUSHOVER_APP_TOKEN;
   const user  = process.env.PUSHOVER_USER_KEY;
   if (!token || !user) {
     console.error('[Glo Karts] Pushover: credentials not configured');
-    return;
+    return false;
   }
   const payload = { token, user, title, message: message.slice(0, 1024), priority: 0 };
   for (let attempt = 1; attempt <= 2; attempt++) {
     try {
       const r = await httpPost('https://api.pushover.net/1/messages.json', payload, {}, 6000);
-      if (r.status === 200 && r.data?.status === 1) return; /* delivered */
+      if (r.status === 200 && r.data?.status === 1) return true;
       console.error('[Glo Karts] Pushover attempt', attempt,
         'HTTP', r.status, 'api-status:', r.data?.status,
         'errors:', JSON.stringify((r.data?.errors || []).map(String)));
     } catch (e) {
       console.error('[Glo Karts] Pushover attempt', attempt, 'exception:', e.message);
     }
-    if (attempt < 2) await new Promise(res => setTimeout(res, 2500));
+    if (attempt < 2) await new Promise(resolve => setTimeout(resolve, 2500));
   }
+  return false;
 }
 
 /* ── Helpers ─────────────────────────────────────────────────── */
@@ -227,10 +250,17 @@ function safeFirst(name) {
     || 'there';
 }
 
-const CUSTOMER_STATUS_MAP = {
-  found:       ['2027 Updates — Past Customer',       'Past booking found'],
-  not_found:   ['2027 Updates — New Customer',        'No past booking found'],
-  unavailable: ['2027 Updates — History Unavailable', 'Booking history unavailable'],
+const MESSAGES = {
+  returning:   fn => `Welcome back, ${fn}! Your request for 2027 season updates is in. Stay in the GLO!`,
+  new:         fn => `Welcome to the GLO, ${fn}! Your request for 2027 season updates is in. We're excited to have you!`,
+  unavailable: fn => `Thanks, ${fn}! We received your request for 2027 season updates. Stay in the GLO!`,
+  duplicate:   fn => `Hi, ${fn}! You're already on the list. We'll reach out when 2027 bookings open.`,
+};
+
+const PUSHOVER_TITLES = {
+  returning:   'Returning Customer — matched supplied booking list',
+  new:         'New Customer — no match in supplied list',
+  unavailable: 'History Unavailable',
 };
 
 /* ── Handler ─────────────────────────────────────────────────── */
@@ -251,112 +281,81 @@ export default async function handler(req, res) {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rawEmail))
     return res.status(400).json({ ok: false, error: 'Please enter a valid email address.' });
 
-  const email           = rawEmail.toLowerCase();
-  const normalizedPhone = rawPhone.replace(/\D/g, '');
-  const firstName       = safeFirst(rawName);
+  const normPhone = normalizePhone(rawPhone);
+  if (normPhone === null)
+    return res.status(400).json({ ok: false, error: 'Please enter a valid 10-digit phone number.' });
 
-  /* ── Storage availability ───────────────────────────────────── */
+  const email     = normalizeEmail(rawEmail);
+  const firstName = safeFirst(rawName);
+
   const hasKV = kvOk();
   const hasSB = sbOk();
-
-  if (!hasKV && !hasSB) {
-    console.error('[Glo Karts] FATAL: no storage.',
-      'KV_URL:', !!process.env.KV_REST_API_URL,
-      'KV_TOKEN:', !!process.env.KV_REST_API_TOKEN,
-      'SB_URL:', !!process.env.SUPABASE_URL,
-      'SB_KEY:', !!process.env.SUPABASE_SERVICE_KEY);
-    return res.status(503).json({
-      ok: false,
-      error: "We couldn't save your signup right now. Please try again in a moment.",
-    });
-  }
 
   /* ── Path A: Vercel KV ──────────────────────────────────────── */
   if (hasKV) {
     const emailKey = `sub:2027:${email}`;
-    const phoneKey = normalizedPhone ? `sub:2027:phone:${normalizedPhone}` : null;
-    const record   = JSON.stringify({
-      name: rawName, email, phone: rawPhone,
-      subscribedAt: new Date().toISOString(),
-    });
+    const phoneKey = `sub:2027:phone:${normPhone}`;
 
     /* Phone duplicate check */
-    if (phoneKey) {
-      const existingPhone = await kvGet(phoneKey);
-      if (existingPhone !== null) {
-        return res.status(200).json({
-          ok: true, duplicate: true,
-          message: `Hi, ${firstName}! You're already in the GLO! We'll email you when 2027 bookings open.`,
-        });
-      }
-    }
+    const existingPhone = await kvGet(phoneKey);
+    if (existingPhone !== null)
+      return res.status(200).json({ ok: true, duplicate: true, message: MESSAGES.duplicate(firstName) });
 
     /* Atomic email write */
+    const record     = JSON.stringify({ name: rawName, email, phone: rawPhone, subscribedAt: new Date().toISOString() });
     const saveResult = await kvSetNX(emailKey, record);
 
-    if (saveResult === 'exists') {
-      return res.status(200).json({
-        ok: true, duplicate: true,
-        message: `Hi, ${firstName}! You're already in the GLO! We'll email you when 2027 bookings open.`,
-      });
-    }
+    if (saveResult === 'exists')
+      return res.status(200).json({ ok: true, duplicate: true, message: MESSAGES.duplicate(firstName) });
 
-    if (saveResult === false) {
-      /* Write error — fall through to Supabase if available */
-      console.error('[Glo Karts] KV write failed, falling through to Supabase');
-      if (!hasSB) {
-        return res.status(503).json({
-          ok: false,
-          error: "We couldn't save your signup right now. Please try again in a moment.",
-        });
-      }
-      /* falls through to Path B below */
+    if (saveResult !== false) {
+      await kvSet(phoneKey, emailKey);
     } else {
-      /* KV save confirmed → write phone index, notify */
-      if (phoneKey) await kvSet(phoneKey, emailKey);
-
-      const past = await findPastBooking(email, normalizedPhone);
-      const [poTitle, customerStatus] = CUSTOMER_STATUS_MAP[past] || CUSTOMER_STATUS_MAP.unavailable;
-      console.log('[Glo Karts] KV save ok, booking status:', past);
-
-      await sendPushover(poTitle,
-        `Name: ${rawName}\nPhone: ${rawPhone}\nEmail: ${email}\nCustomer status: ${customerStatus}\nSource: 2027 Season Updates`);
-
-      return res.status(200).json({
-        ok: true,
-        message: `Hi, ${firstName}! You're in the GLO! We'll email you when 2027 bookings open.`,
-      });
+      console.error('[Glo Karts] KV write failed — continuing to notify');
     }
+
+    const classification = classifyContact(email, normPhone, loadPastCustomers(), loadSignupOnly());
+    console.log('[Glo Karts] KV path, classification:', classification);
+
+    await sendPushover(
+      PUSHOVER_TITLES[classification] || PUSHOVER_TITLES.unavailable,
+      `Name: ${rawName}\nPhone: ${rawPhone}\nEmail: ${email}\nClassification: ${classification}\nSource: 2027 Season Updates`
+    );
+
+    return res.status(200).json({ ok: true, message: (MESSAGES[classification] || MESSAGES.unavailable)(firstName) });
   }
 
   /* ── Path B: Supabase ───────────────────────────────────────── */
-  const sbResult = await sbSave(rawName, email, normalizedPhone);
+  if (hasSB) {
+    const sbResult = await sbSave(rawName, email, normPhone);
 
-  if (sbResult === 'exists') {
-    return res.status(200).json({
-      ok: true, duplicate: true,
-      message: `Hi, ${firstName}! You're already in the GLO! We'll email you when 2027 bookings open.`,
-    });
+    if (sbResult === 'exists')
+      return res.status(200).json({ ok: true, duplicate: true, message: MESSAGES.duplicate(firstName) });
+
+    if (sbResult !== 'new')
+      console.error('[Glo Karts] Supabase write failed:', sbResult, '— continuing to notify');
+
+    const classification = classifyContact(email, normPhone, loadPastCustomers(), loadSignupOnly());
+    console.log('[Glo Karts] Supabase path, classification:', classification);
+
+    await sendPushover(
+      PUSHOVER_TITLES[classification] || PUSHOVER_TITLES.unavailable,
+      `Name: ${rawName}\nPhone: ${rawPhone}\nEmail: ${email}\nClassification: ${classification}\nSource: 2027 Season Updates`
+    );
+
+    return res.status(200).json({ ok: true, message: (MESSAGES[classification] || MESSAGES.unavailable)(firstName) });
   }
 
-  if (sbResult !== 'new') {
-    console.error('[Glo Karts] All storage paths failed. KV:', hasKV, '| SB result:', sbResult);
-    return res.status(503).json({
-      ok: false,
-      error: "We couldn't save your signup right now. Please try again in a moment.",
-    });
-  }
+  /* ── Path C: Pushover-only (no storage configured) ─────────── */
+  console.warn('[Glo Karts] No storage configured — recording signup via Pushover only');
 
-  /* Supabase save confirmed → notify */
-  const past = await findPastBooking(email, normalizedPhone);
-  const [poTitle, customerStatus] = CUSTOMER_STATUS_MAP[past] || CUSTOMER_STATUS_MAP.unavailable;
-  console.log('[Glo Karts] Supabase save ok, booking status:', past);
+  const classification = classifyContact(email, normPhone, loadPastCustomers(), loadSignupOnly());
+  console.log('[Glo Karts] No-storage path, classification:', classification);
 
-  await sendPushover(poTitle,
-    `Name: ${rawName}\nPhone: ${rawPhone}\nEmail: ${email}\nCustomer status: ${customerStatus}\nSource: 2027 Season Updates`);
+  await sendPushover(
+    PUSHOVER_TITLES[classification] || PUSHOVER_TITLES.unavailable,
+    `Name: ${rawName}\nPhone: ${rawPhone}\nEmail: ${email}\nClassification: ${classification}\nSource: 2027 Season Updates (no storage)`
+  );
 
-  return res.status(200).json({
-    ok: true,
-    message: `Hi, ${firstName}! You're in the GLO! We'll email you when 2027 bookings open.`,
-  });
+  return res.status(200).json({ ok: true, message: (MESSAGES[classification] || MESSAGES.unavailable)(firstName) });
 }
